@@ -1,21 +1,21 @@
 import pygame
 from pygame.locals import *
 
-import c_Piece
-import c_Case
+import piece_class
+import cell_class
 import constantes
 
 """Creation des cases (pour créer les pièces)
     -Argument: liste d'argument de création pour la case
     -Retourne: L'objet piece correspondant"""
-def create_piece(listeCase):
+def create_piece(cellList):
     
     pieceList = []
     
-    for case in listeCase:
-        pieceList.append(c_Case.Case(case["x"], case["y"], case["textureUnselected"], case["textureSelected"], case["textureNot"]))
+    for cell in cellList:
+        pieceList.append(cell_class.Cell(cell["x"], cell["y"], cell["textureUnselected"], cell["textureSelected"], cell["textureNot"]))
         
-    piece = c_Piece.Piece(pieceList)
+    piece = piece_class.Piece(pieceList)
         
     return piece
 

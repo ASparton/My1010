@@ -10,54 +10,53 @@ import random
 
 #created files importations
 import constantes
-import fonctions
-import c_Case
-import c_Plateau
-import c_Piece
+import functions
+import cell_class
+import board_class
+import piece_class
 
 pygame.init()
 
-#ALEXANDRE: Création de l'écran
-screen = pygame.display.set_mode((constantes.tailleScreen[0], constantes.tailleScreen[1]), RESIZABLE)
+#Création de l'écran
+screen = pygame.display.set_mode((constantes.screenSize[0], constantes.screenSize[1]), RESIZABLE)
 
-#ALEXANDRE: Importation des background
-#EVA: Affichage du background
-background = pygame.image.load(constantes._Background).convert_alpha()
+#Importation des background + Affichage du background
+background = pygame.image.load(constantes.backgroundTexture).convert_alpha()
 screen.blit(background, (0,0))
 
-backgroundGameOver = pygame.image.load(constantes._Background_game_over).convert_alpha()
+backgroundGameOver = pygame.image.load(constantes.gameOverBackgroundTexture).convert_alpha()
 
 #ALEXANDRE: Création du plateau
 #EVA: Affichage du plateau
-plateau = c_Plateau.Plateau()
-plateau.Construct()
-for case in plateau.listeCase:
-    screen.blit(case.texture, (case.x * constantes.tailleCase, case.y * constantes.tailleCase))
+board = board_class.Board()
+board.construct()
+for cell in board.cellList:
+    screen.blit(cell.texture, (cell.x * constantes.cellSize, cell.y * constantes.cellSize))
 
 
 #ALEXANDRE: Création des pièces aléatoires
-randomListeCase = random.choice(constantes.listePiece)
-Piece1 = fonctions.create_piece(randomListeCase)
-Piece1.defNbCase()
+randomCellList = random.choice(constantes.pieceList)
+piece1 = functions.create_piece(randomCellList)
+piece1.def_cell_number()
 
-randomListeCase = random.choice(constantes.listePiece)
-Piece2 = fonctions.create_piece(randomListeCase)
-Piece2.defNbCase()
+randomCellList = random.choice(constantes.pieceList)
+piece2 = functions.create_piece(randomCellList)
+piece2.def_cell_number()
 
-randomListeCase = random.choice(constantes.listePiece)
-Piece3 = fonctions.create_piece(randomListeCase)
-Piece3.defNbCase()
+randomCellList = random.choice(constantes.pieceList)
+piece3 = functions.create_piece(randomCellList)
+piece3.def_cell_number()
 
 #EVA: Affichage des 3 pièces générées
-for case in Piece1.piece:
-    screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece1 + case.y) * constantes.tailleCase)))
-for case in Piece2.piece:
-    screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece2 + case.y) * constantes.tailleCase)))
-for case in Piece3.piece:
-    screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece3 + case.y) * constantes.tailleCase)))
+for cell in piece1.piece:
+    screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY1 + cell.y) * constantes.cellSize)))
+for cell in piece2.piece:
+    screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY2 + cell.y) * constantes.cellSize)))
+for cell in piece3.piece:
+    screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY3 + cell.y) * constantes.cellSize)))
 
 #ALEXANDRE + EVA + ARMAMIS: On sélectionne d'entrée la pièce 1.
-Piece1.selectPiece()
+piece1.select()
 
 score = 0
 
@@ -68,7 +67,7 @@ pygame.mixer.music.play()
 
 #Initialisation des sons
 winingLineSound = pygame.mixer.Sound("Sons/Ouh_nice_!.wav")
-unplacableSound = pygame.mixer.Sound("Sons/Nope.wav")
+cantPlaceSound = pygame.mixer.Sound("Sons/Nope.wav")
 gameOverSound = pygame.mixer.Sound("Sons/Game_over.wav")
 
 #Game over variable initialization
@@ -96,7 +95,7 @@ while loop:
         if gameOver == False:
 
             score_conversion_text = str(score)
-            score_text = constantes.font.render(score_conversion_text, False, (0,0,0))
+            score_text = constantes.font.render(score_conversion_text, False, (1,1,1))
     
             if phase == 1:
         
@@ -113,86 +112,86 @@ while loop:
                     #Flèche bas
                     if event.key == K_DOWN:
                         
-                        if Piece1.selected == True:
-                            Piece1.unselectPiece()
+                        if piece1.selected == True:
+                            piece1.unselect()
                             
-                            if Piece2.placed == False:
-                                Piece2.selectPiece()
+                            if piece2.placed == False:
+                                piece2.select()
                                 
-                            elif Piece2.placed == True:
-                                if Piece3.placed == False:
-                                    Piece3.selectPiece()
+                            elif piece2.placed == True:
+                                if piece3.placed == False:
+                                    piece3.select()
                                     
-                                elif Piece3.placed == True:
-                                    Piece1.selectPiece()
+                                elif piece3.placed == True:
+                                    piece1.select()
                             
-                        elif Piece2.selected == True:
-                            Piece2.unselectPiece()
+                        elif piece2.selected == True:
+                            piece2.unselect()
                             
-                            if Piece3.placed == False:
-                                Piece3.selectPiece()
+                            if piece3.placed == False:
+                                piece3.select()
                                 
-                            elif Piece3.placed == True:
-                                if Piece1.placed == False:
-                                    Piece1.selectPiece()
+                            elif piece3.placed == True:
+                                if piece1.placed == False:
+                                    piece1.select()
                                     
-                                elif Piece1.placed == True:
-                                    Piece2.selectPiece()
+                                elif piece1.placed == True:
+                                    piece2.select()
                             
-                        elif Piece3.selected == True:
-                            Piece3.unselectPiece()
+                        elif piece3.selected == True:
+                            piece3.unselect()
                             
-                            if Piece1.placed == False:
-                                Piece1.selectPiece()
+                            if piece1.placed == False:
+                                piece1.select()
                                 
-                            elif Piece1.placed == True:
-                                if Piece2.placed == False:
-                                    Piece2.selectPiece()
+                            elif piece1.placed == True:
+                                if piece2.placed == False:
+                                    piece2.select()
                                     
-                                elif Piece2.placed == True:
-                                    Piece3.selectPiece()
+                                elif piece2.placed == True:
+                                    piece3.select()
                                     
                     #Flèche haut
                     if event.key == K_UP:
                     
-                        if Piece1.selected == True:
-                            Piece1.unselectPiece()
+                        if piece1.selected == True:
+                            piece1.unselect()
                         
-                            if Piece3.placed == False:
-                                Piece3.selectPiece()
+                            if piece3.placed == False:
+                                piece3.select()
                             
-                            elif Piece3.placed == True:
-                                if Piece2.placed == False:
-                                    Piece2.selectPiece()
+                            elif piece3.placed == True:
+                                if piece2.placed == False:
+                                    piece2.select()
                                 
-                                elif Piece2.placed == True:
-                                    Piece1.selectPiece()
+                                elif piece2.placed == True:
+                                    piece1.select()
                         
-                        elif Piece2.selected == True:
-                            Piece2.unselectPiece()
+                        elif piece2.selected == True:
+                            piece2.unselect()
                         
-                            if Piece1.placed == False:
-                                Piece1.selectPiece()
+                            if piece1.placed == False:
+                                piece1.select()
                             
-                            elif Piece1.placed == True:
-                                if Piece3.placed == False:
-                                    Piece3.selectPiece()
+                            elif piece1.placed == True:
+                                if piece3.placed == False:
+                                    piece3.select()
                                 
-                                elif Piece3.placed == True:
-                                    Piece2.selectPiece()
+                                elif piece3.placed == True:
+                                    piece2.select()
                         
-                        elif Piece3.selected == True:
-                            Piece3.unselectPiece()
+                        elif piece3.selected == True:
+                            piece3.unselect()
                         
-                            if Piece2.placed == False:
-                                Piece2.selectPiece()
+                            if piece2.placed == False:
+                                piece2.select()
                             
-                            elif Piece2.placed == True:
-                                if Piece1.placed == False:
-                                    Piece1.selectPiece()
+                            elif piece2.placed == True:
+                                if piece1.placed == False:
+                                    piece1.select()
                                 
-                                elif Piece1.placed == True:
-                                    Piece3.selectPiece()
+                                elif piece1.placed == True:
+                                    piece3.select()
                                 
                     """EVA: Une fois la pièce choisie par le joueur, donc sélectionée, s'il appuie sur "Entrée" voici ce qu'il se passe:
                             - La pièce qu'il a sélectionné se place en haut à gauche du plateau (0,0) et reste sélectionée,
@@ -203,20 +202,20 @@ while loop:
                     #Entrée
                     if event.key == K_c:
                     
-                        if Piece1.selected == True:
-                            for case in Piece1.piece:
-                                case.x = 0 + case.x
-                                case.y = 0 + case.y
+                        if piece1.selected == True:
+                            for cell in piece1.piece:
+                                cell.x = 0 + cell.x
+                                cell.y = 0 + cell.y
                         
-                        elif Piece2.selected == True:
-                            for case in Piece1.piece:
-                                case.x = 0 + case.x
-                                case.y = 0 + case.y
+                        elif piece2.selected == True:
+                            for cell in piece1.piece:
+                                cell.x = 0 + cell.x
+                                cell.y = 0 + cell.y
                     
-                        elif Piece3.selected == True:
-                            for case in Piece1.piece:
-                                case.x = 0 + case.x
-                                case.y = 0 + case.y
+                        elif piece3.selected == True:
+                            for cell in piece1.piece:
+                                cell.x = 0 + cell.x
+                                cell.y = 0 + cell.y
                             
                         phase = 2
                 
@@ -239,175 +238,175 @@ while loop:
                     #Flèche bas
                     if event.key == K_DOWN:
                 
-                        if Piece1.selected == True:
-                            Piece1.moove("bas")
-                            Piece1.testBordure(Piece1)
+                        if piece1.selected == True:
+                            piece1.moove("bas")
+                            piece1.testBordure(piece1)
                 
-                        elif Piece2.selected == True:
-                            Piece2.moove("bas")
-                            Piece2.testBordure(Piece2)
+                        elif piece2.selected == True:
+                            piece2.moove("bas")
+                            piece2.testBordure(piece2)
                    
-                        elif Piece3.selected == True:
-                            Piece3.moove("bas")
-                            Piece3.testBordure(Piece3)
+                        elif piece3.selected == True:
+                            piece3.moove("bas")
+                            piece3.testBordure(piece3)
                 
                     #Flèche haut
                     if event.key == K_UP:
                 
-                        if Piece1.selected == True:
-                            Piece1.moove("haut")
-                            Piece1.testBordure(Piece1)
+                        if piece1.selected == True:
+                            piece1.moove("haut")
+                            piece1.testBordure(piece1)
                     
-                        elif Piece2.selected == True:
-                            Piece2.moove("haut")
-                            Piece2.testBordure(Piece2)
+                        elif piece2.selected == True:
+                            piece2.moove("haut")
+                            piece2.testBordure(piece2)
                    
-                        elif Piece3.selected == True:
-                            Piece3.moove("haut")
-                            Piece3.testBordure(Piece3)
+                        elif piece3.selected == True:
+                            piece3.moove("haut")
+                            piece3.testBordure(piece3)
                     
                     #Flèche droite
                     if event.key == K_RIGHT:
                 
-                        if Piece1.selected == True:
-                            Piece1.moove("droite")
-                            Piece1.testBordure(Piece1)
+                        if piece1.selected == True:
+                            piece1.moove("droite")
+                            piece1.testBordure(piece1)
                     
-                        elif Piece2.selected == True:
-                            Piece2.moove("droite")
-                            Piece2.testBordure(Piece2)
+                        elif piece2.selected == True:
+                            piece2.moove("droite")
+                            piece2.testBordure(piece2)
                    
-                        elif Piece3.selected == True:
-                            Piece3.moove("droite")
-                            Piece3.testBordure(Piece3)
+                        elif piece3.selected == True:
+                            piece3.moove("droite")
+                            piece3.testBordure(piece3)
            
                     #Flèche gauche
                     if event.key == K_LEFT:
                 
-                        if Piece1.selected == True:
-                            Piece1.moove("gauche")
-                            Piece1.testBordure(Piece1)
+                        if piece1.selected == True:
+                            piece1.moove("gauche")
+                            piece1.testBordure(piece1)
                     
-                        elif Piece2.selected == True:
-                            Piece2.moove("gauche")
-                            Piece2.testBordure(Piece2)
+                        elif piece2.selected == True:
+                            piece2.moove("gauche")
+                            piece2.testBordure(piece2)
                    
-                        elif Piece3.selected == True:
-                            Piece3.moove("gauche")
-                            Piece3.testBordure(Piece3)
+                        elif piece3.selected == True:
+                            piece3.moove("gauche")
+                            piece3.testBordure(piece3)
             
             
                     #Entrée
                     if event.key == K_RETURN:
                     
-                        if Piece1.selected == True:
-                            okay = plateau.PlayerPlaceVerification(Piece1)
-                            if okay:
-                                Piece1.placePiece(plateau, Piece1)
-                                score += Piece1.NbCase
-                            elif okay == False:
+                        if piece1.selected == True:
+                            canBePlaced = board.player_place_verification(piece1)
+                            if canBePlaced:
+                                piece1.place_piece(board, piece1)
+                                score += piece1.cellNumber
+                            elif canBePlaced == False:
                             
-                                for case in Piece1.piece:
-                                    case.texture = case.texture_not
+                                for cell in piece1.piece:
+                                    cell.texture = cell.cantPlaceTexture
                             
-                                Piece1.placable = False
-                                unplacableSound.play()
+                                piece1.canBePlaced = False
+                                cantPlaceSound.play()
                             
-                        elif Piece2.selected == True:
-                            okay = plateau.PlayerPlaceVerification(Piece2)
-                            if okay:
-                                Piece2.placePiece(plateau, Piece2)
-                                score += Piece2.NbCase
-                            elif okay == False:
+                        elif piece2.selected == True:
+                            canBePlaced = board.player_place_verification(piece2)
+                            if canBePlaced:
+                                piece2.place_piece(board, piece2)
+                                score += piece2.cellNumber
+                            elif canBePlaced == False:
                         
-                                for case in Piece2.piece:
-                                    case.texture = case.texture_not
+                                for cell in piece2.piece:
+                                    cell.texture = cell.cantPlaceTexture
                                 
-                                Piece2.placable = False
-                                unplacableSound.play()
+                                piece2.canBePlaced = False
+                                cantPlaceSound.play()
                             
-                        elif Piece3.selected == True:
-                            okay = plateau.PlayerPlaceVerification(Piece3)
-                            if okay:
-                                Piece3.placePiece(plateau, Piece3)
-                                score += Piece3.NbCase
-                            elif okay == False:
+                        elif piece3.selected == True:
+                            canBePlaced = board.player_place_verification(piece3)
+                            if canBePlaced:
+                                piece3.place_piece(board, piece3)
+                                score += piece3.cellNumber
+                            elif canBePlaced == False:
                             
-                                for case in Piece3.piece:
-                                    case.texture = case.texture_not
+                                for cell in piece3.piece:
+                                    cell.texture = cell.cantPlaceTexture
                                 
-                                Piece3.placable = False
-                                unplacableSound.play()
+                                piece3.canBePlaced = False
+                                cantPlaceSound.play()
                                         
-                        if okay == True: #la piece a été placée on peut repasser en phase 1, celle de sélection.
+                        if canBePlaced == True: #la piece a été placée on peut repasser en phase 1, celle de sélection.
                     
-                            NbCaseLine = plateau.LineVerificationSuppression()
+                            lineCellNumber = board.line_verification_suppression()
                         
-                            if NbCaseLine > 0:
-                                score += NbCaseLine
+                            if lineCellNumber > 0:
+                                score += lineCellNumber
                                 winingLineSound.play()
                         
-                            testListe = []
+                            testList = []
                             test = True
                             
-                            if Piece1.placed == False:
+                            if piece1.placed == False:
                             
-                                testListe.append(plateau.PlaceVerification(Piece1))
-                                if Piece2.placed == False:
-                                    testListe.append(plateau.PlaceVerification(Piece2))
-                                if Piece3.placed == False:
-                                    testListe.append(plateau.PlaceVerification(Piece3))
+                                testList.append(board.place_verification(piece1))
+                                if piece2.placed == False:
+                                    testList.append(board.place_verification(piece2))
+                                if piece3.placed == False:
+                                    testList.append(board.place_verification(piece3))
                             
-                                Piece1.selectPiece()
+                                piece1.select()
                                 
-                            elif Piece1.placed == True:
-                                if Piece2.placed == False:
+                            elif piece1.placed == True:
+                                if piece2.placed == False:
                             
-                                    testListe.append(plateau.PlaceVerification(Piece2))
-                                    if Piece3.placed == False:
-                                        testListe.append(plateau.PlaceVerification(Piece3))
+                                    testList.append(board.place_verification(piece2))
+                                    if piece3.placed == False:
+                                        testList.append(board.place_verification(piece3))
                                 
-                                    Piece2.selectPiece()
+                                    piece2.select()
                                     
-                                elif Piece2.placed == True:
-                                    if Piece3.placed == False:
+                                elif piece2.placed == True:
+                                    if piece3.placed == False:
                                 
-                                        testListe.append(plateau.PlaceVerification(Piece3))
+                                        testList.append(board.place_verification(piece3))
                                     
-                                        Piece3.selectPiece()
+                                        piece3.select()
                                         
-                                    elif Piece3.placed == True:
+                                    elif piece3.placed == True:
                                 
                                         #Si les 3 pièces sont placées, on en génère trois nouvelles et on vérifie si elles sont posables.
                                     
-                                        randomListeCase = random.choice(constantes.listePiece)
-                                        Piece1 = fonctions.create_piece(randomListeCase)
-                                        Piece1.defNbCase()
+                                        randomCellList = random.choice(constantes.pieceList)
+                                        piece1 = functions.create_piece(randomCellList)
+                                        piece1.def_cell_number()
 
-                                        randomListeCase = random.choice(constantes.listePiece)
-                                        Piece2 = fonctions.create_piece(randomListeCase)
-                                        Piece2.defNbCase()
+                                        randomCellList = random.choice(constantes.pieceList)
+                                        piece2 = functions.create_piece(randomCellList)
+                                        piece2.def_cell_number()
 
-                                        randomListeCase = random.choice(constantes.listePiece)
-                                        Piece3 = fonctions.create_piece(randomListeCase)
-                                        Piece3.defNbCase()
+                                        randomCellList = random.choice(constantes.pieceList)
+                                        piece3 = functions.create_piece(randomCellList)
+                                        piece3.def_cell_number()
                                     
-                                        testListe.append(plateau.PlaceVerification(Piece1))
-                                        testListe.append(plateau.PlaceVerification(Piece2))
-                                        testListe.append(plateau.PlaceVerification(Piece3))
+                                        testList.append(board.place_verification(piece1))
+                                        testList.append(board.place_verification(piece2))
+                                        testList.append(board.place_verification(piece3))
                                     
-                                        Piece1.selectPiece()
+                                        piece1.select()
                         
-                            for testEnCours in testListe:
-                                if testEnCours == True:
+                            for currentTest in testList:
+                                if currentTest == True:
                                     test = True
                                     break
-                                elif testEnCours == False:
+                                elif currentTest == False:
                                     test = False
                                 
                             if test == False:
                                 gameOver = True
-                                fonctions.game_over(gameOver, gameOverSound)
+                                functions.game_over(gameOver, gameOverSound)
 
                             phase = 1
             
@@ -417,109 +416,109 @@ while loop:
         screen.blit(background, (0,0))
     
         #Puis le plateau
-        for case in plateau.listeCase:
-            screen.blit(case.texture, (case.x * constantes.tailleCase, case.y * constantes.tailleCase))
+        for cell in board.cellList:
+            screen.blit(cell.texture, (cell.x * constantes.cellSize, cell.y * constantes.cellSize))
     
         #Si on est en phase 1, on affiche les pièces à partir de la droite du plateau (xChoixPiece & yChoixPiece)
         if phase == 1:
-            for case in Piece1.piece:
-                screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece1 + case.y) * constantes.tailleCase)))
-            for case in Piece2.piece:
-                screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece2 + case.y) * constantes.tailleCase)))
-            for case in Piece3.piece:
-                screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece3 + case.y) * constantes.tailleCase)))
+            for cell in piece1.piece:
+                screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY1 + cell.y) * constantes.cellSize)))
+            for cell in piece2.piece:
+                screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY2 + cell.y) * constantes.cellSize)))
+            for cell in piece3.piece:
+                screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY3 + cell.y) * constantes.cellSize)))
     
         #Si on est en phase 2, on affiche la pièce sélectionnée à partir du (0,0), en haut à gauche du plateau, et les autres à droite.
         if phase == 2:
         
-            if Piece1.selected == True:
+            if piece1.selected == True:
         
-                if Piece1.placable == False:
-                    for case in Piece1.piece:
-                        screen.blit(case.texture, (((0 + case.x) * constantes.tailleCase), ((0 + case.y) * constantes.tailleCase)))
+                if piece1.canBePlaced == False:
+                    for cell in piece1.piece:
+                        screen.blit(cell.texture, (((0 + cell.x) * constantes.cellSize), ((0 + cell.y) * constantes.cellSize)))
                     
-                    for case in Piece2.piece:
-                        screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece2 + case.y) * constantes.tailleCase)))
-                    for case in Piece3.piece:
-                        screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece3 + case.y) * constantes.tailleCase)))    
+                    for cell in piece2.piece:
+                        screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY2 + cell.y) * constantes.cellSize)))
+                    for cell in piece3.piece:
+                        screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY3 + cell.y) * constantes.cellSize)))    
                     
                     pygame.display.flip()
                     time.sleep(0.6)
                 
-                    for case in Piece1.piece:
-                        case.texture = case.texture_selected
-                        Piece1.placable = True
+                    for cell in piece1.piece:
+                        cell.texture = cell.selectedTexture
+                        piece1.canBePlaced = True
                 
                 else:
-                    for case in Piece1.piece:
-                        screen.blit(case.texture, (((0 + case.x) * constantes.tailleCase), ((0 + case.y) * constantes.tailleCase)))
+                    for cell in piece1.piece:
+                        screen.blit(cell.texture, (((0 + cell.x) * constantes.cellSize), ((0 + cell.y) * constantes.cellSize)))
                 
-                    for case in Piece2.piece:
-                        screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece2 + case.y) * constantes.tailleCase)))
-                    for case in Piece3.piece:
-                        screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece3 + case.y) * constantes.tailleCase)))
+                    for cell in piece2.piece:
+                        screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY2 + cell.y) * constantes.cellSize)))
+                    for cell in piece3.piece:
+                        screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY3 + cell.y) * constantes.cellSize)))
                     
-            elif Piece2.selected == True:
+            elif piece2.selected == True:
         
-                if Piece2.placable == False:
-                    for case in Piece2.piece:
-                        screen.blit(case.texture, (((0 + case.x) * constantes.tailleCase), ((0 + case.y) * constantes.tailleCase)))
+                if piece2.canBePlaced == False:
+                    for cell in piece2.piece:
+                        screen.blit(cell.texture, (((0 + cell.x) * constantes.cellSize), ((0 + cell.y) * constantes.cellSize)))
                     
-                    for case in Piece1.piece:
-                        screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece1 + case.y) * constantes.tailleCase)))
-                    for case in Piece3.piece:
-                        screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece3 + case.y) * constantes.tailleCase)))    
+                    for cell in piece1.piece:
+                        screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY1 + cell.y) * constantes.cellSize)))
+                    for cell in piece3.piece:
+                        screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY3 + cell.y) * constantes.cellSize)))    
                     
                     pygame.display.flip()
                     time.sleep(0.6)
                 
-                    for case in Piece2.piece:
-                        case.texture = case.texture_selected
-                        Piece2.placable = True
+                    for cell in piece2.piece:
+                        cell.texture = cell.selectedTexture
+                        piece2.canBePlaced = True
                     
                 else:
-                    for case in Piece2.piece:
-                        screen.blit(case.texture, (((0 + case.x) * constantes.tailleCase), ((0 + case.y) * constantes.tailleCase)))
+                    for cell in piece2.piece:
+                        screen.blit(cell.texture, (((0 + cell.x) * constantes.cellSize), ((0 + cell.y) * constantes.cellSize)))
                 
-                    for case in Piece1.piece:
-                        screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece1 + case.y) * constantes.tailleCase)))
-                    for case in Piece3.piece:
-                        screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece3 + case.y) * constantes.tailleCase)))
+                    for cell in piece1.piece:
+                        screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY1 + cell.y) * constantes.cellSize)))
+                    for cell in piece3.piece:
+                        screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY3 + cell.y) * constantes.cellSize)))
                 
-            elif Piece3.selected == True:
+            elif piece3.selected == True:
         
-                if Piece3.placable == False:
-                    for case in Piece3.piece:
-                        screen.blit(case.texture, (((0 + case.x) * constantes.tailleCase), ((0 + case.y) * constantes.tailleCase)))
+                if piece3.canBePlaced == False:
+                    for cell in piece3.piece:
+                        screen.blit(cell.texture, (((0 + cell.x) * constantes.cellSize), ((0 + cell.y) * constantes.cellSize)))
                     
-                    for case in Piece2.piece:
-                        screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece2 + case.y) * constantes.tailleCase)))
-                    for case in Piece1.piece:
-                        screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece1 + case.y) * constantes.tailleCase)))
+                    for cell in piece2.piece:
+                        screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY2 + cell.y) * constantes.cellSize)))
+                    for cell in piece1.piece:
+                        screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY1 + cell.y) * constantes.cellSize)))
                     
                     pygame.display.flip()
                     time.sleep(0.6)
                 
-                    for case in Piece3.piece:
-                        case.texture = case.texture_selected
-                        Piece3.placable = True
+                    for cell in piece3.piece:
+                        cell.texture = cell.selectedTexture
+                        piece3.canBePlaced = True
                     
                 else:
-                    for case in Piece3.piece:
-                        screen.blit(case.texture, (((0 + case.x) * constantes.tailleCase), ((0 + case.y) * constantes.tailleCase)))
+                    for cell in piece3.piece:
+                        screen.blit(cell.texture, (((0 + cell.x) * constantes.cellSize), ((0 + cell.y) * constantes.cellSize)))
             
-                    for case in Piece2.piece:
-                        screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece2 + case.y) * constantes.tailleCase)))
-                    for case in Piece1.piece:
-                        screen.blit(case.texture, (((constantes.xChoixPiece + case.x) * constantes.tailleCase), ((constantes.yChoixPiece1 + case.y) * constantes.tailleCase)))
+                    for cell in piece2.piece:
+                        screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY2 + cell.y) * constantes.cellSize)))
+                    for cell in piece1.piece:
+                        screen.blit(cell.texture, (((constantes.pieceChoosePlaceX + cell.x) * constantes.cellSize), ((constantes.pieceChoosePlaceY1 + cell.y) * constantes.cellSize)))
 
 
         #EVA: Affichage d'un nouvel écran lors d'un game over.
         if gameOver == True:
             screen.blit(backgroundGameOver,(0,0))
-            screen.blit(gameOverText, (6*constantes.tailleCase, 7*constantes.tailleCase))
+            screen.blit(gameOverText, (6*constantes.cellSize, 7*constantes.cellSize))
     
         pygame.display.flip()
 
         #EVA: Affichage du score constantes
-        screen.blit(score_text, (1*constantes.tailleCase, 15*constantes.tailleCase))
+        screen.blit(score_text, (1*constantes.cellSize, 15*constantes.cellSize))

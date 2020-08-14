@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 
 import constantes
-import c_Case
+import cell_class
 
 """ALEXANDRE: Classe permettant de gérer le plateau. 
     
@@ -18,86 +18,82 @@ import c_Case
                       - PlaceVerification : Vérifie si la ou les pièces sont posables sur plateau
                       - PlayerPlaceVerification : Vérifie si l'emplacement où le joueur décide de poser la pièce est libre
                       - LineVerificationSuppression : Vérifie si une ligne du plateau est remplie, et si oui, supprime la ligne"""
-class Plateau:
+class Board:
         
     def __init__(self, x=10, y=10):
         
-        self.taille_x = x
-        self.taille_y = y
-        self.listeCase = []
-        
-        """taille_x = nombre de case en longueur du plateau"""
-        """taille_y = nombre de case en largeur du plateau"""
-        """listeCase = liste des cases qui composent le plateau (Longueur*Largeur)"""
+        self.x_size = x
+        self.y_size = y
+        self.cellList = []
            
-    def Construct(self):
+    def construct(self):
         """Méthode de construction du plateau"""
         
-        compteur_x = 0
-        compteur_y = 0
+        x_counter = 0
+        y_counter = 0
         
-        while(compteur_y < self.taille_y):
-            while(compteur_x < self.taille_x):
-                self.listeCase.append(c_Case.Case(compteur_x, compteur_y))
-                compteur_x += 1
+        while(y_counter < self.y_size):
+            while(x_counter < self.x_size):
+                self.cellList.append(cell_class.Cell(x_counter, y_counter))
+                x_counter += 1
             
-            compteur_y += 1
-            compteur_x = 0
+            y_counter += 1
+            x_counter = 0
             
-    def PlaceVerification(self, piece):
+    def place_verification(self, piece):
         """Méthode pour vérifier si une pièce est posable sur le plateau: 
            - Prend en paramêtre la pièce que l'on veut tester
            - Renvoie le booléen "test", pour dire si oui ou non la pièce est posable sur le plateau."""
         
         test = False
-        testEnCours = False
-        caseATester = [0,0]
+        currentTest = False
+        cellToTest = [0,0]
         
-        xmaxTest = 10 - piece.NbCasex
-        ymaxTest = 10 - piece.NbCasey
+        xMaxTest = 10 - piece.cellNumberX
+        yMaxTest = 10 - piece.cellNumberY
         
-        for casePlateau in self.listeCase:
+        for boardCell in self.cellList:
             
-            if casePlateau.x < xmaxTest and casePlateau.y < ymaxTest:            
+            if boardCell.x < xMaxTest and boardCell.y < yMaxTest:         
             
-                for casePiece in piece.piece:
+                for pieceCell in piece.piece:
                 
-                    caseATester[0] = casePlateau.x + casePiece.x
-                    caseATester[1] = casePlateau.y + casePiece.y
+                    cellToTest[0] = boardCell.x + pieceCell.x
+                    cellToTest[1] = boardCell.y + pieceCell.y
                     
-                    for casePlateauTest in self.listeCase:
-                        if casePlateauTest.x == caseATester[0] and casePlateauTest.y == caseATester[1]:
-                            if casePlateauTest.vide == False:
-                                testEnCours = False
+                    for boardCellToTest in self.cellList:
+                        if boardCellToTest.x == cellToTest[0] and boardCellToTest.y == cellToTest[1]:
+                            if boardCellToTest.empty == False:
+                                currentTest = False
                                 break
-                            elif casePlateauTest.vide == True:
-                                testEnCours = True
+                            elif boardCellToTest.empty == True:
+                                currentTest = True
                                 break
                                 
-                    if testEnCours == False:
+                    if currentTest == False:
                         break
                         
-                if testEnCours == True:
+                if currentTest == True:
                     test = True
                     break
                     
-                elif testEnCours == False:
+                elif currentTest == False:
                     test = False
         
         return test
         
-    def PlayerPlaceVerification(self, piece):
+    def player_place_verification(self, piece):
         """Méthode pour vérifier si là où le joueur décide de poser sa pièce est bien libre:
            - Prend en paramêtre la pièce que le joueur veut essayer de poser
            - Retourn le booléen "test" pour dire si oui ou non la pièce est posable là où l'utilisateur veut la poser."""
         
         test = True
         
-        for casePiece in piece.piece:
-            for casePlateau in self.listeCase:
+        for pieceCell in piece.piece:
+            for boardCell in self.cellList:
                 
-                if casePlateau.x == casePiece.x and casePlateau.y == casePiece.y:
-                    if casePlateau.vide == False:
+                if boardCell.x == pieceCell.x and boardCell.y == pieceCell.y:
+                    if boardCell.empty == False:
                         test = False
                     break
             
@@ -106,114 +102,114 @@ class Plateau:
                 
         return test
         
-    def LineVerificationSuppression(self):
+    def line_verification_suppression(self):
         """Méthode qui permet de vérifier si une ou plusieurs lignes du plateau sont pleines, et si c'est le cas, les effacent."""
         
-        NbCaseLine = 0
+        LineCellNumber = 0
         
-        caseATester = [0,0]
+        cellToTest = [0,0]
         test = 0
         
-        for case in self.listeCase:
+        for cell in self.cellList:
             
-            caseATester[0] = case.x
-            caseATester[1] = case.y
+            cellToTest[0] = cell.x
+            cellToTest[1] = cell.y
         
 
             """Vérification de l'attribut "vide" de chaque case sur les lignes horizontales."""
-            if case.x == 0 and case.y != 0:
+            if cell.x == 0 and cell.y != 0:
             
-                while caseATester[0] < 10:
-                    for casePlateauTest in self.listeCase:
+                while cellToTest[0] < 10:
+                    for boardCellToTest in self.cellList:
                     
-                        if casePlateauTest.x == caseATester[0] and casePlateauTest.y == caseATester[1]:
-                            if casePlateauTest.vide == True:
+                        if boardCellToTest.x == cellToTest[0] and boardCellToTest.y == cellToTest[1]:
+                            if boardCellToTest.empty == True:
                                 test = False
                                 break
-                            elif casePlateauTest.vide == False:
+                            elif boardCellToTest.empty == False:
                                 test = True
                             break
                     
                     if test == False:
                         break
                         
-                    caseATester[0] += 1
+                    cellToTest[0] += 1
                     
-                caseATester[0] -= 1
+                cellToTest[0] -= 1
                 
                 """Suppression de la ligne horizontale si chaque case qui la compose sont pleines (vide == False)."""
                 if test == True:
-                    while caseATester[0] >= 0:
-                        for case in self.listeCase:
-                            if case.x == caseATester[0] and case.y == caseATester[1]:
-                                case.vide = True
-                                case.texture = pygame.image.load(constantes._CasePlateau).convert_alpha()
+                    while cellToTest[0] >= 0:
+                        for cell in self.cellList:
+                            if cell.x == cellToTest[0] and cell.y == cellToTest[1]:
+                                cell.empty = True
+                                cell.texture = pygame.image.load(constantes.boardCellTexture).convert_alpha()
                                 
-                                NbCaseLine += 1
+                                LineCellNumber += 1
                                 
                                 break
                                 
-                        caseATester[0] -= 1
+                        cellToTest[0] -= 1
             
             
 
             
-            elif case.y == 0:
+            elif cell.y == 0:
                 
-                while caseATester[1] < 10:
-                    for casePlateauTest in self.listeCase:
+                while cellToTest[1] < 10:
+                    for boardCellToTest in self.cellList:
                     
-                        if casePlateauTest.x == caseATester[0] and casePlateauTest.y == caseATester[1]:
-                            if casePlateauTest.vide == True:
+                        if boardCellToTest.x == cellToTest[0] and boardCellToTest.y == cellToTest[1]:
+                            if boardCellToTest.empty == True:
                                 test = False
                                 break
-                            elif casePlateauTest.vide == False:
+                            elif boardCellToTest.empty == False:
                                 test = True
                                 break
                     
                     if test == False:
                         break
                         
-                    caseATester[1] += 1
+                    cellToTest[1] += 1
                     
-                caseATester[1] -= 1
+                cellToTest[1] -= 1
                 
                 """Suppression de la ligne verticale si chaque case qui la compose sont pleines (vide == False)."""
                 if test == True:
-                    while caseATester[1] >= 0:
-                        for case in self.listeCase:
-                            if case.x == caseATester[0] and case.y == caseATester[1]:
-                                case.vide = True
-                                case.texture = pygame.image.load(constantes._CasePlateau).convert_alpha()
+                    while cellToTest[1] >= 0:
+                        for cell in self.cellList:
+                            if cell.x == cellToTest[0] and cell.y == cellToTest[1]:
+                                cell.empty = True
+                                cell.texture = pygame.image.load(constantes.boardCellTexture).convert_alpha()
                                     
-                                NbCaseLine += 1
+                                LineCellNumber += 1
                                     
                                 break
                                 
-                        caseATester[1] -= 1
+                        cellToTest[1] -= 1
                             
-        return NbCaseLine
+        return LineCellNumber
                             
-    def PutDownPiece(self, piece):
+    def put_down_piece(self, piece):
         """Méthode permettant de poser une pièce dans le plateau (côté développeur):
             - Prend en paramêtre la pièce à poser"""
         
-        compteur = piece.NbCase
+        counter = piece.cellNumber
         
-        for casePlateau in self.listeCase:
+        for boardCell in self.cellList:
         
             """Si toutes les cases ont étaient posées (compteur == 0), alors on arrête de parcourir le plateau inutilement."""
-            if compteur == 0:
+            if counter == 0:
                 break
             
-            for casePiece in piece.piece:
+            for pieceCell in piece.piece:
                 
-                if casePlateau.x == casePiece.x and casePlateau.y == casePiece.y:
+                if boardCell.x == pieceCell.x and boardCell.y == pieceCell.y:
                 
                     """Modification des propriétés des cases du plateau correspondantes aux cases de la pièce.
                     Elles sont maintenant pleines (vide == False) et prennent la texture de la pièce."""
-                    casePlateau.vide = False
-                    casePlateau.texture = casePiece.texture
-                    compteur -= 1
+                    boardCell.empty = False
+                    boardCell.texture = pieceCell.texture
+                    counter -= 1
                     
                     break

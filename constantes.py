@@ -3,99 +3,99 @@ from pygame.locals import *
 pygame.init()
 
 """Screen"""
-tailleScreen = [640, 544]
+screenSize = [640, 544]
 
-tailleCase = 32
+cellSize = 32
 
-xChoixPiece = 12
-yChoixPiece1 = 0
-yChoixPiece2 = 6
-yChoixPiece3 = 12
+pieceChoosePlaceX = 12
+pieceChoosePlaceY1 = 0
+pieceChoosePlaceY2 = 6
+pieceChoosePlaceY3 = 12
 
 """Textures"""
-_Background = "Textures\Background.png"
-_Background_game_over = "Textures\Background_game_over.png"
+backgroundTexture = "Textures\Background.png"
+gameOverBackgroundTexture = "Textures\Background_game_over.png"
 
-_CasePlateau = "Textures\CaseVide.png"
+boardCellTexture = "Textures\CaseVide.png"
     
 #Cases colorées
-_CaseRed = "Textures\CaseRed.png"
-_CaseLightBlue = "Textures\CaseLightBlue.png"
-_CaseOrange = "Textures\CaseOrange.png"
-_CaseYellow = "Textures\CaseYellow.png"
-_CaseBlue = "Textures\CaseBlue.png"
-_CaseBlack = "Textures\CaseBlack.png"
-_CaseBrown = "Textures\CaseBrown.png"
-_CaseGreen = "Textures\CaseGreen.png"
-_CasePink = "Textures\CasePink.png"
-_CasePurple = "Textures\CasePurple.png"
+redCellTexture = "Textures\CaseRed.png"
+lightBlueCellTexture = "Textures\CaseLightBlue.png"
+orangeCellTexture = "Textures\CaseOrange.png"
+yellowCellTexture = "Textures\CaseYellow.png"
+blueCellTexture = "Textures\CaseBlue.png"
+blackCellTexture = "Textures\CaseBlack.png"
+brownCellTexture = "Textures\CaseBrown.png"
+greenCellTexture = "Textures\CaseGreen.png"
+pinkCellTexture = "Textures\CasePink.png"
+purpleCellTexture = "Textures\CasePurple.png"
 
 #Cases sélectionnées
 
-_CaseRedSelected = "Textures\CaseRedSelected.png"
-_CaseLightBlueSelected = "Textures\CaseLightBlueSelected.png"
-_CaseOrangeSelected = "Textures\CaseOrangeSelected.png"
-_CaseYellowSelected = "Textures\CaseYellowSelected.png"
-_CaseBlueSelected = "Textures\CaseBlueSelected.png"
-_CaseBlackSelected = "Textures\CaseBlackSelected.png"
-_CaseBrownSelected = "Textures\CaseBrownSelected.png"
-_CaseGreenSelected = "Textures\CaseGreenSelected.png"
-_CasePinkSelected = "Textures\CasePinkSelected.png"
-_CasePurpleSelected = "Textures\CasePurpleSelected.png"
+redCellSelectedTexture = "Textures\CaseRedSelected.png"
+lightBlueCellSelectedTexture = "Textures\CaseLightBlueSelected.png"
+orangeCellSelectedTexture = "Textures\CaseOrangeSelected.png"
+yellowCellSelectedTexture = "Textures\CaseYellowSelected.png"
+blueCellSelectedTexture = "Textures\CaseBlueSelected.png"
+blackCellSelectedTexture = "Textures\CaseBlackSelected.png"
+brownCellSelectedTexture = "Textures\CaseBrownSelected.png"
+greenCellSelectedTexture = "Textures\CaseGreenSelected.png"
+pinkCellSelectedTexture = "Textures\CasePinkSelected.png"
+purpleCellSelectedTexture = "Textures\CasePurpleSelected.png"
 
 #Cases Impossible à placer
 
-_CaseRedNot = "Textures\CaseRedNot.png"
-_CaseLightBlueNot = "Textures\CaseLightBlueNot.png"
-_CaseOrangeNot = "Textures\CaseOrangeNot.png"
-_CaseYellowNot = "Textures\CaseYellowNot.png"
-_CaseBlueNot = "Textures\CaseBlueNot.png"
-_CaseBlackNot = "Textures\CaseBlackNot.png"
-_CaseBrownNot = "Textures\CaseBrownNot.png"
-_CaseGreenNot = "Textures\CaseGreenNot.png"
-_CasePinkNot = "Textures\CasePinkNot.png"
-_CasePurpleNot = "Textures\CasePurpleNot.png"
+redCantPlaceTexture = "Textures\CaseRedNot.png"
+lightBlueCantPlaceTexture = "Textures\CaseLightBlueNot.png"
+orangeCantPlaceTexture = "Textures\CaseOrangeNot.png"
+yellowCantPlaceTexture = "Textures\CaseYellowNot.png"
+blueCantPlaceTexture = "Textures\CaseBlueNot.png"
+blackCantPlaceTexture = "Textures\CaseBlackNot.png"
+brownCantPlaceTexture = "Textures\CaseBrownNot.png"
+greenCantPlaceTexture = "Textures\CaseGreenNot.png"
+pinkCantPlaceTexture = "Textures\CasePinkNot.png"
+purpleCantPlaceTexture = "Textures\CasePurpleNot.png"
 
 #Liste des arguments permettant de créer différentes pièces
-listePiece = [
+pieceList = [
     
-    [{"x":0, "y":0,"textureUnselected": _CaseRed, "textureSelected": _CaseRedSelected, 'textureNot': _CaseRedNot}],
+    [{"x":0, "y":0,"textureUnselected": redCellTexture, "textureSelected": redCellSelectedTexture, "textureNot": redCantPlaceTexture}],
 
-    [{"x":0, "y":0,"textureUnselected": _CaseBlue, "textureSelected": _CaseBlueSelected, "textureNot": _CaseBlueNot}, {"x":0, "y":1,"textureUnselected": _CaseBlue, "textureSelected": _CaseBlueSelected, "textureNot": _CaseBlueNot}],
-    [{"x":0, "y":0,"textureUnselected": _CaseBlue, "textureSelected": _CaseBlueSelected, "textureNot": _CaseBlueNot}, {"x":1, "y":0,"textureUnselected": _CaseBlue, "textureSelected": _CaseBlueSelected, "textureNot": _CaseBlueNot}],
+    [{"x":0, "y":0,"textureUnselected": blueCellTexture, "textureSelected": blueCellSelectedTexture, "textureNot": blueCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": blueCellTexture, "textureSelected": blueCellSelectedTexture, "textureNot": blueCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": blueCellTexture, "textureSelected": blueCellSelectedTexture, "textureNot": blueCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": blueCellTexture, "textureSelected": blueCellSelectedTexture, "textureNot": blueCantPlaceTexture}],
 
-    [{"x":0, "y":0,"textureUnselected": _CaseLightBlue, "textureSelected": _CaseLightBlueSelected, "textureNot": _CaseLightBlueNot}, {"x":0, "y":1,"textureUnselected": _CaseLightBlue, "textureSelected": _CaseLightBlueSelected, "textureNot": _CaseLightBlueNot}, {"x":0, "y":2,"textureUnselected": _CaseLightBlue, "textureSelected": _CaseLightBlueSelected, "textureNot": _CaseLightBlueNot}],
-    [{"x":0, "y":0,"textureUnselected": _CaseLightBlue, "textureSelected": _CaseLightBlueSelected, "textureNot": _CaseLightBlueNot}, {"x":1, "y":0,"textureUnselected": _CaseLightBlue, "textureSelected": _CaseLightBlueSelected, "textureNot": _CaseLightBlueNot}, {"x":2, "y":0,"textureUnselected": _CaseLightBlue, "textureSelected": _CaseLightBlueSelected, "textureNot": _CaseLightBlueNot}],
+    [{"x":0, "y":0,"textureUnselected": lightBlueCellTexture, "textureSelected": lightBlueCellSelectedTexture, "textureNot": lightBlueCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": lightBlueCellTexture, "textureSelected": lightBlueCellSelectedTexture, "textureNot": lightBlueCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": lightBlueCellTexture, "textureSelected": lightBlueCellSelectedTexture, "textureNot": lightBlueCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": lightBlueCellTexture, "textureSelected": lightBlueCellSelectedTexture, "textureNot": lightBlueCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": lightBlueCellTexture, "textureSelected": lightBlueCellSelectedTexture, "textureNot": lightBlueCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": lightBlueCellTexture, "textureSelected": lightBlueCellSelectedTexture, "textureNot": lightBlueCantPlaceTexture}],
 
-    [{"x":0, "y":0,"textureUnselected": _CasePurple, "textureSelected": _CasePurpleSelected, "textureNot": _CasePurpleNot}, {"x":0, "y":1,"textureUnselected": _CasePurple, "textureSelected": _CasePurpleSelected, "textureNot": _CasePurpleNot}, {"x":0, "y":2,"textureUnselected": _CasePurple, "textureSelected": _CasePurpleSelected, "textureNot": _CasePurpleNot}, {"x":0, "y":3,"textureUnselected": _CasePurple, "textureSelected": _CasePurpleSelected, "textureNot": _CasePurpleNot}],
-    [{"x":0, "y":0,"textureUnselected": _CasePurple, "textureSelected": _CasePurpleSelected, "textureNot": _CasePurpleNot}, {"x":1, "y":0,"textureUnselected": _CasePurple, "textureSelected": _CasePurpleSelected, "textureNot": _CasePurpleNot}, {"x":2, "y":0,"textureUnselected": _CasePurple, "textureSelected": _CasePurpleSelected, "textureNot": _CasePurpleNot}, {"x":3, "y":0,"textureUnselected": _CasePurple, "textureSelected": _CasePurpleSelected, "textureNot": _CasePurpleNot}],
+    [{"x":0, "y":0,"textureUnselected": purpleCellTexture, "textureSelected": purpleCellSelectedTexture, "textureNot": purpleCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": purpleCellTexture, "textureSelected": purpleCellSelectedTexture, "textureNot": purpleCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": purpleCellTexture, "textureSelected": purpleCellSelectedTexture, "textureNot": purpleCantPlaceTexture}, {"x":0, "y":3,"textureUnselected": purpleCellTexture, "textureSelected": purpleCellSelectedTexture, "textureNot": purpleCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": purpleCellTexture, "textureSelected": purpleCellSelectedTexture, "textureNot": purpleCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": purpleCellTexture, "textureSelected": purpleCellSelectedTexture, "textureNot": purpleCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": purpleCellTexture, "textureSelected": purpleCellSelectedTexture, "textureNot": purpleCantPlaceTexture}, {"x":3, "y":0,"textureUnselected": purpleCellTexture, "textureSelected": purpleCellSelectedTexture, "textureNot": purpleCantPlaceTexture}],
     
-    [{"x":0, "y":0,"textureUnselected": _CaseBrown, "textureSelected": _CaseBrownSelected, "textureNot": _CaseBrownNot}, {"x":0, "y":1,"textureUnselected": _CaseBrown, "textureSelected": _CaseBrownSelected, "textureNot": _CaseBrownNot}, {"x":0, "y":2,"textureUnselected": _CaseBrown, "textureSelected": _CaseBrownSelected, "textureNot": _CaseBrownNot}, {"x":0, "y":3,"textureUnselected": _CaseBrown, "textureSelected": _CaseBrownSelected, "textureNot": _CaseBrownNot}, {"x":0, "y":4,"textureUnselected": _CaseBrown, "textureSelected": _CaseBrownSelected, "textureNot": _CaseBrownNot}],
-    [{"x":0, "y":0,"textureUnselected": _CaseBrown, "textureSelected": _CaseBrownSelected, "textureNot": _CaseBrownNot}, {"x":1, "y":0,"textureUnselected": _CaseBrown, "textureSelected": _CaseBrownSelected, "textureNot": _CaseBrownNot}, {"x":2, "y":0,"textureUnselected": _CaseBrown, "textureSelected": _CaseBrownSelected, "textureNot": _CaseBrownNot}, {"x":3, "y":0,"textureUnselected": _CaseBrown, "textureSelected": _CaseBrownSelected, "textureNot": _CaseBrownNot}, {"x":4, "y":0,"textureUnselected": _CaseBrown, "textureSelected": _CaseBrownSelected, "textureNot": _CaseBrownNot}],
+    [{"x":0, "y":0,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}, {"x":0, "y":3,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}, {"x":0, "y":4,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}, {"x":3, "y":0,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}, {"x":4, "y":0,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}],
 
-    [{"x":0, "y":0,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":1, "y":0,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":2, "y":0,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":2, "y":1,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}],
-    [{"x":0, "y":0,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":1, "y":0,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":2, "y":0,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":0, "y":1,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}],
-    [{"x":0, "y":1,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":1, "y":1,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":2, "y":1,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":2, "y":0,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}],
-    [{"x":0, "y":1,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":1, "y":1,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":2, "y":1,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":0, "y":0,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}],
-    [{"x":0, "y":0,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":0, "y":1,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":0, "y":2,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":1, "y":2,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}],
-    [{"x":0, "y":0,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":1, "y":0,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":0, "y":1,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":0, "y":2,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}],
-    [{"x":0, "y":0,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":1, "y":0,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":1, "y":1,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":1, "y":2,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}],
-    [{"x":1, "y":0,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":1, "y":1,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":1, "y":2,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}, {"x":0, "y":2,"textureUnselected": _CaseGreen, "textureSelected": _CaseGreenSelected, "textureNot": _CaseGreenNot}],
+    [{"x":0, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":2, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}],
+    [{"x":0, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":2, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}],
+    [{"x":0, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":2, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":0, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":2,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":2,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}],
+    [{"x":1, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":2,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}],
 
 
-    [{"x":0, "y":0,"textureUnselected": _CaseYellow, "textureSelected": _CaseYellowSelected, "textureNot": _CaseYellowNot}, {"x":0, "y":1,"textureUnselected": _CaseYellow, "textureSelected": _CaseYellowSelected, "textureNot": _CaseYellowNot}, {"x":1, "y":1,"textureUnselected": _CaseYellow, "textureSelected": _CaseYellowSelected, "textureNot": _CaseYellowNot}],
-    [{"x":1, "y":0,"textureUnselected": _CaseYellow, "textureSelected": _CaseYellowSelected, "textureNot": _CaseYellowNot}, {"x":1, "y":1,"textureUnselected": _CaseYellow, "textureSelected": _CaseYellowSelected, "textureNot": _CaseYellowNot}, {"x":0, "y":1,"textureUnselected": _CaseYellow, "textureSelected": _CaseYellowSelected, "textureNot": _CaseYellowNot}],
-    [{"x":0, "y":0,"textureUnselected": _CaseYellow, "textureSelected": _CaseYellowSelected, "textureNot": _CaseYellowNot}, {"x":1, "y":0,"textureUnselected": _CaseYellow, "textureSelected": _CaseYellowSelected, "textureNot": _CaseYellowNot}, {"x":0, "y":1,"textureUnselected": _CaseYellow, "textureSelected": _CaseYellowSelected, "textureNot": _CaseYellowNot}],
-    [{"x":0, "y":0,"textureUnselected": _CaseYellow, "textureSelected": _CaseYellowSelected, "textureNot": _CaseYellowNot}, {"x":1, "y":0,"textureUnselected": _CaseYellow, "textureSelected": _CaseYellowSelected, "textureNot": _CaseYellowNot}, {"x":1, "y":1,"textureUnselected": _CaseYellow, "textureSelected": _CaseYellowSelected, "textureNot": _CaseYellowNot}],
+    [{"x":0, "y":0,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}],
+    [{"x":1, "y":0,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}],
 
-    [{"x":0, "y":0,"textureUnselected": _CaseBlack, "textureSelected": _CaseBlackSelected, "textureNot": _CaseBlackNot}, {"x":0, "y":1,"textureUnselected": _CaseBlack, "textureSelected": _CaseBlackSelected, "textureNot": _CaseBlackNot}, {"x":1, "y":0,"textureUnselected": _CaseBlack, "textureSelected": _CaseBlackSelected, "textureNot": _CaseBlackNot}, {"x":1, "y":1,"textureUnselected": _CaseBlack, "textureSelected": _CaseBlackSelected, "textureNot": _CaseBlackNot}],
+    [{"x":0, "y":0,"textureUnselected": blackCellTexture, "textureSelected": blackCellSelectedTexture, "textureNot": blackCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": blackCellTexture, "textureSelected": blackCellSelectedTexture, "textureNot": blackCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": blackCellTexture, "textureSelected": blackCellSelectedTexture, "textureNot": blackCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": blackCellTexture, "textureSelected": blackCellSelectedTexture, "textureNot": blackCantPlaceTexture}],
 
-    [{"x":0, "y":0,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}, {"x":0, "y":1,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}, {"x":0, "y":2,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}, {"x":1, "y":2,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}, {"x":2, "y":2,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}],
-    [{"x":2, "y":0,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}, {"x":2, "y":1,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}, {"x":2, "y":2,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}, {"x":1, "y":2,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}, {"x":0, "y":2,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}],
-    [{"x":0, "y":0,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}, {"x":1, "y":0,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}, {"x":2, "y":0,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}, {"x":0, "y":1,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}, {"x":0, "y":2,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}],
-    [{"x":0, "y":0,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}, {"x":1, "y":0,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}, {"x":2, "y":0,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}, {"x":2, "y":1,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}, {"x":2, "y":2,"textureUnselected": _CasePink, "textureSelected": _CasePinkSelected, "textureNot": _CasePinkNot}],
+    [{"x":0, "y":0,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":1, "y":2,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":2, "y":2,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}],
+    [{"x":2, "y":0,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":2, "y":1,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":2, "y":2,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":1, "y":2,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":2, "y":1,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":2, "y":2,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}],
 
-    [{"x":0, "y":0,"textureUnselected": _CaseOrange, "textureSelected": _CaseOrangeSelected, "textureNot": _CaseOrangeNot}, {"x":0, "y":1,"textureUnselected": _CaseOrange, "textureSelected": _CaseOrangeSelected, "textureNot": _CaseOrangeNot}, {"x":0, "y":2,"textureUnselected": _CaseOrange, "textureSelected": _CaseOrangeSelected, "textureNot": _CaseOrangeNot}, {"x":1, "y":0,"textureUnselected": _CaseOrange, "textureSelected": _CaseOrangeSelected, "textureNot": _CaseOrangeNot}, {"x":1, "y":1,"textureUnselected": _CaseOrange, "textureSelected": _CaseOrangeSelected, "textureNot": _CaseOrangeNot}, {"x":1, "y":2,"textureUnselected": _CaseOrange, "textureSelected": _CaseOrangeSelected, "textureNot": _CaseOrangeNot}, {"x":2, "y":0,"textureUnselected": _CaseOrange, "textureSelected": _CaseOrangeSelected, "textureNot": _CaseOrangeNot}, {"x":2, "y":1,"textureUnselected": _CaseOrange, "textureSelected": _CaseOrangeSelected, "textureNot": _CaseOrangeNot}, {"x":2, "y":2,"textureUnselected": _CaseOrange, "textureSelected": _CaseOrangeSelected, "textureNot": _CaseOrangeNot}],
+    [{"x":0, "y":0,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":1, "y":2,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":2, "y":1,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":2, "y":2,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}],
 ]
 
 #Police pour le text(game over)
