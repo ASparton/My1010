@@ -40,15 +40,12 @@ for cell in board.cellList:
 #ALEXANDRE: Création des pièces aléatoires
 randomCellList = random.choice(constants.pieceList)
 piece1 = functions.create_piece(randomCellList)
-piece1.def_cell_number()
 
 randomCellList = random.choice(constants.pieceList)
 piece2 = functions.create_piece(randomCellList)
-piece2.def_cell_number()
 
 randomCellList = random.choice(constants.pieceList)
 piece3 = functions.create_piece(randomCellList)
-piece3.def_cell_number()
 
 #EVA: Affichage des 3 pièces générées
 for cell in piece1.piece:
@@ -370,15 +367,12 @@ while loop:
                                     
                                         randomCellList = random.choice(constants.pieceList)
                                         piece1 = functions.create_piece(randomCellList)
-                                        piece1.def_cell_number()
 
                                         randomCellList = random.choice(constants.pieceList)
                                         piece2 = functions.create_piece(randomCellList)
-                                        piece2.def_cell_number()
 
                                         randomCellList = random.choice(constants.pieceList)
                                         piece3 = functions.create_piece(randomCellList)
-                                        piece3.def_cell_number()
                                     
                                         testList.append(board.place_verification(piece1))
                                         testList.append(board.place_verification(piece2))

@@ -33,9 +33,11 @@ class Piece:
         self.cellNumber = 0
         self.cellNumberX = 0
         self.cellNumberY = 0
+
+        self.def_cell_number()
         
     def def_cell_number(self):
-        """Méthode permettant d'obtenir le nombre de case présent dans la pièce"""
+        """Give the number of cells in the piece + number in X and Y specific axis"""
         
         xmax = 0
         ymax = 0
@@ -53,7 +55,7 @@ class Piece:
         self.cellNumberY = ymax
           
     def select(self):
-        """Méthode qui permet de sélectionner chaque case de la pièce et de modifier l'attribut selected"""
+        """Select each cell of the piece and the piece itself"""
         
         for cell in self.piece:
             cell.select = True
@@ -62,6 +64,7 @@ class Piece:
         self.selected = True
         
     def unselect(self):
+        """Unselect each cell of the piece and the piece itself"""
         
         for cell in self.piece:
             cell.texture = cell.unselectedTexture
@@ -70,44 +73,44 @@ class Piece:
         self.selected = False
         
     def moove(self, direction):
-        """Method to moove the piece to the 4 directions"""
+        """Method to moove the piece to one of the 4 directions"""
         
          #Variable that allow or not a piece to moove after testing if each cell of that piece will still be in the board
-        canMoove = True
+        outside = False
 
         if direction == "right":
-            for cell in self.piece:
+            for cell in self.piece: #If we moove right the piece, test if it will be outside of the board or not
                 if (cell.x + 1) > 9:
-                    canMoove = False
+                    outside = True
             
-            if canMoove == True:
+            if outside == False: #If it's not outside, then moove each in cell (= the entire piece)
                 for cell in self.piece:
                     cell.x += 1
                 
         if direction == "left":
             for cell in self.piece:
                 if (cell.x - 1) < 0:
-                    canMoove = False
+                    outside = True
 
-            if canMoove == True:
+            if outside == False:
                 for cell in self.piece:        
                     cell.x -=1
                 
         if direction == "up":
             for cell in self.piece:
                 if (cell.y - 1) < 0:
-                    canMoove = False
+                    outside = True
 
-            if canMoove == True:
+            if outside == False:
                 for cell in self.piece:
                     cell.y -=1
                 
         if direction == "down":
             for cell in self.piece:
                 if (cell.y + 1) > 9:
-                    canMoove = False
+                    outside = True
 
-            if canMoove == True:
+            if outside == False:
                 for cell in self.piece:
                     cell.y +=1
             
