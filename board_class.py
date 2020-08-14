@@ -105,7 +105,7 @@ class Board:
             cellToTest[1] = cell.y
         
 
-            """Test the "empty" attribute of each cell of the horizontal lines."""
+            #Test the "empty" attribute of each cell of the horizontal lines
             if cell.x == 0 and cell.y != 0:
             
                 while cellToTest[0] < 10:
@@ -126,7 +126,7 @@ class Board:
                     
                 cellToTest[0] -= 1
                 
-                """Remove the horizontal line if all the cell are not empty (empty == False)."""
+                #Remove the horizontal line if all the cell are not empty (empty == False)
                 if test == True:
                     while cellToTest[0] >= 0:
                         for cell in self.cellList:
@@ -140,7 +140,7 @@ class Board:
                                 
                         cellToTest[0] -= 1
             
-            """Test the "empty" attribute of each cell of the vertical lines."""
+            #Test the "empty" attribute of each cells of the vertical lines
             elif cell.y == 0:
                 
                 while cellToTest[1] < 10:
@@ -161,7 +161,7 @@ class Board:
                     
                 cellToTest[1] -= 1
                 
-                """Remove the line if the cells are not empty. (empty == False)."""
+                #Remove the line if the cells are not empty. (empty == False)
                 if test == True:
                     while cellToTest[1] >= 0:
                         for cell in self.cellList:
