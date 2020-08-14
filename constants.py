@@ -1,7 +1,3 @@
-import pygame
-from pygame.locals import *
-pygame.init()
-
 """Screen"""
 screenSize = [640, 544]
 
@@ -97,6 +93,3 @@ pieceList = [
 
     [{"x":0, "y":0,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":1, "y":2,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":2, "y":1,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":2, "y":2,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}],
 ]
-
-#Police pour le text(game over)
-font = pygame.font.SysFont("dearsunshine", 64)

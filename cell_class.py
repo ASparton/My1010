@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-import constantes
+import constants
 
 """ALEXANDRE: Classe mère de la classe "Plateau" et "Piece".
                   Elle contiendra toutes les informations d'une case :
@@ -15,7 +15,7 @@ import constantes
 
 class Cell:
         
-    def __init__(self, x_pos, y_pos, unselected_texture=constantes.boardCellTexture, selected_texture=constantes.boardCellTexture, cant_place_texture=constantes.boardCellTexture, empty=True, select=False):
+    def __init__(self, x_pos, y_pos, unselected_texture=constants.boardCellTexture, selected_texture=constants.boardCellTexture, cant_place_texture=constants.boardCellTexture, empty=True, select=False):
         
         self.x = x_pos
         self.y = y_pos

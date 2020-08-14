@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-import constantes
+import constants
 
 """Classe qui va nous permettre de manipuler les pièces au cours du jeu.
                Une pièce est une liste de cases, elle se créera donc grâce à la classe "Case" précédemment écrite.

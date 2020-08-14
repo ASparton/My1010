@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 
-import constantes
+import constants
 import cell_class
 
 """ALEXANDRE: Classe permettant de gérer le plateau. 
@@ -143,7 +143,7 @@ class Board:
                         for cell in self.cellList:
                             if cell.x == cellToTest[0] and cell.y == cellToTest[1]:
                                 cell.empty = True
-                                cell.texture = pygame.image.load(constantes.boardCellTexture).convert_alpha()
+                                cell.texture = pygame.image.load(constants.boardCellTexture).convert_alpha()
                                 
                                 LineCellNumber += 1
                                 
@@ -180,7 +180,7 @@ class Board:
                         for cell in self.cellList:
                             if cell.x == cellToTest[0] and cell.y == cellToTest[1]:
                                 cell.empty = True
-                                cell.texture = pygame.image.load(constantes.boardCellTexture).convert_alpha()
+                                cell.texture = pygame.image.load(constants.boardCellTexture).convert_alpha()
                                     
                                 LineCellNumber += 1
                                     

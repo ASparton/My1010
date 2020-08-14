@@ -3,7 +3,7 @@ from pygame.locals import *
 
 import piece_class
 import cell_class
-import constantes
+import constants
 
 """Creation des cases (pour créer les pièces)
     -Argument: liste d'argument de création pour la case
