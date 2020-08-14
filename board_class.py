@@ -4,20 +4,8 @@ from pygame.locals import *
 import constants
 import cell_class
 
-"""ALEXANDRE: Classe permettant de gérer le plateau. 
-    
-                  Le plateau est un liste de cases, on utilisera ainsi la classe "Case" précédemment écrite.
-                
-                  Atrributs:
-                      -taille_x : nombre de case en longueur du plateau
-                      -taille_y : nombre de case en largeur du plateau
-                      -listeCase : liste des cases qui composent le plateau (Longueur*Largeur)
-                
-                  Méthodes:
-                      - Construct : Construction du plateau
-                      - PlaceVerification : Vérifie si la ou les pièces sont posables sur plateau
-                      - PlayerPlaceVerification : Vérifie si l'emplacement où le joueur décide de poser la pièce est libre
-                      - LineVerificationSuppression : Vérifie si une ligne du plateau est remplie, et si oui, supprime la ligne"""
+"""Board class of the game.
+   It is a list of cells (cell_class)."""
 class Board:
         
     def __init__(self, x=10, y=10):
@@ -26,8 +14,8 @@ class Board:
         self.y_size = y
         self.cellList = []
            
-    def construct(self):
-        """Méthode de construction du plateau"""
+    def build(self):
+        """Build the board based on the size given."""
         
         x_counter = 0
         y_counter = 0
@@ -41,9 +29,9 @@ class Board:
             x_counter = 0
             
     def place_verification(self, piece):
-        """Méthode pour vérifier si une pièce est posable sur le plateau: 
-           - Prend en paramêtre la pièce que l'on veut tester
-           - Renvoie le booléen "test", pour dire si oui ou non la pièce est posable sur le plateau."""
+        """Test if a piece can be placed on the board: 
+           - Take the piece that we wanna test in parameter
+           - Return the true if the piece can be placed and false if it can't."""
         
         test = False
         currentTest = False
@@ -56,7 +44,7 @@ class Board:
             
             if boardCell.x < xMaxTest and boardCell.y < yMaxTest:         
             
-                for pieceCell in piece.piece:
+                for pieceCell in piece.cellsList:
                 
                     cellToTest[0] = boardCell.x + pieceCell.x
                     cellToTest[1] = boardCell.y + pieceCell.y
@@ -83,13 +71,13 @@ class Board:
         return test
         
     def player_place_verification(self, piece):
-        """Méthode pour vérifier si là où le joueur décide de poser sa pièce est bien libre:
-           - Prend en paramêtre la pièce que le joueur veut essayer de poser
-           - Retourn le booléen "test" pour dire si oui ou non la pièce est posable là où l'utilisateur veut la poser."""
+        """Test if the piece can be placed where the player decide to place:
+           - Take the piece that we wanna test in parameter
+           - Return the true if the piece can be placed and false if it can't."""
         
         test = True
         
-        for pieceCell in piece.piece:
+        for pieceCell in piece.cellsList:
             for boardCell in self.cellList:
                 
                 if boardCell.x == pieceCell.x and boardCell.y == pieceCell.y:
@@ -103,7 +91,8 @@ class Board:
         return test
         
     def line_verification_suppression(self):
-        """Méthode qui permet de vérifier si une ou plusieurs lignes du plateau sont pleines, et si c'est le cas, les effacent."""
+        """Test if one or more lines of the board are complete.
+        If it is, remove the lines and return the number of lines removed."""
         
         LineCellNumber = 0
         
@@ -116,7 +105,7 @@ class Board:
             cellToTest[1] = cell.y
         
 
-            """Vérification de l'attribut "vide" de chaque case sur les lignes horizontales."""
+            """Test the "empty" attribute of each cell of the horizontal lines."""
             if cell.x == 0 and cell.y != 0:
             
                 while cellToTest[0] < 10:
@@ -137,7 +126,7 @@ class Board:
                     
                 cellToTest[0] -= 1
                 
-                """Suppression de la ligne horizontale si chaque case qui la compose sont pleines (vide == False)."""
+                """Remove the horizontal line if all the cell are not empty (empty == False)."""
                 if test == True:
                     while cellToTest[0] >= 0:
                         for cell in self.cellList:
@@ -151,9 +140,7 @@ class Board:
                                 
                         cellToTest[0] -= 1
             
-            
-
-            
+            """Test the "empty" attribute of each cell of the vertical lines."""
             elif cell.y == 0:
                 
                 while cellToTest[1] < 10:
@@ -174,7 +161,7 @@ class Board:
                     
                 cellToTest[1] -= 1
                 
-                """Suppression de la ligne verticale si chaque case qui la compose sont pleines (vide == False)."""
+                """Remove the line if the cells are not empty. (empty == False)."""
                 if test == True:
                     while cellToTest[1] >= 0:
                         for cell in self.cellList:
@@ -191,23 +178,23 @@ class Board:
         return LineCellNumber
                             
     def put_down_piece(self, piece):
-        """Méthode permettant de poser une pièce dans le plateau (côté développeur):
-            - Prend en paramêtre la pièce à poser"""
+        """Place the piece on the board.
+           Modify the properties of the board's cells at the position where we put down the piece"""
         
         counter = piece.cellNumber
         
         for boardCell in self.cellList:
         
-            """Si toutes les cases ont étaient posées (compteur == 0), alors on arrête de parcourir le plateau inutilement."""
+            """If each cells of the piece are placed (counter == 0), then we stop crossing the board cells list."""
             if counter == 0:
                 break
             
-            for pieceCell in piece.piece:
+            for pieceCell in piece.cellsList:
                 
                 if boardCell.x == pieceCell.x and boardCell.y == pieceCell.y:
                 
-                    """Modification des propriétés des cases du plateau correspondantes aux cases de la pièce.
-                    Elles sont maintenant pleines (vide == False) et prennent la texture de la pièce."""
+                    """Modification of the cell's board properties.
+                    (empty == False) and take the texture of the piece."""
                     boardCell.empty = False
                     boardCell.texture = pieceCell.texture
                     counter -= 1

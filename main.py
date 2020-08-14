@@ -32,7 +32,7 @@ font = pygame.font.SysFont("dearsunshine", 64)
 #ALEXANDRE: Création du plateau
 #EVA: Affichage du plateau
 board = board_class.Board()
-board.construct()
+board.build()
 for cell in board.cellList:
     screen.blit(cell.texture, (cell.x * constants.cellSize, cell.y * constants.cellSize))
 
@@ -48,11 +48,11 @@ randomCellList = random.choice(constants.pieceList)
 piece3 = functions.create_piece(randomCellList)
 
 #EVA: Affichage des 3 pièces générées
-for cell in piece1.piece:
+for cell in piece1.cellsList:
     screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
-for cell in piece2.piece:
+for cell in piece2.cellsList:
     screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
-for cell in piece3.piece:
+for cell in piece3.cellsList:
     screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
 
 #ALEXANDRE + EVA + ARMAMIS: On sélectionne d'entrée la pièce 1.
@@ -202,17 +202,17 @@ while loop:
                     if event.key == K_c:
                     
                         if piece1.selected == True:
-                            for cell in piece1.piece:
+                            for cell in piece1.cellsList:
                                 cell.x = 0 + cell.x
                                 cell.y = 0 + cell.y
                         
                         elif piece2.selected == True:
-                            for cell in piece1.piece:
+                            for cell in piece1.cellsList:
                                 cell.x = 0 + cell.x
                                 cell.y = 0 + cell.y
                     
                         elif piece3.selected == True:
-                            for cell in piece1.piece:
+                            for cell in piece1.cellsList:
                                 cell.x = 0 + cell.x
                                 cell.y = 0 + cell.y
                             
@@ -288,11 +288,11 @@ while loop:
                         if piece1.selected == True:
                             canBePlaced = board.player_place_verification(piece1)
                             if canBePlaced:
-                                piece1.place_piece(board, piece1)
+                                piece1.place_piece(board)
                                 score += piece1.cellNumber
                             elif canBePlaced == False:
                             
-                                for cell in piece1.piece:
+                                for cell in piece1.cellsList:
                                     cell.texture = cell.cantPlaceTexture
                             
                                 piece1.canBePlaced = False
@@ -301,11 +301,11 @@ while loop:
                         elif piece2.selected == True:
                             canBePlaced = board.player_place_verification(piece2)
                             if canBePlaced:
-                                piece2.place_piece(board, piece2)
+                                piece2.place_piece(board)
                                 score += piece2.cellNumber
                             elif canBePlaced == False:
                         
-                                for cell in piece2.piece:
+                                for cell in piece2.cellsList:
                                     cell.texture = cell.cantPlaceTexture
                                 
                                 piece2.canBePlaced = False
@@ -314,11 +314,11 @@ while loop:
                         elif piece3.selected == True:
                             canBePlaced = board.player_place_verification(piece3)
                             if canBePlaced:
-                                piece3.place_piece(board, piece3)
+                                piece3.place_piece(board)
                                 score += piece3.cellNumber
                             elif canBePlaced == False:
                             
-                                for cell in piece3.piece:
+                                for cell in piece3.cellsList:
                                     cell.texture = cell.cantPlaceTexture
                                 
                                 piece3.canBePlaced = False
@@ -404,11 +404,11 @@ while loop:
     
         #Si on est en phase 1, on affiche les pièces à partir de la droite du plateau (xChoixPiece & yChoixPiece)
         if phase == 1:
-            for cell in piece1.piece:
+            for cell in piece1.cellsList:
                 screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
-            for cell in piece2.piece:
+            for cell in piece2.cellsList:
                 screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
-            for cell in piece3.piece:
+            for cell in piece3.cellsList:
                 screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
     
         #Si on est en phase 2, on affiche la pièce sélectionnée à partir du (0,0), en haut à gauche du plateau, et les autres à droite.
@@ -417,82 +417,82 @@ while loop:
             if piece1.selected == True:
         
                 if piece1.canBePlaced == False:
-                    for cell in piece1.piece:
+                    for cell in piece1.cellsList:
                         screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
                     
-                    for cell in piece2.piece:
+                    for cell in piece2.cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
-                    for cell in piece3.piece:
+                    for cell in piece3.cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))    
                     
                     pygame.display.flip()
                     time.sleep(0.6)
                 
-                    for cell in piece1.piece:
+                    for cell in piece1.cellsList:
                         cell.texture = cell.selectedTexture
                         piece1.canBePlaced = True
                 
                 else:
-                    for cell in piece1.piece:
+                    for cell in piece1.cellsList:
                         screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
                 
-                    for cell in piece2.piece:
+                    for cell in piece2.cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
-                    for cell in piece3.piece:
+                    for cell in piece3.cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
                     
             elif piece2.selected == True:
         
                 if piece2.canBePlaced == False:
-                    for cell in piece2.piece:
+                    for cell in piece2.cellsList:
                         screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
                     
-                    for cell in piece1.piece:
+                    for cell in piece1.cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
-                    for cell in piece3.piece:
+                    for cell in piece3.cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))    
                     
                     pygame.display.flip()
                     time.sleep(0.6)
                 
-                    for cell in piece2.piece:
+                    for cell in piece2.cellsList:
                         cell.texture = cell.selectedTexture
                         piece2.canBePlaced = True
                     
                 else:
-                    for cell in piece2.piece:
+                    for cell in piece2.cellsList:
                         screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
                 
-                    for cell in piece1.piece:
+                    for cell in piece1.cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
-                    for cell in piece3.piece:
+                    for cell in piece3.cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
                 
             elif piece3.selected == True:
         
                 if piece3.canBePlaced == False:
-                    for cell in piece3.piece:
+                    for cell in piece3.cellsList:
                         screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
                     
-                    for cell in piece2.piece:
+                    for cell in piece2.cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
-                    for cell in piece1.piece:
+                    for cell in piece1.cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
                     
                     pygame.display.flip()
                     time.sleep(0.6)
                 
-                    for cell in piece3.piece:
+                    for cell in piece3.cellsList:
                         cell.texture = cell.selectedTexture
                         piece3.canBePlaced = True
                     
                 else:
-                    for cell in piece3.piece:
+                    for cell in piece3.cellsList:
                         screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
             
-                    for cell in piece2.piece:
+                    for cell in piece2.cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
-                    for cell in piece1.piece:
+                    for cell in piece1.cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
 
 

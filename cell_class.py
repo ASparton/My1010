@@ -2,17 +2,14 @@ import pygame
 from pygame.locals import *
 import constants
 
-"""ALEXANDRE: Classe mère de la classe "Plateau" et "Piece".
-                  Elle contiendra toutes les informations d'une case :
-                  - sa position x (int)
-                  - sa position y (int)
-                  - si la case est sélectionnée ou non (bool)
-                  - si la case est rempli ou non (bool)
-                  - la texture de la case lorsqu'elle est sélectionnée
-                  - la texture de la case lorsqu'elle n'est pas sélectionnée
-                  - la texture de la case qui sera utilisé pour l'afficher (par défaut = texture non sélectionnée)"""
-
-
+"""Mother's class of "Board" and "Piece".
+                  Contain all the informations about a cell :
+                  - it's position (X an Y axis)
+                  - selected attribute
+                  - empty attribute
+                  - the texture when it's selected
+                  - the texture when it's not selected
+                  - the texture when it can't be placed on the board"""
 class Cell:
         
     def __init__(self, x_pos, y_pos, unselected_texture=constants.boardCellTexture, selected_texture=constants.boardCellTexture, cant_place_texture=constants.boardCellTexture, empty=True, select=False):

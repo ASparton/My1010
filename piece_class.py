@@ -2,29 +2,15 @@ import pygame
 from pygame.locals import *
 import constants
 
-"""Classe qui va nous permettre de manipuler les pièces au cours du jeu.
-               Une pièce est une liste de cases, elle se créera donc grâce à la classe "Case" précédemment écrite.
-    
-               Attributs:
-                   - piece : Pièce choisie lors de la création de l'objet
-                   - selected : Permet de savoir si la pièce est sélectionnée ou non
-                   - NbCase : Correspond au nombres de cases de la pièce
-                   - NbCasex : Correspond au nombres de cases horizontales de la pièce 
-                   - NbCasey : Correspond au nombres de cases verticales de la pièce 
-                    
-               Méthodes:
-                   - defNbCase : Méthode permettant d'obtenir les "NbCase" 
-                   - selectPiece : Méthode qui sélectionne chaque case de la pièce et modifie l'attribut selected
-                   - moove : Méthode qui permet de déplacer la pièce d'une case vers le haut, le bas, la droite ou la gauche
-                   - testBordure : Méthode qui permet de replacer la pièce dans la plateau si jamais elle se retrouve à l'extèrieur
-                   - placePiece : Méthode qui permet de "poser" la pièce dans le plateau et changer son statut placed."""
-
-
+"""Class that will be the pieces of the game.
+ A piece is a cell (cell_class) list.
+This class control the pieces in the game (moove, place...).
+"""
 class Piece:
         
-    def __init__(self, pieceType, select=False):
+    def __init__(self, cellsList, select=False):
         
-        self.piece = pieceType
+        self.cellsList = cellsList
         
         self.selected = select
         self.placed = False
@@ -42,7 +28,7 @@ class Piece:
         xmax = 0
         ymax = 0
         
-        for cell in self.piece:
+        for cell in self.cellsList:
             self.cellNumber = self.cellNumber + 1
             
             if xmax < cell.x:
@@ -57,7 +43,7 @@ class Piece:
     def select(self):
         """Select each cell of the piece and the piece itself"""
         
-        for cell in self.piece:
+        for cell in self.cellsList:
             cell.select = True
             cell.texture = cell.selectedTexture
             
@@ -66,7 +52,7 @@ class Piece:
     def unselect(self):
         """Unselect each cell of the piece and the piece itself"""
         
-        for cell in self.piece:
+        for cell in self.cellsList:
             cell.texture = cell.unselectedTexture
             cell.select = False
             
@@ -79,54 +65,52 @@ class Piece:
         outside = False
 
         if direction == "right":
-            for cell in self.piece: #If we moove right the piece, test if it will be outside of the board or not
+            for cell in self.cellsList: #If we moove right the piece, test if it will be outside of the board or not
                 if (cell.x + 1) > 9:
                     outside = True
             
             if outside == False: #If it's not outside, then moove each in cell (= the entire piece)
-                for cell in self.piece:
+                for cell in self.cellsList:
                     cell.x += 1
                 
         if direction == "left":
-            for cell in self.piece:
+            for cell in self.cellsList:
                 if (cell.x - 1) < 0:
                     outside = True
 
             if outside == False:
-                for cell in self.piece:        
+                for cell in self.cellsList:        
                     cell.x -=1
                 
         if direction == "up":
-            for cell in self.piece:
+            for cell in self.cellsList:
                 if (cell.y - 1) < 0:
                     outside = True
 
             if outside == False:
-                for cell in self.piece:
+                for cell in self.cellsList:
                     cell.y -=1
                 
         if direction == "down":
-            for cell in self.piece:
+            for cell in self.cellsList:
                 if (cell.y + 1) > 9:
                     outside = True
 
             if outside == False:
-                for cell in self.piece:
+                for cell in self.cellsList:
                     cell.y +=1
             
-    def place_piece(self, board, piece):
-        """Méthode qui permet de poser la pièce dans le plateau :
-        - D'abord on a besoin de connaître le nombre de cases de la pièce pour pouvoir utiliser la méthode "PutDownPiece", donc on utilise "defNbCase" 
-        - On désélectionne la pièce puisqu'elle va maintenant se placée grâce à la méthode "unselectPiece" 
-        - On change les propriétés des cases du plateau correspondantes en mimétisme avec ceux de la pièce (texture, vide/plein...)
-        avec la méthode "PutDownPiece" de la classe Plateau.
+    def place_piece(self, board):
+        """Put down the piece on the board :
+        - Unselect the piece
+        - Use "put_down_piece" method of the board to change the properties of the board
+        - Change the placed attribute to true
+        - Place the actual piece outside of the screen (it will be removed when the 3 next pieces will be generated)."""
         
-        - L'attribut "placed" est maintenant vrai car la pièce est placée."""
-        
-        piece.unselect()
-        board.put_down_piece(piece)
+        self.unselect()
+        board.put_down_piece(self)
         
         self.placed = True
-        for cell in piece.piece:
-            cell.x = 20 + cell.x
-            cell.y = 20 + cell.y
+        for cell in self.cellsList:
+            cell.x = 20
+            cell.y = 20
