@@ -96,9 +96,8 @@ while loop:
             loop = 0
         
         if gameOver == False:
-
             score_conversion_text = str(score)
-            score_text = font.render(score_conversion_text, False, (1,1,1))
+            score_text = font.render(score_conversion_text, False, (255,255,255))
     
             if phase == 1:
         
@@ -521,7 +520,7 @@ while loop:
             screen.blit(backgroundGameOver,(0,0))
             screen.blit(gameOverText, (6*constants.cellSize, 7*constants.cellSize))
     
-        pygame.display.flip()
-
         #EVA: Affichage du score constantes
         screen.blit(score_text, (1*constants.cellSize, 15*constants.cellSize))
+
+        pygame.display.flip()
