@@ -241,62 +241,49 @@ while loop:
                     if event.key == K_DOWN:
                 
                         if piece1.selected == True:
-                            piece1.moove("bas")
-                            piece1.testBordure(piece1)
+                            piece1.moove("down")
                 
                         elif piece2.selected == True:
-                            piece2.moove("bas")
-                            piece2.testBordure(piece2)
+                            piece2.moove("down")
                    
                         elif piece3.selected == True:
-                            piece3.moove("bas")
-                            piece3.testBordure(piece3)
+                            piece3.moove("down")
                 
                     #Flèche haut
                     if event.key == K_UP:
                 
                         if piece1.selected == True:
-                            piece1.moove("haut")
-                            piece1.testBordure(piece1)
+                            piece1.moove("up")
                     
                         elif piece2.selected == True:
-                            piece2.moove("haut")
-                            piece2.testBordure(piece2)
+                            piece2.moove("up")
                    
                         elif piece3.selected == True:
-                            piece3.moove("haut")
-                            piece3.testBordure(piece3)
+                            piece3.moove("up")
                     
                     #Flèche droite
                     if event.key == K_RIGHT:
                 
                         if piece1.selected == True:
-                            piece1.moove("droite")
-                            piece1.testBordure(piece1)
+                            piece1.moove("right")
                     
                         elif piece2.selected == True:
-                            piece2.moove("droite")
-                            piece2.testBordure(piece2)
+                            piece2.moove("right")
                    
                         elif piece3.selected == True:
-                            piece3.moove("droite")
-                            piece3.testBordure(piece3)
+                            piece3.moove("right")
            
                     #Flèche gauche
                     if event.key == K_LEFT:
                 
                         if piece1.selected == True:
-                            piece1.moove("gauche")
-                            piece1.testBordure(piece1)
+                            piece1.moove("left")
                     
                         elif piece2.selected == True:
-                            piece2.moove("gauche")
-                            piece2.testBordure(piece2)
+                            piece2.moove("left")
                    
                         elif piece3.selected == True:
-                            piece3.moove("gauche")
-                            piece3.testBordure(piece3)
-            
+                            piece3.moove("left")
             
                     #Entrée
                     if event.key == K_RETURN:

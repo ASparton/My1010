@@ -70,46 +70,47 @@ class Piece:
         self.selected = False
         
     def moove(self, direction):
-        """Méthode qui permet de déplacer la pièce d'une case vers le haut, le bas, la droite ou la gauche"""
+        """Method to moove the piece to the 4 directions"""
         
-        if direction == "droite":
+         #Variable that allow or not a piece to moove after testing if each cell of that piece will still be in the board
+        canMoove = True
+
+        if direction == "right":
             for cell in self.piece:
-                cell.x +=1
-                
-        if direction == "gauche":
-            for cell in self.piece:
-                cell.x -=1
-                
-        if direction == "haut":
-            for cell in self.piece:
-                cell.y -=1
-                
-        if direction == "bas":
-            for cell in self.piece:
-                cell.y +=1
+                if (cell.x + 1) > 9:
+                    canMoove = False
             
-    def testBordure(self, piece):
-        """Méthode qui a 2 buts:
-        - Tester si la pièce est en dehors le plateau
-        - Si elle est en dehors du plateau, la faire revenir à sa position précédente grâce à la méthode "moove". """
-        
-        for case in self.piece:
-            if case.x < 0:
-                piece.moove("droite")
-                break
+            if canMoove == True:
+                for cell in self.piece:
+                    cell.x += 1
                 
-            if case.x > 9:
-                piece.moove("gauche")
-                break
+        if direction == "left":
+            for cell in self.piece:
+                if (cell.x - 1) < 0:
+                    canMoove = False
+
+            if canMoove == True:
+                for cell in self.piece:        
+                    cell.x -=1
                 
-            if case.y < 0:
-                piece.moove("bas")
-                break
+        if direction == "up":
+            for cell in self.piece:
+                if (cell.y - 1) < 0:
+                    canMoove = False
+
+            if canMoove == True:
+                for cell in self.piece:
+                    cell.y -=1
                 
-            if case.y > 9:
-                piece.moove("haut")
-                break
-                
+        if direction == "down":
+            for cell in self.piece:
+                if (cell.y + 1) > 9:
+                    canMoove = False
+
+            if canMoove == True:
+                for cell in self.piece:
+                    cell.y +=1
+            
     def place_piece(self, board, piece):
         """Méthode qui permet de poser la pièce dans le plateau :
         - D'abord on a besoin de connaître le nombre de cases de la pièce pour pouvoir utiliser la méthode "PutDownPiece", donc on utilise "defNbCase" 
