@@ -1,6 +1,3 @@
-import pygame
-from pygame.locals import *
-
 import constants
 import cell_class
 
@@ -103,27 +100,22 @@ class Board:
             
             cellToTest[0] = cell.x
             cellToTest[1] = cell.y
-        
 
             #Test the "empty" attribute of each cell of the horizontal lines
-            if cell.x == 0 and cell.y != 0:
+            if cell.x == 0:
             
                 while cellToTest[0] < 10:
                     for boardCellToTest in self.cellList:
-                    
                         if boardCellToTest.x == cellToTest[0] and boardCellToTest.y == cellToTest[1]:
                             if boardCellToTest.empty == True:
                                 test = False
                                 break
                             elif boardCellToTest.empty == False:
                                 test = True
-                            break
-                    
+                                break
                     if test == False:
                         break
-                        
                     cellToTest[0] += 1
-                    
                 cellToTest[0] -= 1
                 
                 #Remove the horizontal line if all the cell are not empty (empty == False)
@@ -132,20 +124,46 @@ class Board:
                         for cell in self.cellList:
                             if cell.x == cellToTest[0] and cell.y == cellToTest[1]:
                                 cell.empty = True
-                                cell.texture = pygame.image.load(constants.boardCellTexture).convert_alpha()
-                                
+                                cell.texture = cell.unselectedTexture
                                 LineCellNumber += 1
-                                
                                 break
-                                
                         cellToTest[0] -= 1
+
+                if cell.y == 0:
+
+                    cellToTest[0] = 0
+                    cellToTest[1] = 0
+
+                    while cellToTest[1] < 10:
+                        for boardCellToTest in self.cellList:
+                            if boardCellToTest.x == cellToTest[0] and boardCellToTest.y == cellToTest[1]:
+                                if boardCellToTest.empty == True:
+                                    test = False
+                                    break
+                                elif boardCellToTest.empty == False:
+                                    test = True
+                                    break
+                        if test == False:
+                            break
+                        cellToTest[1] += 1
+                    cellToTest[1] -= 1    
+
+                    #Remove the line if the cells are not empty. (empty == False)
+                    if test == True:
+                        while cellToTest[1] >= 0:
+                            for cell in self.cellList:
+                                if cell.x == cellToTest[0] and cell.y == cellToTest[1]:
+                                    cell.empty = True
+                                    cell.texture = cell.unselectedTexture
+                                    LineCellNumber += 1
+                                    break
+                            cellToTest[1] -= 1
             
             #Test the "empty" attribute of each cells of the vertical lines
             elif cell.y == 0:
                 
                 while cellToTest[1] < 10:
                     for boardCellToTest in self.cellList:
-                    
                         if boardCellToTest.x == cellToTest[0] and boardCellToTest.y == cellToTest[1]:
                             if boardCellToTest.empty == True:
                                 test = False
@@ -153,12 +171,9 @@ class Board:
                             elif boardCellToTest.empty == False:
                                 test = True
                                 break
-                    
                     if test == False:
                         break
-                        
                     cellToTest[1] += 1
-                    
                 cellToTest[1] -= 1
                 
                 #Remove the line if the cells are not empty. (empty == False)
@@ -167,12 +182,9 @@ class Board:
                         for cell in self.cellList:
                             if cell.x == cellToTest[0] and cell.y == cellToTest[1]:
                                 cell.empty = True
-                                cell.texture = pygame.image.load(constants.boardCellTexture).convert_alpha()
-                                    
+                                cell.texture = cell.unselectedTexture
                                 LineCellNumber += 1
-                                    
                                 break
-                                
                         cellToTest[1] -= 1
                             
         return LineCellNumber

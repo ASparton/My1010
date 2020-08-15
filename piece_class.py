@@ -1,5 +1,3 @@
-import pygame
-from pygame.locals import *
 import constants
 
 """Class that will be the pieces of the game.
