@@ -9,8 +9,13 @@ class Board:
         
         self.x_size = x
         self.y_size = y
-        self.cellList = []
+        self._cellsList = []
            
+    #CellsList property
+    def _get_cellsList(self):
+        return self._cellsList
+    cellsList = property(_get_cellsList)
+
     def build(self):
         """Build the board based on the size given."""
         
@@ -19,7 +24,7 @@ class Board:
         
         while(y_counter < self.y_size):
             while(x_counter < self.x_size):
-                self.cellList.append(cell_class.Cell(x_counter, y_counter))
+                self.cellsList.append(cell_class.Cell(x_counter, y_counter))
                 x_counter += 1
             
             y_counter += 1
@@ -37,7 +42,7 @@ class Board:
         xMaxTest = 10 - piece.cellNumberX
         yMaxTest = 10 - piece.cellNumberY
         
-        for boardCell in self.cellList:
+        for boardCell in self.cellsList:
             
             if boardCell.x < xMaxTest and boardCell.y < yMaxTest:         
             
@@ -46,7 +51,7 @@ class Board:
                     cellToTest[0] = boardCell.x + pieceCell.x
                     cellToTest[1] = boardCell.y + pieceCell.y
                     
-                    for boardCellToTest in self.cellList:
+                    for boardCellToTest in self.cellsList:
                         if boardCellToTest.x == cellToTest[0] and boardCellToTest.y == cellToTest[1]:
                             if boardCellToTest.empty == False:
                                 currentTest = False
@@ -75,7 +80,7 @@ class Board:
         test = True
         
         for pieceCell in piece.cellsList:
-            for boardCell in self.cellList:
+            for boardCell in self.cellsList:
                 
                 if boardCell.x == pieceCell.x and boardCell.y == pieceCell.y:
                     if boardCell.empty == False:
@@ -96,7 +101,7 @@ class Board:
         cellToTest = [0,0]
         test = 0
         
-        for cell in self.cellList:
+        for cell in self.cellsList:
             
             cellToTest[0] = cell.x
             cellToTest[1] = cell.y
@@ -105,7 +110,7 @@ class Board:
             if cell.x == 0:
             
                 while cellToTest[0] < 10:
-                    for boardCellToTest in self.cellList:
+                    for boardCellToTest in self.cellsList:
                         if boardCellToTest.x == cellToTest[0] and boardCellToTest.y == cellToTest[1]:
                             if boardCellToTest.empty == True:
                                 test = False
@@ -121,7 +126,7 @@ class Board:
                 #Remove the horizontal line if all the cell are not empty (empty == False)
                 if test == True:
                     while cellToTest[0] >= 0:
-                        for cell in self.cellList:
+                        for cell in self.cellsList:
                             if cell.x == cellToTest[0] and cell.y == cellToTest[1]:
                                 cell.empty = True
                                 cell.texture = cell.unselectedTexture
@@ -135,7 +140,7 @@ class Board:
                     cellToTest[1] = 0
 
                     while cellToTest[1] < 10:
-                        for boardCellToTest in self.cellList:
+                        for boardCellToTest in self.cellsList:
                             if boardCellToTest.x == cellToTest[0] and boardCellToTest.y == cellToTest[1]:
                                 if boardCellToTest.empty == True:
                                     test = False
@@ -151,7 +156,7 @@ class Board:
                     #Remove the line if the cells are not empty. (empty == False)
                     if test == True:
                         while cellToTest[1] >= 0:
-                            for cell in self.cellList:
+                            for cell in self.cellsList:
                                 if cell.x == cellToTest[0] and cell.y == cellToTest[1]:
                                     cell.empty = True
                                     cell.texture = cell.unselectedTexture
@@ -163,7 +168,7 @@ class Board:
             elif cell.y == 0:
                 
                 while cellToTest[1] < 10:
-                    for boardCellToTest in self.cellList:
+                    for boardCellToTest in self.cellsList:
                         if boardCellToTest.x == cellToTest[0] and boardCellToTest.y == cellToTest[1]:
                             if boardCellToTest.empty == True:
                                 test = False
@@ -179,7 +184,7 @@ class Board:
                 #Remove the line if the cells are not empty. (empty == False)
                 if test == True:
                     while cellToTest[1] >= 0:
-                        for cell in self.cellList:
+                        for cell in self.cellsList:
                             if cell.x == cellToTest[0] and cell.y == cellToTest[1]:
                                 cell.empty = True
                                 cell.texture = cell.unselectedTexture
@@ -195,7 +200,7 @@ class Board:
         
         counter = piece.cellNumber
         
-        for boardCell in self.cellList:
+        for boardCell in self.cellsList:
         
             """If each cells of the piece are placed (counter == 0), then we stop crossing the board cells list."""
             if counter == 0:

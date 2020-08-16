@@ -30,7 +30,7 @@ font = pygame.font.SysFont("dearsunshine", 64)
 #Board creation + display
 board = board_class.Board()
 board.build()
-for cell in board.cellList:
+for cell in board.cellsList:
     screen.blit(cell.texture, (cell.x * constants.cellSize, cell.y * constants.cellSize))
 
 #Pieces creation
@@ -362,9 +362,9 @@ while loop:
             
         """Display every textures of the game at every loop in the right order."""
     
-        screen.blit(background, (0,0))*
+        screen.blit(background, (0,0))
 
-        for cell in board.cellList:
+        for cell in board.cellsList:
             screen.blit(cell.texture, (cell.x * constants.cellSize, cell.y * constants.cellSize))
     
         if phase == 1:
