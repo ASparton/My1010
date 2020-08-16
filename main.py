@@ -1,10 +1,8 @@
-#pygame importations
 import pygame
 from pygame.locals import *
-#intern python importations
+
 import time
-import random
-#created files importations
+
 import constants
 import functions
 import cell_class
@@ -33,15 +31,8 @@ board.build()
 for cell in board.cellsList:
     screen.blit(cell.texture, (cell.x * constants.cellSize, cell.y * constants.cellSize))
 
-#Pieces creation
-randomCellList = random.choice(constants.pieceList)
-piece1 = [functions.create_piece(randomCellList)]
-
-randomCellList = random.choice(constants.pieceList)
-piece2 = [functions.create_piece(randomCellList)]
-
-randomCellList = random.choice(constants.pieceList)
-piece3 = [functions.create_piece(randomCellList)]
+#Pieces generation
+piece1, piece2, piece3 = functions.generate_pieces()
 #Pointer (list) of the piece the player is going to choose
 chosenPiece = piece1    #For now it points on piece1
 #We select the first piece. Then the player will choose from that start
@@ -247,16 +238,15 @@ while loop:
                                 winingLineSound.play()
                         
                             #Check for a possible game over
-                            testList = []
-                            test = True
+                            boardPlaceTestList = []
                             
                             if piece1[0].placed == False:
                             
-                                testList.append(board.place_verification(piece1[0]))
+                                boardPlaceTestList.append(board.place_verification(piece1[0]))
                                 if piece2[0].placed == False:
-                                    testList.append(board.place_verification(piece2[0]))
+                                    boardPlaceTestList.append(board.place_verification(piece2[0]))
                                 if piece3[0].placed == False:
-                                    testList.append(board.place_verification(piece3[0]))
+                                    boardPlaceTestList.append(board.place_verification(piece3[0]))
                             
                                 piece1[0].select()
                                 chosenPiece = piece1
@@ -264,9 +254,9 @@ while loop:
                             elif piece1[0].placed == True:
                                 if piece2[0].placed == False:
                             
-                                    testList.append(board.place_verification(piece2[0]))
+                                    boardPlaceTestList.append(board.place_verification(piece2[0]))
                                     if piece3[0].placed == False:
-                                        testList.append(board.place_verification(piece3[0]))
+                                        boardPlaceTestList.append(board.place_verification(piece3[0]))
                                 
                                     piece2[0].select()
                                     chosenPiece = piece2
@@ -274,7 +264,7 @@ while loop:
                                 elif piece2[0].placed == True:
                                     if piece3[0].placed == False:
                                 
-                                        testList.append(board.place_verification(piece3[0]))
+                                        boardPlaceTestList.append(board.place_verification(piece3[0]))
                                     
                                         piece3[0].select()
                                         chosenPiece = piece3
@@ -282,34 +272,19 @@ while loop:
                                     elif piece3[0].placed == True:
                                 
                                         #Generate 3 other pieces if all has been placed
-                                    
-                                        randomCellList = random.choice(constants.pieceList)
-                                        piece1 = [functions.create_piece(randomCellList)]
-
-                                        randomCellList = random.choice(constants.pieceList)
-                                        piece2 = [functions.create_piece(randomCellList)]
-
-                                        randomCellList = random.choice(constants.pieceList)
-                                        piece3 = [functions.create_piece(randomCellList)]
-                                    
-                                        testList.append(board.place_verification(piece1[0]))
-                                        testList.append(board.place_verification(piece2[0]))
-                                        testList.append(board.place_verification(piece3[0]))
-                                    
+                                        piece1, piece2, piece3 = functions.generate_pieces()
                                         piece1[0].select()
                                         chosenPiece = piece1
+
+                                        boardPlaceTestList.append(board.place_verification(piece1[0]))
+                                        boardPlaceTestList.append(board.place_verification(piece2[0]))
+                                        boardPlaceTestList.append(board.place_verification(piece3[0]))
                         
-                            #Create the game over or not
-                            for currentTest in testList:
-                                if currentTest == True:
-                                    test = True
-                                    break
-                                elif currentTest == False:
-                                    test = False
-                                
-                            if test == False:
+                            #Test if we are game over or not
+                            gameOverTest = functions.check_game_over(boardPlaceTestList)
+                            if gameOverTest == True:
                                 gameOver = True
-                                functions.game_over(gameOver, gameOverSound)
+                                gameOverSound.play()
 
                             phase = 1
             

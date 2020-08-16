@@ -5,9 +5,11 @@ import piece_class
 import cell_class
 import constants
 
-"""Creation des cases (pour créer les pièces)
-    -Argument: liste d'argument de création pour la case
-    -Retourne: L'objet piece correspondant"""
+import random
+
+"""Cells creation to create pieces.
+    -Take: list of arguments to create cells
+    -Return: the piece created"""
 def create_piece(cellList):
     
     pieceList = []
@@ -19,13 +21,28 @@ def create_piece(cellList):
         
     return piece
 
-"""Fonction appelée lors d'un game over.
-    -Argument: gameOver (true or false)
-    -Retourne: True si on est bien en game over"""
-def game_over(gameOver, gameOverSound):
+def generate_pieces():
 
-    if gameOver == True:
-        gameOverSound.play()
-        return True
-    else:
-        return False
+    randomCellList = random.choice(constants.pieceList)
+    piece1 = [create_piece(randomCellList)]
+
+    randomCellList = random.choice(constants.pieceList)
+    piece2 = [create_piece(randomCellList)]
+
+    randomCellList = random.choice(constants.pieceList)
+    piece3 = [create_piece(randomCellList)]
+
+    return piece1, piece2, piece3
+
+def check_game_over(boardPlaceTestList):
+
+    gameOverTest = False
+
+    for currentTest in boardPlaceTestList:
+        if currentTest == True:
+            gameOverTest = False
+            break
+        elif currentTest == False:
+            gameOverTest = True
+
+    return gameOverTest
