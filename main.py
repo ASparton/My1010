@@ -1,13 +1,9 @@
-#importations
-
 #pygame importations
 import pygame
 from pygame.locals import *
-
 #intern python importations
 import time
 import random
-
 #created files importations
 import constants
 import functions
@@ -17,27 +13,27 @@ import piece_class
 
 pygame.init()
 
-#Création de l'écran
+"""Initialization of all we need before starting the game."""
+
+#Screen creations
 screen = pygame.display.set_mode((constants.screenSize[0], constants.screenSize[1]), RESIZABLE)
 
-#Importation des background + Affichage du background
+#Background importation + display
 background = pygame.image.load(constants.backgroundTexture).convert_alpha()
 screen.blit(background, (0,0))
-
+#Game over background importation
 backgroundGameOver = pygame.image.load(constants.gameOverBackgroundTexture).convert_alpha()
 
-#Police pour le text
+#Font creation
 font = pygame.font.SysFont("dearsunshine", 64)
 
-#ALEXANDRE: Création du plateau
-#EVA: Affichage du plateau
+#Board creation + display
 board = board_class.Board()
 board.build()
 for cell in board.cellList:
     screen.blit(cell.texture, (cell.x * constants.cellSize, cell.y * constants.cellSize))
 
-
-#ALEXANDRE: Création des pièces aléatoires
+#Pieces creation
 randomCellList = random.choice(constants.pieceList)
 piece1 = functions.create_piece(randomCellList)
 
@@ -47,7 +43,7 @@ piece2 = functions.create_piece(randomCellList)
 randomCellList = random.choice(constants.pieceList)
 piece3 = functions.create_piece(randomCellList)
 
-#EVA: Affichage des 3 pièces générées
+#Pieces display
 for cell in piece1.cellsList:
     screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
 for cell in piece2.cellsList:
@@ -55,9 +51,9 @@ for cell in piece2.cellsList:
 for cell in piece3.cellsList:
     screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
 
-#ALEXANDRE + EVA + ARMAMIS: On sélectionne d'entrée la pièce 1.
+#We select the first piece. Then the player will choose from that start
 piece1.select()
-
+#Set the score at the beginning
 score = 0
 
 #Game music
@@ -65,7 +61,7 @@ pygame.mixer.music.load("Sons/Music.wav")
 pygame.mixer.music.set_volume(0.1)
 pygame.mixer.music.play()
 
-#Initialisation des sons
+#Game sound initialization
 winingLineSound = pygame.mixer.Sound("Sons/Ouh_nice_!.wav")
 cantPlaceSound = pygame.mixer.Sound("Sons/Nope.wav")
 gameOverSound = pygame.mixer.Sound("Sons/Game_over.wav")
@@ -74,41 +70,31 @@ gameOverSound = pygame.mixer.Sound("Sons/Game_over.wav")
 gameOver = False
 gameOverText = font.render("Game Over", False, (255, 255, 255))
 
-#EVA : Rafraichissement de l'écran.
-pygame.display.flip()
-
-"""EVA : Variable qui va nous permettre de différencier les 2 phases de jeux:
-         - Quand phase == 1, on est dans la première phase (sélection)
-         - Quand phase == 2, on est dans la seconde phase (placement de la pièce dans le plateau)"""
-    
+"""Variable that cut the two phase of the game:
+         - When phase == 1, we are in the first phase, the selection of the piece
+         - When phase == 2, we are in the second phase, the player put down the piece on the board"""
 phase = 1
 
-#ALEXANDRE: Variable qui permet de gérer la sortie de la boucle principale du programme, et donc de le fermer.
+#Load the screen
+pygame.display.flip()
+
 loop = 1
 while loop:
     
-    #ALEXANDRE: Evènement de fermeture de la fenêtre
-    for event in pygame.event.get():
+    for event in pygame.event.get(): #Exit event
         if event.type == QUIT:
             loop = 0
         
+        #We wait for game event and update the score only if we're not in game over
         if gameOver == False:
             score_conversion_text = str(score)
             score_text = font.render(score_conversion_text, False, (255,255,255))
     
             if phase == 1:
-        
-                """ARAMIS : Lorsque l'on est en phase 1, on sélectionne les différentes pièces en appuyant sur flèche bas ou flèche haut,
-                            sans oublier de désélectionner la pièce séléctionnée auparavant. On utilise donc les méthodes à voir dans la classe pièce:
-                            - "selectPiece"
-                            - "unselectPiece"
-                ALEXANDRE : Enfin, on sélectionne une pièce uniquement si elle n'est pas déjà placée sur le plateau, si l'attribut "placed" est donc égale à false.
-                            Sinon on sélectionne la pièce suivante, si elle aussi n'a pas été posée."""
-        
-                #Evenèments clavier
+                """When we are in phase 1, the player need to choose a piece with the directional keys,
+                and need to press "c" to choose the one he wants. That's the events we are wainting for"""
                 if event.type == KEYDOWN:
                 
-                    #Flèche bas
                     if event.key == K_DOWN:
                         
                         if piece1.selected == True:
@@ -149,8 +135,7 @@ while loop:
                                     
                                 elif piece2.placed == True:
                                     piece3.select()
-                                    
-                    #Flèche haut
+                                
                     if event.key == K_UP:
                     
                         if piece1.selected == True:
@@ -192,13 +177,6 @@ while loop:
                                 elif piece1.placed == True:
                                     piece3.select()
                                 
-                    """EVA: Une fois la pièce choisie par le joueur, donc sélectionée, s'il appuie sur "Entrée" voici ce qu'il se passe:
-                            - La pièce qu'il a sélectionné se place en haut à gauche du plateau (0,0) et reste sélectionée,
-                            - Les autres pièces gardent les mêmes caractéristiques et gardent la même position (selected = false...),
-                            - On passe dans la seconde phase de jeu (phase = 2)."""
-                            
-                                
-                    #Entrée
                     if event.key == K_c:
                     
                         if piece1.selected == True:
@@ -219,22 +197,12 @@ while loop:
                         phase = 2
                 
             if phase == 2:
-        
-                """En phase 2 :
-                - ARAMIS : Les flèches directionnels permettent de déplacer la pièce dans le plateau avec "moove".
-                           On test à chaque déplacement si la pièce est en dehors du plateau, et si c'est le cas, on la remet à sa position précédente avec "testBordure". 
-            
-                - ALEXANDRE : Quand l'utilisateur appuie sur "Entrée", on test si la place est libre avec "PlayerPlaceVerification" de la classe Plateau.
-                        Si la place est libre, on appelle la méthode "placePiece"
-                        Lorsqu'une pièce a été posée ou que des nouvelles pièces se génèrent, on test s'il y a encore de la place, sinon game over.
-                    
-                - EVA : Quand la pièce a été posée on repasse en phase 1,
-                        puis on sélectionne les pièces manquantes ou si toute les pièces ont été placées, on en génère des nouvelles."""
-        
-                #Evenèments clavier
+                """During phase 2 :
+                - We wait for the player to moove the piece on the board with the directional keys.
+                - Then we wait for him to put down the piece on the board with enter.
+                - Then we check for a possible game over, generate other pieces if there is no more and return to phase 1"""
                 if event.type == KEYDOWN:
                 
-                    #Flèche bas
                     if event.key == K_DOWN:
                 
                         if piece1.selected == True:
@@ -246,7 +214,6 @@ while loop:
                         elif piece3.selected == True:
                             piece3.moove("down")
                 
-                    #Flèche haut
                     if event.key == K_UP:
                 
                         if piece1.selected == True:
@@ -258,7 +225,6 @@ while loop:
                         elif piece3.selected == True:
                             piece3.moove("up")
                     
-                    #Flèche droite
                     if event.key == K_RIGHT:
                 
                         if piece1.selected == True:
@@ -270,7 +236,6 @@ while loop:
                         elif piece3.selected == True:
                             piece3.moove("right")
            
-                    #Flèche gauche
                     if event.key == K_LEFT:
                 
                         if piece1.selected == True:
@@ -282,7 +247,6 @@ while loop:
                         elif piece3.selected == True:
                             piece3.moove("left")
             
-                    #Entrée
                     if event.key == K_RETURN:
                     
                         if piece1.selected == True:
@@ -324,7 +288,8 @@ while loop:
                                 piece3.canBePlaced = False
                                 cantPlaceSound.play()
                                         
-                        if canBePlaced == True: #la piece a été placée on peut repasser en phase 1, celle de sélection.
+                        if canBePlaced == True:
+                            #Check for lines who has been made and add to the score
                     
                             lineCellNumber = board.line_verification_suppression()
                         
@@ -332,6 +297,7 @@ while loop:
                                 score += lineCellNumber
                                 winingLineSound.play()
                         
+                            #Check for a possible game over
                             testList = []
                             test = True
                             
@@ -363,7 +329,7 @@ while loop:
                                         
                                     elif piece3.placed == True:
                                 
-                                        #Si les 3 pièces sont placées, on en génère trois nouvelles et on vérifie si elles sont posables.
+                                        #Generate 3 other pieces if all has been placed
                                     
                                         randomCellList = random.choice(constants.pieceList)
                                         piece1 = functions.create_piece(randomCellList)
@@ -380,6 +346,7 @@ while loop:
                                     
                                         piece1.select()
                         
+                            #Create the game over or not
                             for currentTest in testList:
                                 if currentTest == True:
                                     test = True
@@ -393,16 +360,13 @@ while loop:
 
                             phase = 1
             
-        """EVA: Affichage des éléments(textures) du jeu puis actualisation de l'écran à chaque tour de boucle."""
+        """Display every textures of the game at every loop in the right order."""
     
-        #D'abord le background
-        screen.blit(background, (0,0))
-    
-        #Puis le plateau
+        screen.blit(background, (0,0))*
+
         for cell in board.cellList:
             screen.blit(cell.texture, (cell.x * constants.cellSize, cell.y * constants.cellSize))
     
-        #Si on est en phase 1, on affiche les pièces à partir de la droite du plateau (xChoixPiece & yChoixPiece)
         if phase == 1:
             for cell in piece1.cellsList:
                 screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
@@ -411,7 +375,6 @@ while loop:
             for cell in piece3.cellsList:
                 screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
     
-        #Si on est en phase 2, on affiche la pièce sélectionnée à partir du (0,0), en haut à gauche du plateau, et les autres à droite.
         if phase == 2:
         
             if piece1.selected == True:
@@ -495,13 +458,10 @@ while loop:
                     for cell in piece1.cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
 
-
-        #EVA: Affichage d'un nouvel écran lors d'un game over.
         if gameOver == True:
             screen.blit(backgroundGameOver,(0,0))
             screen.blit(gameOverText, (6*constants.cellSize, 7*constants.cellSize))
     
-        #EVA: Affichage du score constantes
         screen.blit(score_text, (1*constants.cellSize, 15*constants.cellSize))
 
         pygame.display.flip()
