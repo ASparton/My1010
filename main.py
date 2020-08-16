@@ -35,24 +35,26 @@ for cell in board.cellsList:
 
 #Pieces creation
 randomCellList = random.choice(constants.pieceList)
-piece1 = functions.create_piece(randomCellList)
+piece1 = [functions.create_piece(randomCellList)]
 
 randomCellList = random.choice(constants.pieceList)
-piece2 = functions.create_piece(randomCellList)
+piece2 = [functions.create_piece(randomCellList)]
 
 randomCellList = random.choice(constants.pieceList)
-piece3 = functions.create_piece(randomCellList)
+piece3 = [functions.create_piece(randomCellList)]
+#Pointer (list) of the piece the player is going to choose
+chosenPiece = piece1    #For now it points on piece1
+#We select the first piece. Then the player will choose from that start
+piece1[0].select()
 
 #Pieces display
-for cell in piece1.cellsList:
+for cell in piece1[0].cellsList:
     screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
-for cell in piece2.cellsList:
+for cell in piece2[0].cellsList:
     screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
-for cell in piece3.cellsList:
+for cell in piece3[0].cellsList:
     screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
 
-#We select the first piece. Then the player will choose from that start
-piece1.select()
 #Set the score at the beginning
 score = 0
 
@@ -97,102 +99,109 @@ while loop:
                 
                     if event.key == K_DOWN:
                         
-                        if piece1.selected == True:
-                            piece1.unselect()
+                        if piece1[0].selected == True:
+                            piece1[0].unselect()
                             
-                            if piece2.placed == False:
-                                piece2.select()
+                            if piece2[0].placed == False:
+                                piece2[0].select()
+                                chosenPiece = piece2
                                 
-                            elif piece2.placed == True:
-                                if piece3.placed == False:
-                                    piece3.select()
+                            elif piece2[0].placed == True:
+                                if piece3[0].placed == False:
+                                    piece3[0].select()
+                                    chosenPiece = piece3
                                     
-                                elif piece3.placed == True:
-                                    piece1.select()
+                                elif piece3[0].placed == True:
+                                    piece1[0].select()
+                                    chosenPiece = piece1
                             
-                        elif piece2.selected == True:
-                            piece2.unselect()
+                        elif piece2[0].selected == True:
+                            piece2[0].unselect()
                             
-                            if piece3.placed == False:
-                                piece3.select()
+                            if piece3[0].placed == False:
+                                piece3[0].select()
+                                chosenPiece = piece3
                                 
-                            elif piece3.placed == True:
-                                if piece1.placed == False:
-                                    piece1.select()
+                            elif piece3[0].placed == True:
+                                if piece1[0].placed == False:
+                                    piece1[0].select()
+                                    chosenPiece = piece1
                                     
-                                elif piece1.placed == True:
-                                    piece2.select()
+                                elif piece1[0].placed == True:
+                                    piece2[0].select()
+                                    chosenPiece = piece2
                             
-                        elif piece3.selected == True:
-                            piece3.unselect()
+                        elif piece3[0].selected == True:
+                            piece3[0].unselect()
                             
-                            if piece1.placed == False:
-                                piece1.select()
+                            if piece1[0].placed == False:
+                                piece1[0].select()
+                                chosenPiece = piece1
                                 
-                            elif piece1.placed == True:
-                                if piece2.placed == False:
-                                    piece2.select()
+                            elif piece1[0].placed == True:
+                                if piece2[0].placed == False:
+                                    piece2[0].select()
+                                    chosenPiece = piece2
                                     
-                                elif piece2.placed == True:
-                                    piece3.select()
+                                elif piece2[0].placed == True:
+                                    piece3[0].select()
+                                    chosenPiece = piece3
                                 
                     if event.key == K_UP:
                     
-                        if piece1.selected == True:
-                            piece1.unselect()
+                        if piece1[0].selected == True:
+                            piece1[0].unselect()
                         
-                            if piece3.placed == False:
-                                piece3.select()
+                            if piece3[0].placed == False:
+                                piece3[0].select()
+                                chosenPiece = piece3
                             
-                            elif piece3.placed == True:
-                                if piece2.placed == False:
-                                    piece2.select()
+                            elif piece3[0].placed == True:
+                                if piece2[0].placed == False:
+                                    piece2[0].select()
+                                    chosenPiece = piece2
                                 
-                                elif piece2.placed == True:
-                                    piece1.select()
+                                elif piece2[0].placed == True:
+                                    piece1[0].select()
+                                    chosenPiece = piece1
                         
-                        elif piece2.selected == True:
-                            piece2.unselect()
+                        elif piece2[0].selected == True:
+                            piece2[0].unselect()
                         
-                            if piece1.placed == False:
-                                piece1.select()
+                            if piece1[0].placed == False:
+                                piece1[0].select()
+                                chosenPiece = piece1
                             
-                            elif piece1.placed == True:
-                                if piece3.placed == False:
-                                    piece3.select()
+                            elif piece1[0].placed == True:
+                                if piece3[0].placed == False:
+                                    piece3[0].select()
+                                    chosenPiece = piece3
                                 
-                                elif piece3.placed == True:
-                                    piece2.select()
+                                elif piece3[0].placed == True:
+                                    piece2[0].select()
+                                    chosenPiece = piece2
                         
-                        elif piece3.selected == True:
-                            piece3.unselect()
+                        elif piece3[0].selected == True:
+                            piece3[0].unselect()
                         
-                            if piece2.placed == False:
-                                piece2.select()
+                            if piece2[0].placed == False:
+                                piece2[0].select()
+                                chosenPiece = piece2
                             
-                            elif piece2.placed == True:
-                                if piece1.placed == False:
-                                    piece1.select()
+                            elif piece2[0].placed == True:
+                                if piece1[0].placed == False:
+                                    piece1[0].select()
+                                    chosenPiece = piece1
                                 
-                                elif piece1.placed == True:
-                                    piece3.select()
-                                
+                                elif piece1[0].placed == True:
+                                    piece3[0].select()
+                                    chosenPiece = piece3
+ 
                     if event.key == K_c:
-                    
-                        if piece1.selected == True:
-                            for cell in piece1.cellsList:
-                                cell.x = 0 + cell.x
-                                cell.y = 0 + cell.y
-                        
-                        elif piece2.selected == True:
-                            for cell in piece1.cellsList:
-                                cell.x = 0 + cell.x
-                                cell.y = 0 + cell.y
-                    
-                        elif piece3.selected == True:
-                            for cell in piece1.cellsList:
-                                cell.x = 0 + cell.x
-                                cell.y = 0 + cell.y
+
+                        for cell in chosenPiece[0].cellsList:
+                            cell.x = 0 + cell.x
+                            cell.y = 0 + cell.y
                             
                         phase = 2
                 
@@ -204,89 +213,29 @@ while loop:
                 if event.type == KEYDOWN:
                 
                     if event.key == K_DOWN:
-                
-                        if piece1.selected == True:
-                            piece1.moove("down")
-                
-                        elif piece2.selected == True:
-                            piece2.moove("down")
-                   
-                        elif piece3.selected == True:
-                            piece3.moove("down")
+                        chosenPiece[0].moove("down")
                 
                     if event.key == K_UP:
-                
-                        if piece1.selected == True:
-                            piece1.moove("up")
-                    
-                        elif piece2.selected == True:
-                            piece2.moove("up")
-                   
-                        elif piece3.selected == True:
-                            piece3.moove("up")
+                        chosenPiece[0].moove("up")
                     
                     if event.key == K_RIGHT:
-                
-                        if piece1.selected == True:
-                            piece1.moove("right")
-                    
-                        elif piece2.selected == True:
-                            piece2.moove("right")
-                   
-                        elif piece3.selected == True:
-                            piece3.moove("right")
+                        chosenPiece[0].moove("right")
            
                     if event.key == K_LEFT:
-                
-                        if piece1.selected == True:
-                            piece1.moove("left")
-                    
-                        elif piece2.selected == True:
-                            piece2.moove("left")
-                   
-                        elif piece3.selected == True:
-                            piece3.moove("left")
+                        chosenPiece[0].moove("left")
             
                     if event.key == K_RETURN:
                     
-                        if piece1.selected == True:
-                            canBePlaced = board.player_place_verification(piece1)
-                            if canBePlaced:
-                                piece1.place_piece(board)
-                                score += piece1.cellNumber
-                            elif canBePlaced == False:
+                        canBePlaced = board.player_place_verification(chosenPiece[0])
+                        if canBePlaced:
+                            chosenPiece[0].place_piece(board)
+                            score += chosenPiece[0].cellNumber
+                        elif canBePlaced == False:
+                            for cell in chosenPiece[0].cellsList:
+                                cell.texture = cell.cantPlaceTexture
                             
-                                for cell in piece1.cellsList:
-                                    cell.texture = cell.cantPlaceTexture
-                            
-                                piece1.canBePlaced = False
-                                cantPlaceSound.play()
-                            
-                        elif piece2.selected == True:
-                            canBePlaced = board.player_place_verification(piece2)
-                            if canBePlaced:
-                                piece2.place_piece(board)
-                                score += piece2.cellNumber
-                            elif canBePlaced == False:
-                        
-                                for cell in piece2.cellsList:
-                                    cell.texture = cell.cantPlaceTexture
-                                
-                                piece2.canBePlaced = False
-                                cantPlaceSound.play()
-                            
-                        elif piece3.selected == True:
-                            canBePlaced = board.player_place_verification(piece3)
-                            if canBePlaced:
-                                piece3.place_piece(board)
-                                score += piece3.cellNumber
-                            elif canBePlaced == False:
-                            
-                                for cell in piece3.cellsList:
-                                    cell.texture = cell.cantPlaceTexture
-                                
-                                piece3.canBePlaced = False
-                                cantPlaceSound.play()
+                            chosenPiece[0].canBePlaced = False
+                            cantPlaceSound.play()
                                         
                         if canBePlaced == True:
                             #Check for lines who has been made and add to the score
@@ -301,50 +250,54 @@ while loop:
                             testList = []
                             test = True
                             
-                            if piece1.placed == False:
+                            if piece1[0].placed == False:
                             
-                                testList.append(board.place_verification(piece1))
-                                if piece2.placed == False:
-                                    testList.append(board.place_verification(piece2))
-                                if piece3.placed == False:
-                                    testList.append(board.place_verification(piece3))
+                                testList.append(board.place_verification(piece1[0]))
+                                if piece2[0].placed == False:
+                                    testList.append(board.place_verification(piece2[0]))
+                                if piece3[0].placed == False:
+                                    testList.append(board.place_verification(piece3[0]))
                             
-                                piece1.select()
+                                piece1[0].select()
+                                chosenPiece = piece1
                                 
-                            elif piece1.placed == True:
-                                if piece2.placed == False:
+                            elif piece1[0].placed == True:
+                                if piece2[0].placed == False:
                             
-                                    testList.append(board.place_verification(piece2))
-                                    if piece3.placed == False:
-                                        testList.append(board.place_verification(piece3))
+                                    testList.append(board.place_verification(piece2[0]))
+                                    if piece3[0].placed == False:
+                                        testList.append(board.place_verification(piece3[0]))
                                 
-                                    piece2.select()
+                                    piece2[0].select()
+                                    chosenPiece = piece2
                                     
-                                elif piece2.placed == True:
-                                    if piece3.placed == False:
+                                elif piece2[0].placed == True:
+                                    if piece3[0].placed == False:
                                 
-                                        testList.append(board.place_verification(piece3))
+                                        testList.append(board.place_verification(piece3[0]))
                                     
-                                        piece3.select()
+                                        piece3[0].select()
+                                        chosenPiece = piece3
                                         
-                                    elif piece3.placed == True:
+                                    elif piece3[0].placed == True:
                                 
                                         #Generate 3 other pieces if all has been placed
                                     
                                         randomCellList = random.choice(constants.pieceList)
-                                        piece1 = functions.create_piece(randomCellList)
+                                        piece1 = [functions.create_piece(randomCellList)]
 
                                         randomCellList = random.choice(constants.pieceList)
-                                        piece2 = functions.create_piece(randomCellList)
+                                        piece2 = [functions.create_piece(randomCellList)]
 
                                         randomCellList = random.choice(constants.pieceList)
-                                        piece3 = functions.create_piece(randomCellList)
+                                        piece3 = [functions.create_piece(randomCellList)]
                                     
-                                        testList.append(board.place_verification(piece1))
-                                        testList.append(board.place_verification(piece2))
-                                        testList.append(board.place_verification(piece3))
+                                        testList.append(board.place_verification(piece1[0]))
+                                        testList.append(board.place_verification(piece2[0]))
+                                        testList.append(board.place_verification(piece3[0]))
                                     
-                                        piece1.select()
+                                        piece1[0].select()
+                                        chosenPiece = piece1
                         
                             #Create the game over or not
                             for currentTest in testList:
@@ -368,96 +321,50 @@ while loop:
             screen.blit(cell.texture, (cell.x * constants.cellSize, cell.y * constants.cellSize))
     
         if phase == 1:
-            for cell in piece1.cellsList:
+            for cell in piece1[0].cellsList:
                 screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
-            for cell in piece2.cellsList:
+            for cell in piece2[0].cellsList:
                 screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
-            for cell in piece3.cellsList:
+            for cell in piece3[0].cellsList:
                 screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
     
         if phase == 2:
         
-            if piece1.selected == True:
-        
-                if piece1.canBePlaced == False:
-                    for cell in piece1.cellsList:
-                        screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
+            if chosenPiece[0].canBePlaced == False:
+                for cell in chosenPiece[0].cellsList:
+                    screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
                     
-                    for cell in piece2.cellsList:
-                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
-                    for cell in piece3.cellsList:
-                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))    
+                    if piece1[0].selected == False:
+                        for cell in piece1[0].cellsList:
+                            screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
+                    if piece2[0].selected == False:
+                        for cell in piece2[0].cellsList:
+                            screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
+                    if piece3[0].selected == False:
+                        for cell in piece3[0].cellsList:
+                            screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
                     
                     pygame.display.flip()
                     time.sleep(0.6)
                 
-                    for cell in piece1.cellsList:
+                    for cell in chosenPiece[0].cellsList:
                         cell.texture = cell.selectedTexture
-                        piece1.canBePlaced = True
+                        chosenPiece[0].canBePlaced = True
                 
-                else:
-                    for cell in piece1.cellsList:
-                        screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
+            else:
+                for cell in chosenPiece[0].cellsList:
+                    screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
                 
-                    for cell in piece2.cellsList:
+                if piece1[0].selected == False:
+                    for cell in piece1[0].cellsList:
+                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
+                if piece2[0].selected == False:
+                    for cell in piece2[0].cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
-                    for cell in piece3.cellsList:
+                if piece3[0].selected == False:
+                    for cell in piece3[0].cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
                     
-            elif piece2.selected == True:
-        
-                if piece2.canBePlaced == False:
-                    for cell in piece2.cellsList:
-                        screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
-                    
-                    for cell in piece1.cellsList:
-                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
-                    for cell in piece3.cellsList:
-                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))    
-                    
-                    pygame.display.flip()
-                    time.sleep(0.6)
-                
-                    for cell in piece2.cellsList:
-                        cell.texture = cell.selectedTexture
-                        piece2.canBePlaced = True
-                    
-                else:
-                    for cell in piece2.cellsList:
-                        screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
-                
-                    for cell in piece1.cellsList:
-                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
-                    for cell in piece3.cellsList:
-                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
-                
-            elif piece3.selected == True:
-        
-                if piece3.canBePlaced == False:
-                    for cell in piece3.cellsList:
-                        screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
-                    
-                    for cell in piece2.cellsList:
-                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
-                    for cell in piece1.cellsList:
-                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
-                    
-                    pygame.display.flip()
-                    time.sleep(0.6)
-                
-                    for cell in piece3.cellsList:
-                        cell.texture = cell.selectedTexture
-                        piece3.canBePlaced = True
-                    
-                else:
-                    for cell in piece3.cellsList:
-                        screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
-            
-                    for cell in piece2.cellsList:
-                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
-                    for cell in piece1.cellsList:
-                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
-
         if gameOver == True:
             screen.blit(backgroundGameOver,(0,0))
             screen.blit(gameOverText, (6*constants.cellSize, 7*constants.cellSize))
