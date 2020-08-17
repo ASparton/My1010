@@ -23,7 +23,7 @@ screen.blit(background, (0,0))
 backgroundGameOver = pygame.image.load(constants.gameOverBackgroundTexture).convert_alpha()
 
 #Font creation
-font = pygame.font.SysFont("dearsunshine", 40)
+font = pygame.font.Font("assets/pixel_font.ttf", 40)
 
 #Board creation + display
 board = board_class.Board()
@@ -51,14 +51,14 @@ score = 0
 bestScore = functions.get_best_score()
 
 #Game music
-pygame.mixer.music.load("Sons/The Grand Affair.wav")
+pygame.mixer.music.load("assets/sounds/The Grand Affair.wav")
 pygame.mixer.music.set_volume(0.3)
 pygame.mixer.music.play()
 
 #Game sound initialization
-winingLineSound = pygame.mixer.Sound("Sons/Ouh_nice_!.wav")
-cantPlaceSound = pygame.mixer.Sound("Sons/Nope.wav")
-gameOverSound = pygame.mixer.Sound("Sons/Game_over.wav")
+winingLineSound = pygame.mixer.Sound("assets/sounds/Ouh_nice_!.wav")
+cantPlaceSound = pygame.mixer.Sound("assets/sounds/Nope.wav")
+gameOverSound = pygame.mixer.Sound("assets/sounds/Game_over.wav")
 
 #Game over variable initialization
 gameOver = False
@@ -81,10 +81,10 @@ while loop:
         
         #We wait for game event and update the score only if we're not in game over
         if gameOver == False:
-            strScore = "Score: " + str(score)
-            scoreText = font.render(strScore, False, (255,255,255))
-            strBestScore = "Best score: " + bestScore
-            bestScoreText = font.render(strBestScore, False, (255, 255, 255))
+            strScore = "SCORE: " + str(score)
+            scoreText = font.render(strScore, False, (10,10,10))
+            strBestScore = "BEST SCORE: " + bestScore
+            bestScoreText = font.render(strBestScore, False, (10,10,10))
     
             if phase == 1:
                 """When we are in phase 1, the player need to choose a piece with the directional keys,
@@ -313,22 +313,25 @@ while loop:
                 for cell in chosenPiece[0].cellsList:
                     screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
                     
-                    if piece1[0].selected == False:
-                        for cell in piece1[0].cellsList:
-                            screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
-                    if piece2[0].selected == False:
-                        for cell in piece2[0].cellsList:
-                            screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
-                    if piece3[0].selected == False:
-                        for cell in piece3[0].cellsList:
-                            screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
+                if piece1[0].selected == False:
+                    for cell in piece1[0].cellsList:
+                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
+                if piece2[0].selected == False:
+                    for cell in piece2[0].cellsList:
+                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
+                if piece3[0].selected == False:
+                    for cell in piece3[0].cellsList:
+                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
                     
-                    pygame.display.flip()
-                    time.sleep(0.6)
+                screen.blit(scoreText, (0.3*constants.cellSize, 13.8*constants.cellSize))
+                screen.blit(bestScoreText, (0.3*constants.cellSize, 15.8*constants.cellSize))
+
+                pygame.display.flip()
+                time.sleep(0.6)
                 
-                    for cell in chosenPiece[0].cellsList:
-                        cell.texture = cell.selectedTexture
-                        chosenPiece[0].canBePlaced = True
+                for cell in chosenPiece[0].cellsList:
+                    cell.texture = cell.selectedTexture
+                    chosenPiece[0].canBePlaced = True
                 
             else:
                 for cell in chosenPiece[0].cellsList:
@@ -344,8 +347,8 @@ while loop:
                     for cell in piece3[0].cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
                     
-        screen.blit(scoreText, (0.5*constants.cellSize, 16*constants.cellSize))
-        screen.blit(bestScoreText, (6*constants.cellSize, 16*constants.cellSize))
+        screen.blit(scoreText, (0.3*constants.cellSize, 13.8*constants.cellSize))
+        screen.blit(bestScoreText, (0.3*constants.cellSize, 15.8*constants.cellSize))
 
         if gameOver == True:
             screen.blit(backgroundGameOver,(0,0))

@@ -9,50 +9,48 @@ pieceChoosePlaceY2 = 6
 pieceChoosePlaceY3 = 12
 
 """Textures"""
-backgroundTexture = "Textures\Background.png"
-gameOverBackgroundTexture = "Textures\Background_game_over.png"
+backgroundTexture = "assets/textures/Background.png"
+gameOverBackgroundTexture = "assets/textures/Background_game_over.png"
 
-boardCellTexture = "Textures\CaseVide.png"
+boardCellTexture = "assets/textures/Empty_cell.png"
     
-#Cases colorées
-redCellTexture = "Textures\CaseRed.png"
-lightBlueCellTexture = "Textures\CaseLightBlue.png"
-orangeCellTexture = "Textures\CaseOrange.png"
-yellowCellTexture = "Textures\CaseYellow.png"
-blueCellTexture = "Textures\CaseBlue.png"
-blackCellTexture = "Textures\CaseBlack.png"
-brownCellTexture = "Textures\CaseBrown.png"
-greenCellTexture = "Textures\CaseGreen.png"
-pinkCellTexture = "Textures\CasePink.png"
-purpleCellTexture = "Textures\CasePurple.png"
+#Colored cell's texture
+redCellTexture = "assets/textures/Red_cell.png"
+lightBlueCellTexture = "assets/textures/Light_blue_cell.png"
+orangeCellTexture = "assets/textures/Orange_cell.png"
+yellowCellTexture = "assets/textures/Yellow_cell.png"
+blueCellTexture = "assets/textures/Blue_cell.png"
+blackCellTexture = "assets/textures/Black_cell.png"
+brownCellTexture = "assets/textures/Brown_cell.png"
+greenCellTexture = "assets/textures/Green_cell.png"
+pinkCellTexture = "assets/textures/Pink_cell.png"
+purpleCellTexture = "assets/textures/Purple_cell.png"
 
-#Cases sélectionnées
+#Selected cell's texture
+redCellSelectedTexture = "assets/textures/Red_cell_selected.png"
+lightBlueCellSelectedTexture = "assets/textures/Light_blue_cell_selected.png"
+orangeCellSelectedTexture = "assets/textures/Orange_cell_selected.png"
+yellowCellSelectedTexture = "assets/textures/Yellow_cell_selected.png"
+blueCellSelectedTexture = "assets/textures/Blue_cell_selected.png"
+blackCellSelectedTexture = "assets/textures/Black_cell_selected.png"
+brownCellSelectedTexture = "assets/textures/Brown_cell_selected.png"
+greenCellSelectedTexture = "assets/textures/Green_cell_selected.png"
+pinkCellSelectedTexture = "assets/textures/Pink_cell_selected.png"
+purpleCellSelectedTexture = "assets/textures/Purple_cell_selected.png"
 
-redCellSelectedTexture = "Textures\CaseRedSelected.png"
-lightBlueCellSelectedTexture = "Textures\CaseLightBlueSelected.png"
-orangeCellSelectedTexture = "Textures\CaseOrangeSelected.png"
-yellowCellSelectedTexture = "Textures\CaseYellowSelected.png"
-blueCellSelectedTexture = "Textures\CaseBlueSelected.png"
-blackCellSelectedTexture = "Textures\CaseBlackSelected.png"
-brownCellSelectedTexture = "Textures\CaseBrownSelected.png"
-greenCellSelectedTexture = "Textures\CaseGreenSelected.png"
-pinkCellSelectedTexture = "Textures\CasePinkSelected.png"
-purpleCellSelectedTexture = "Textures\CasePurpleSelected.png"
+#Can't be placed cell's texture
+redCantPlaceTexture = "assets/textures/Red_cell_not.png"
+lightBlueCantPlaceTexture = "assets/textures/Light_blue_cell_not.png"
+orangeCantPlaceTexture = "assets/textures/Orange_cell_not.png"
+yellowCantPlaceTexture = "assets/textures/Yellow_cell_not.png"
+blueCantPlaceTexture = "assets/textures/Blue_cell_not.png"
+blackCantPlaceTexture = "assets/textures/Black_cell_not.png"
+brownCantPlaceTexture = "assets/textures/Brown_cell_not.png"
+greenCantPlaceTexture = "assets/textures/Green_cell_not.png"
+pinkCantPlaceTexture = "assets/textures/Pink_cell_not.png"
+purpleCantPlaceTexture = "assets/textures/Purple_cell_not.png"
 
-#Cases Impossible à placer
-
-redCantPlaceTexture = "Textures\CaseRedNot.png"
-lightBlueCantPlaceTexture = "Textures\CaseLightBlueNot.png"
-orangeCantPlaceTexture = "Textures\CaseOrangeNot.png"
-yellowCantPlaceTexture = "Textures\CaseYellowNot.png"
-blueCantPlaceTexture = "Textures\CaseBlueNot.png"
-blackCantPlaceTexture = "Textures\CaseBlackNot.png"
-brownCantPlaceTexture = "Textures\CaseBrownNot.png"
-greenCantPlaceTexture = "Textures\CaseGreenNot.png"
-pinkCantPlaceTexture = "Textures\CasePinkNot.png"
-purpleCantPlaceTexture = "Textures\CasePurpleNot.png"
-
-#Liste des arguments permettant de créer différentes pièces
+#List of list of cell's argument (pick a random list to generate a piece)
 pieceList = [
     
     [{"x":0, "y":0,"textureUnselected": redCellTexture, "textureSelected": redCellSelectedTexture, "textureNot": redCantPlaceTexture}],
