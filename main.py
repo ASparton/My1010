@@ -23,7 +23,7 @@ screen.blit(background, (0,0))
 backgroundGameOver = pygame.image.load(constants.gameOverBackgroundTexture).convert_alpha()
 
 #Font creation
-font = pygame.font.SysFont("dearsunshine", 64)
+font = pygame.font.SysFont("dearsunshine", 40)
 
 #Board creation + display
 board = board_class.Board()
@@ -48,10 +48,11 @@ for cell in piece3[0].cellsList:
 
 #Set the score at the beginning
 score = 0
+bestScore = functions.get_best_score()
 
 #Game music
-pygame.mixer.music.load("Sons/Music.wav")
-pygame.mixer.music.set_volume(0.1)
+pygame.mixer.music.load("Sons/The Grand Affair.wav")
+pygame.mixer.music.set_volume(0.3)
 pygame.mixer.music.play()
 
 #Game sound initialization
@@ -80,8 +81,10 @@ while loop:
         
         #We wait for game event and update the score only if we're not in game over
         if gameOver == False:
-            score_conversion_text = str(score)
-            score_text = font.render(score_conversion_text, False, (255,255,255))
+            strScore = "Score: " + str(score)
+            scoreText = font.render(strScore, False, (255,255,255))
+            strBestScore = "Best score: " + bestScore
+            bestScoreText = font.render(strBestScore, False, (255, 255, 255))
     
             if phase == 1:
                 """When we are in phase 1, the player need to choose a piece with the directional keys,
@@ -285,6 +288,7 @@ while loop:
                             if gameOverTest == True:
                                 gameOver = True
                                 gameOverSound.play()
+                                functions.set_new_best_score_or_not(score, int(bestScore))
 
                             phase = 1
             
@@ -340,10 +344,11 @@ while loop:
                     for cell in piece3[0].cellsList:
                         screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
                     
+        screen.blit(scoreText, (0.5*constants.cellSize, 16*constants.cellSize))
+        screen.blit(bestScoreText, (6*constants.cellSize, 16*constants.cellSize))
+
         if gameOver == True:
             screen.blit(backgroundGameOver,(0,0))
             screen.blit(gameOverText, (6*constants.cellSize, 7*constants.cellSize))
-    
-        screen.blit(score_text, (1*constants.cellSize, 15*constants.cellSize))
 
         pygame.display.flip()

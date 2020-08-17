@@ -34,6 +34,19 @@ def generate_pieces():
 
     return piece1, piece2, piece3
 
+def get_best_score():
+
+    with open("Score.txt", 'r') as scoreFile:
+        bestScore = scoreFile.read()
+
+    return bestScore
+
+def set_new_best_score_or_not(actualScore, newBestScore):
+
+    if actualScore > newBestScore:
+        with open("Score.txt", "w") as scoreFile:
+            scoreFile.write(str(actualScore))
+
 def check_game_over(boardPlaceTestList):
 
     gameOverTest = False
