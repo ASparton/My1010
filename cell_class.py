@@ -15,6 +15,9 @@ class Cell:
         
         self.x = x_pos
         self.y = y_pos
+
+        self._initialX = x_pos
+        self._initialY = y_pos
         
         self.selected = selected
         self.empty = empty
@@ -23,3 +26,11 @@ class Cell:
         self.selectedTexture = pygame.image.load(selected_texture).convert_alpha()
         self.cantPlaceTexture = pygame.image.load(cant_place_texture).convert_alpha()
         self.texture = self.unselectedTexture
+
+    #initialPosition properties
+    def _get_initialX(self):
+        return self._initialX
+    initialX = property(_get_initialX)
+    def _get_initialY(self):
+        return self._initialY
+    initialY = property(_get_initialY)

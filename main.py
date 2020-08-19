@@ -291,7 +291,13 @@ while loop:
                                 functions.set_new_best_score_or_not(score, int(bestScore))
 
                             phase = 1
-            
+
+                    if event.key == K_r:
+                        for cell in chosenPiece[0].cellsList:
+                            cell.x = cell.initialX
+                            cell.y = cell.initialY
+                        phase = 1
+
         """Display every textures of the game at every loop in the right order."""
     
         screen.blit(background, (0,0))

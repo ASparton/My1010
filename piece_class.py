@@ -9,7 +9,7 @@ class Piece:
     def __init__(self, cellsList, selected=False):
         
         self._cellsList = cellsList
-        
+
         self._selected = selected
         self._placed = False
         self._canBePlaced = True
@@ -66,6 +66,8 @@ class Piece:
         self._cellNumberY = cellNumberY
     cellNumberY = property(_get_cellNumber, _set_cellNumberY)
 
+    """Methods"""
+
     def def_cell_number(self):
         """Give the number of cells in the piece + number in X and Y specific axis"""
         
@@ -83,7 +85,7 @@ class Piece:
                 
         self.cellNumberX = xmax
         self.cellNumberY = ymax
-          
+
     def select(self):
         """Select each cell of the piece and the piece itself"""
         
