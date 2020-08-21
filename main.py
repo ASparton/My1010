@@ -66,25 +66,30 @@ gameOverText = font.render("Game Over", False, (255, 255, 255))
 
 """Variable that cut the two phase of the game:
          - When phase == 1, we are in the first phase, the selection of the piece
-         - When phase == 2, we are in the second phase, the player put down the piece on the board"""
+         - When phase == 2, we are in the second phase, the player put down the piece on the board
+         - When phase == 3, we are in game over, the player can watch the scores, then exit or go to the main menu"""
 phase = 1
 
 #Load the screen
 pygame.display.flip()
 
-loop = 1
-while loop:
+runGame = True
+while runGame:
     
-    for event in pygame.event.get(): #Exit event
-        if event.type == QUIT:
-            loop = 0
+    while (phase == 1 or phase == 2):
         
-        #We wait for game event and update the score only if we're not in game over
-        if gameOver == False:
-            strScore = "SCORE: " + str(score)
-            scoreText = font.render(strScore, False, (10,10,10))
-            strBestScore = "BEST SCORE: " + bestScore
-            bestScoreText = font.render(strBestScore, False, (10,10,10))
+        if not runGame: #If the player exit the game. Break the while loop to end up the program
+            break
+        
+        #We wait for game event and update the score
+        strScore = "SCORE: " + str(score)
+        scoreText = font.render(strScore, False, (10,10,10))
+        strBestScore = "BEST SCORE: " + bestScore
+        bestScoreText = font.render(strBestScore, False, (10,10,10))
+
+        for event in pygame.event.get(): #Exit event
+            if event.type == QUIT:
+                runGame = False
     
             if phase == 1:
                 """When we are in phase 1, the player need to choose a piece with the directional keys,
@@ -218,6 +223,12 @@ while loop:
                     if event.key == K_LEFT:
                         chosenPiece[0].moove("left")
             
+                    if event.key == K_r:
+                        for cell in chosenPiece[0].cellsList:
+                            cell.x = cell.initialX
+                            cell.y = cell.initialY
+                        phase = 1
+
                     if event.key == K_RETURN:
                     
                         canBePlaced = board.player_place_verification(chosenPiece[0])
@@ -286,17 +297,11 @@ while loop:
                             #Test if we are game over or not
                             gameOverTest = functions.check_game_over(boardPlaceTestList)
                             if gameOverTest == True:
-                                gameOver = True
                                 gameOverSound.play()
                                 functions.set_new_best_score_or_not(score, int(bestScore))
-
-                            phase = 1
-
-                    if event.key == K_r:
-                        for cell in chosenPiece[0].cellsList:
-                            cell.x = cell.initialX
-                            cell.y = cell.initialY
-                        phase = 1
+                                phase = 3
+                            else:
+                                phase = 1
 
         """Display every textures of the game at every loop in the right order."""
     
@@ -356,8 +361,18 @@ while loop:
         screen.blit(scoreText, (0.3*constants.cellSize, 13.8*constants.cellSize))
         screen.blit(bestScoreText, (0.3*constants.cellSize, 15.8*constants.cellSize))
 
-        if gameOver == True:
-            screen.blit(backgroundGameOver,(0,0))
-            screen.blit(gameOverText, (6*constants.cellSize, 7*constants.cellSize))
+        pygame.display.flip()
+
+    while (phase == 3):
+
+        if not runGame: #If the player exit the game. Break the while loop to end up the program
+            break
+
+        for event in pygame.event.get(): #Exit event
+            if event.type == QUIT:
+                runGame = False
+
+        screen.blit(backgroundGameOver,(0,0))
+        screen.blit(gameOverText, (6*constants.cellSize, 7*constants.cellSize))
 
         pygame.display.flip()
