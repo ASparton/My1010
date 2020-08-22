@@ -12,9 +12,16 @@ pieceChoosePlaceY3 = 12
 backgroundTexture = "assets/textures/Background.png"
 gameOverBackgroundTexture = "assets/textures/Background_game_over.png"
 
-boardCellTexture = "assets/textures/Empty_cell.png"
+#Main menu
+titleTexture = "assets/textures/Title.png"
+playButtonTexture = "assets/textures/Play_button.png"
+playButtonSelectedTexture = "assets/textures/Play_button_selected.png"
+exitButtonTexture = "assets/textures/Exit_button.png"
+exitButtonSelectedTexture = "assets/textures/Exit_button_selected.png"
     
-#Colored cell's texture
+#Cell's texture
+boardCellTexture = "assets/textures/Empty_cell.png"
+
 redCellTexture = "assets/textures/Red_cell.png"
 lightBlueCellTexture = "assets/textures/Light_blue_cell.png"
 orangeCellTexture = "assets/textures/Orange_cell.png"

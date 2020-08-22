@@ -8,6 +8,7 @@ import functions
 import cell_class
 import board_class
 import piece_class
+import button_class
 
 pygame.init()
 
@@ -64,18 +65,63 @@ gameOverSound = pygame.mixer.Sound("assets/sounds/Game_over.wav")
 gameOver = False
 gameOverText = font.render("Game Over", False, (255, 255, 255))
 
+#Menu initialization
+title = pygame.image.load(constants.titleTexture).convert_alpha()
+
+playButton = button_class.Button("play", constants.screenSize[0]/2-96, 200, constants.playButtonTexture, constants.playButtonSelectedTexture, True)
+exitButton = button_class.Button("exit", constants.screenSize[0]/2-96, 400, constants.exitButtonTexture, constants.exitButtonSelectedTexture)
+
 """Variable that cut the two phase of the game:
          - When phase == 1, we are in the first phase, the selection of the piece
          - When phase == 2, we are in the second phase, the player put down the piece on the board
          - When phase == 3, we are in game over, the player can watch the scores, then exit or go to the main menu"""
-phase = 1
+phase = 0
 
 #Load the screen
 pygame.display.flip()
 
 runGame = True
 while runGame:
-    
+    while (phase == 0):
+        """Main menu"""
+        if not runGame: #If the player exit the game. Break the while loop to end up the program
+            break
+            
+        for event in pygame.event.get(): #Exit event
+            if event.type == QUIT:
+                runGame = False
+
+            if event.type == KEYDOWN:
+                if event.key == K_DOWN: #Select the next button
+                    if playButton.selected:
+                        playButton.selected = False
+                        exitButton.selected = True
+                    elif exitButton.selected:
+                        exitButton.selected = False
+                        playButton.selected = True
+
+                if event.key == K_UP:   #Select the next button
+                    if playButton.selected:
+                        playButton.selected = False
+                        exitButton.selected = True
+                    elif exitButton.selected:
+                        exitButton.selected = False
+                        playButton.selected = True
+
+                if event.key == K_RETURN:   #Call the function of the selected button
+                    if playButton.selected:
+                        phase = playButton.do_function()
+                    elif exitButton.selected:
+                        runGame = exitButton.do_function()
+
+        """Display of the main menu's elements"""
+        screen.blit(background, (0,0))
+        screen.blit(title, ((constants.screenSize[0]/2-160), 0))
+        screen.blit(playButton.texture, (playButton.x, playButton.y))
+        screen.blit(exitButton.texture, (exitButton.x, exitButton.y))
+
+        pygame.display.flip()
+
     while (phase == 1 or phase == 2):
         
         if not runGame: #If the player exit the game. Break the while loop to end up the program
