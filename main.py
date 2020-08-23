@@ -26,31 +26,6 @@ backgroundGameOver = pygame.image.load(constants.gameOverBackgroundTexture).conv
 #Font creation
 font = pygame.font.Font("assets/pixel_font.ttf", 40)
 
-#Board creation + display
-board = board_class.Board()
-board.build()
-for cell in board.cellsList:
-    screen.blit(cell.texture, (cell.x * constants.cellSize, cell.y * constants.cellSize))
-
-#Pieces generation
-piece1, piece2, piece3 = functions.generate_pieces()
-#Pointer (list) of the piece the player is going to choose
-chosenPiece = piece1    #For now it points on piece1
-#We select the first piece. Then the player will choose from that start
-piece1[0].select()
-
-#Pieces display
-for cell in piece1[0].cellsList:
-    screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
-for cell in piece2[0].cellsList:
-    screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
-for cell in piece3[0].cellsList:
-    screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
-
-#Set the score at the beginning
-score = 0
-bestScore = functions.get_best_score()
-
 #Game music
 pygame.mixer.music.load("assets/sounds/The Grand Affair.wav")
 pygame.mixer.music.set_volume(0.3)
@@ -67,9 +42,9 @@ gameOverText = font.render("Game Over", False, (255, 255, 255))
 
 #Menu initialization
 title = pygame.image.load(constants.titleTexture).convert_alpha()
-
+#Buttons creation
 playButton = button_class.Button("play", constants.screenSize[0]/2-96, 200, constants.playButtonTexture, constants.playButtonSelectedTexture, True)
-exitButton = button_class.Button("exit", constants.screenSize[0]/2-96, 400, constants.exitButtonTexture, constants.exitButtonSelectedTexture)
+mainMenuExitButton = button_class.Button("exit", constants.screenSize[0]/2-96, 400, constants.exitButtonTexture, constants.exitButtonSelectedTexture)
 
 """Variable that cut the two phase of the game:
          - When phase == 1, we are in the first phase, the selection of the piece
@@ -86,7 +61,7 @@ while runGame:
         """Main menu"""
         if not runGame: #If the player exit the game. Break the while loop to end up the program
             break
-            
+
         for event in pygame.event.get(): #Exit event
             if event.type == QUIT:
                 runGame = False
@@ -95,30 +70,44 @@ while runGame:
                 if event.key == K_DOWN: #Select the next button
                     if playButton.selected:
                         playButton.selected = False
-                        exitButton.selected = True
-                    elif exitButton.selected:
-                        exitButton.selected = False
+                        mainMenuExitButton.selected = True
+                    elif mainMenuExitButton.selected:
+                        mainMenuExitButton.selected = False
                         playButton.selected = True
 
                 if event.key == K_UP:   #Select the next button
                     if playButton.selected:
                         playButton.selected = False
-                        exitButton.selected = True
-                    elif exitButton.selected:
-                        exitButton.selected = False
+                        mainMenuExitButton.selected = True
+                    elif mainMenuExitButton.selected:
+                        mainMenuExitButton.selected = False
                         playButton.selected = True
 
                 if event.key == K_RETURN:   #Call the function of the selected button
                     if playButton.selected:
                         phase = playButton.do_function()
-                    elif exitButton.selected:
-                        runGame = exitButton.do_function()
+                        if phase == 1:  #Creation of the game elements
+                            #Board creation
+                            board = board_class.Board()
+                            board.build()
+                            #Pieces generation
+                            piece1, piece2, piece3 = functions.generate_pieces()
+                            #Pointer (list) of the piece the player is going to choose
+                            chosenPiece = piece1    #For now it points on piece1
+                            #We select the first piece. Then the player will choose from that start
+                            piece1[0].select()
+                            #Set the score at the beginning
+                            score = 0
+                            bestScore = functions.get_best_score()
+
+                    elif mainMenuExitButton.selected:
+                        runGame = mainMenuExitButton.do_function()
 
         """Display of the main menu's elements"""
         screen.blit(background, (0,0))
         screen.blit(title, ((constants.screenSize[0]/2-160), 0))
         screen.blit(playButton.texture, (playButton.x, playButton.y))
-        screen.blit(exitButton.texture, (exitButton.x, exitButton.y))
+        screen.blit(mainMenuExitButton.texture, (mainMenuExitButton.x, mainMenuExitButton.y))
 
         pygame.display.flip()
 
@@ -345,6 +334,9 @@ while runGame:
                             if gameOverTest == True:
                                 gameOverSound.play()
                                 functions.set_new_best_score_or_not(score, int(bestScore))
+                                #Game over menu's buttons creation
+                                homeButton = button_class.Button("home", constants.screenSize[0]/2-96, 200, constants.homeButtonTexture, constants.homeButtonSelectedTexture, True)
+                                gameOverExitButton = button_class.Button("exit", constants.screenSize[0]/2-96, 400, constants.exitButtonTexture, constants.exitButtonSelectedTexture)
                                 phase = 3
                             else:
                                 phase = 1
@@ -418,7 +410,37 @@ while runGame:
             if event.type == QUIT:
                 runGame = False
 
+            if event.type == KEYDOWN:
+                if event.key == K_DOWN: #Select the next button
+                    if homeButton.selected:
+                        homeButton.selected = False
+                        gameOverExitButton.selected = True
+                    elif gameOverExitButton.selected:
+                        gameOverExitButton.selected = False
+                        homeButton.selected = True
+
+                if event.key == K_UP:   #Select the next button
+                    if homeButton.selected:
+                        homeButton.selected = False
+                        gameOverExitButton.selected = True
+                    elif gameOverExitButton.selected:
+                        gameOverExitButton.selected = False
+                        homeButton.selected = True
+
+                if event.key == K_RETURN:   #Call the function of the selected button
+                    if homeButton.selected:
+                        phase = homeButton.do_function()
+                        if phase == 0:
+                            #Main menu's buttons creation
+                            playButton = button_class.Button("play", constants.screenSize[0]/2-96, 200, constants.playButtonTexture, constants.playButtonSelectedTexture, True)
+                            mainMenuExitButton = button_class.Button("exit", constants.screenSize[0]/2-96, 400, constants.exitButtonTexture, constants.exitButtonSelectedTexture)
+                    elif gameOverExitButton.selected:
+                        runGame = gameOverExitButton.do_function()
+
+        """Display of the game over menu's objects"""
         screen.blit(backgroundGameOver,(0,0))
-        screen.blit(gameOverText, (6*constants.cellSize, 7*constants.cellSize))
+        screen.blit(gameOverText, (300, 50))
+        screen.blit(homeButton.texture, (homeButton.x, homeButton.y))
+        screen.blit(gameOverExitButton.texture, (gameOverExitButton.x, gameOverExitButton.y))
 
         pygame.display.flip()
