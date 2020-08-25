@@ -22,13 +22,13 @@ def create_piece(cellsArgumentList):
 def generate_pieces():
     """Generate and return 3 random pieces using "create_piece" function."""
 
-    randomCellsArgumentList = random.choice(constants.pieceList)
+    randomCellsArgumentList = random.choice(constants.PIECELIST)
     piece1 = [create_piece(randomCellsArgumentList)]
 
-    randomCellsArgumentList = random.choice(constants.pieceList)
+    randomCellsArgumentList = random.choice(constants.PIECELIST)
     piece2 = [create_piece(randomCellsArgumentList)]
 
-    randomCellsArgumentList = random.choice(constants.pieceList)
+    randomCellsArgumentList = random.choice(constants.PIECELIST)
     piece3 = [create_piece(randomCellsArgumentList)]
 
     return piece1, piece2, piece3

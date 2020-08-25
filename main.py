@@ -15,13 +15,14 @@ pygame.init()
 """Initialization of all we need before starting the game."""
 
 #Screen creations
-screen = pygame.display.set_mode((constants.screenSize[0], constants.screenSize[1]), RESIZABLE)
+screen = pygame.display.set_mode((constants.SCREENSIZE[0], constants.SCREENSIZE[1]), RESIZABLE)
+pygame.display.set_caption("Retro 1010!")
 
 #Background importation + display
-background = pygame.image.load(constants.backgroundTexture).convert_alpha()
+background = pygame.image.load(constants.BACKGROUNDTEXTURE).convert_alpha()
 screen.blit(background, (0,0))
 #Game over background importation
-backgroundGameOver = pygame.image.load(constants.gameOverBackgroundTexture).convert_alpha()
+backgroundGameOver = pygame.image.load(constants.GAMEOVERBACKGROUNDTEXTURE).convert_alpha()
 
 #Font creation
 font = pygame.font.Font("assets/pixel_font.ttf", 40)
@@ -41,10 +42,10 @@ gameOver = False
 gameOverText = font.render("Game Over", False, (255, 255, 255))
 
 #Menu initialization
-title = pygame.image.load(constants.titleTexture).convert_alpha()
+title = pygame.image.load(constants.TITLETEXTURE).convert_alpha()
 #Buttons creation
-playButton = button_class.Button("play", constants.screenSize[0]/2-96, 200, constants.playButtonTexture, constants.playButtonSelectedTexture, True)
-mainMenuExitButton = button_class.Button("exit", constants.screenSize[0]/2-96, 400, constants.exitButtonTexture, constants.exitButtonSelectedTexture)
+playButton = button_class.Button("play", constants.SCREENSIZE[0]/2-96, 200, constants.PLAYBUTTONTEXTURE, constants.PLAYBUTTONSELECTEDTEXTURE, True)
+mainMenuExitButton = button_class.Button("exit", constants.SCREENSIZE[0]/2-96, 400, constants.EXITBUTTONTEXTURE, constants.exitButtonSelectedTexture)
 
 """Variable that cut the two phase of the game:
          - When phase == 1, we are in the first phase, the selection of the piece
@@ -55,9 +56,17 @@ phase = 0
 #Load the screen
 pygame.display.flip()
 
+#game loop setup
+clock = pygame.time.Clock()
 runGame = True
+
 while runGame:
+     #Set the max FPS of the game to "constants.FPS" (60), so we have the same loop time on every system
+    clock.tick(constants.FPS)
+
     while (phase == 0):
+        clock.tick(constants.FPS)
+
         """Main menu"""
         if not runGame: #If the player exit the game. Break the while loop to end up the program
             break
@@ -105,14 +114,15 @@ while runGame:
 
         """Display of the main menu's elements"""
         screen.blit(background, (0,0))
-        screen.blit(title, ((constants.screenSize[0]/2-160), 0))
+        screen.blit(title, ((constants.SCREENSIZE[0]/2-160), 0))
         screen.blit(playButton.texture, (playButton.x, playButton.y))
         screen.blit(mainMenuExitButton.texture, (mainMenuExitButton.x, mainMenuExitButton.y))
 
         pygame.display.flip()
 
     while (phase == 1 or phase == 2):
-        
+        clock.tick(constants.FPS)
+
         if not runGame: #If the player exit the game. Break the while loop to end up the program
             break
         
@@ -335,8 +345,8 @@ while runGame:
                                 gameOverSound.play()
                                 functions.set_new_best_score_or_not(score, int(bestScore))
                                 #Game over menu's buttons creation
-                                homeButton = button_class.Button("home", constants.screenSize[0]/2-96, 200, constants.homeButtonTexture, constants.homeButtonSelectedTexture, True)
-                                gameOverExitButton = button_class.Button("exit", constants.screenSize[0]/2-96, 400, constants.exitButtonTexture, constants.exitButtonSelectedTexture)
+                                homeButton = button_class.Button("home", constants.SCREENSIZE[0]/2-96, 200, constants.HOMEBUTTONTEXTURE, constants.HOMEBUTTONSELECTEDTEXTURE, True)
+                                gameOverExitButton = button_class.Button("exit", constants.SCREENSIZE[0]/2-96, 400, constants.EXITBUTTONTEXTURE, constants.exitButtonSelectedTexture)
                                 phase = 3
                             else:
                                 phase = 1
@@ -346,34 +356,34 @@ while runGame:
         screen.blit(background, (0,0))
 
         for cell in board.cellsList:
-            screen.blit(cell.texture, (cell.x * constants.cellSize, cell.y * constants.cellSize))
+            screen.blit(cell.texture, (cell.x * constants.CELLSIZE, cell.y * constants.CELLSIZE))
     
         if phase == 1:
             for cell in piece1[0].cellsList:
-                screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
+                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY1 + cell.y) * constants.CELLSIZE)))
             for cell in piece2[0].cellsList:
-                screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
+                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY2 + cell.y) * constants.CELLSIZE)))
             for cell in piece3[0].cellsList:
-                screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
+                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY3 + cell.y) * constants.CELLSIZE)))
     
         if phase == 2:
         
             if chosenPiece[0].canBePlaced == False:
                 for cell in chosenPiece[0].cellsList:
-                    screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
+                    screen.blit(cell.texture, (((0 + cell.x) * constants.CELLSIZE), ((0 + cell.y) * constants.CELLSIZE)))
                     
                 if piece1[0].selected == False:
                     for cell in piece1[0].cellsList:
-                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
+                        screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY1 + cell.y) * constants.CELLSIZE)))
                 if piece2[0].selected == False:
                     for cell in piece2[0].cellsList:
-                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
+                        screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY2 + cell.y) * constants.CELLSIZE)))
                 if piece3[0].selected == False:
                     for cell in piece3[0].cellsList:
-                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
+                        screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY3 + cell.y) * constants.CELLSIZE)))
                     
-                screen.blit(scoreText, (0.3*constants.cellSize, 13.8*constants.cellSize))
-                screen.blit(bestScoreText, (0.3*constants.cellSize, 15.8*constants.cellSize))
+                screen.blit(scoreText, (0.3*constants.CELLSIZE, 13.8*constants.CELLSIZE))
+                screen.blit(bestScoreText, (0.3*constants.CELLSIZE, 15.8*constants.CELLSIZE))
 
                 pygame.display.flip()
                 time.sleep(0.6)
@@ -384,24 +394,25 @@ while runGame:
                 
             else:
                 for cell in chosenPiece[0].cellsList:
-                    screen.blit(cell.texture, (((0 + cell.x) * constants.cellSize), ((0 + cell.y) * constants.cellSize)))
+                    screen.blit(cell.texture, (((0 + cell.x) * constants.CELLSIZE), ((0 + cell.y) * constants.CELLSIZE)))
                 
                 if piece1[0].selected == False:
                     for cell in piece1[0].cellsList:
-                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY1 + cell.y) * constants.cellSize)))
+                        screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY1 + cell.y) * constants.CELLSIZE)))
                 if piece2[0].selected == False:
                     for cell in piece2[0].cellsList:
-                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY2 + cell.y) * constants.cellSize)))
+                        screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY2 + cell.y) * constants.CELLSIZE)))
                 if piece3[0].selected == False:
                     for cell in piece3[0].cellsList:
-                        screen.blit(cell.texture, (((constants.pieceChoosePlaceX + cell.x) * constants.cellSize), ((constants.pieceChoosePlaceY3 + cell.y) * constants.cellSize)))
+                        screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY3 + cell.y) * constants.CELLSIZE)))
                     
-        screen.blit(scoreText, (0.3*constants.cellSize, 13.8*constants.cellSize))
-        screen.blit(bestScoreText, (0.3*constants.cellSize, 15.8*constants.cellSize))
+        screen.blit(scoreText, (0.3*constants.CELLSIZE, 13.8*constants.CELLSIZE))
+        screen.blit(bestScoreText, (0.3*constants.CELLSIZE, 15.8*constants.CELLSIZE))
 
         pygame.display.flip()
 
     while (phase == 3):
+        clock.tick(constants.FPS)
 
         if not runGame: #If the player exit the game. Break the while loop to end up the program
             break
@@ -432,8 +443,8 @@ while runGame:
                         phase = homeButton.do_function()
                         if phase == 0:
                             #Main menu's buttons creation
-                            playButton = button_class.Button("play", constants.screenSize[0]/2-96, 200, constants.playButtonTexture, constants.playButtonSelectedTexture, True)
-                            mainMenuExitButton = button_class.Button("exit", constants.screenSize[0]/2-96, 400, constants.exitButtonTexture, constants.exitButtonSelectedTexture)
+                            playButton = button_class.Button("play", constants.SCREENSIZE[0]/2-96, 200, constants.PLAYBUTTONTEXTURE, constants.PLAYBUTTONSELECTEDTEXTURE, True)
+                            mainMenuExitButton = button_class.Button("exit", constants.SCREENSIZE[0]/2-96, 400, constants.EXITBUTTONTEXTURE, constants.exitButtonSelectedTexture)
                     elif gameOverExitButton.selected:
                         runGame = gameOverExitButton.do_function()
 
@@ -444,3 +455,5 @@ while runGame:
         screen.blit(gameOverExitButton.texture, (gameOverExitButton.x, gameOverExitButton.y))
 
         pygame.display.flip()
+
+pygame.quit()   #If the main loop is break it's because a "QUIT" event has been done. So we quit pygame

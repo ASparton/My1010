@@ -1,104 +1,107 @@
 """Screen"""
-screenSize = [640, 544]
+SCREENSIZE = [640, 544]
 
-cellSize = 32
+CELLSIZE = 32
 
-pieceChoosePlaceX = 12
-pieceChoosePlaceY1 = 0
-pieceChoosePlaceY2 = 6
-pieceChoosePlaceY3 = 12
+PIECECHOOSEPLACEX = 12
+PIECECHOOSEPLACEY1 = 0
+PIECECHOOSEPLACEY2 = 6
+PIECECHOOSEPLACEY3 = 12
+
+"""Game loop constants"""
+FPS = 60
 
 """Textures"""
-backgroundTexture = "assets/textures/Background.png"
-gameOverBackgroundTexture = "assets/textures/Background_game_over.png"
+BACKGROUNDTEXTURE = "assets/textures/Background.png"
+GAMEOVERBACKGROUNDTEXTURE = "assets/textures/Background_game_over.png"
 
 #Main menu
-titleTexture = "assets/textures/Title.png"
+TITLETEXTURE = "assets/textures/Title.png"
 
 #Buttons
-playButtonTexture = "assets/textures/Play_button.png"
-playButtonSelectedTexture = "assets/textures/Play_button_selected.png"
-exitButtonTexture = "assets/textures/Exit_button.png"
+PLAYBUTTONTEXTURE = "assets/textures/Play_button.png"
+PLAYBUTTONSELECTEDTEXTURE = "assets/textures/Play_button_selected.png"
+EXITBUTTONTEXTURE = "assets/textures/Exit_button.png"
 exitButtonSelectedTexture = "assets/textures/Exit_button_selected.png"
-homeButtonTexture = "assets/textures/Home_button.png"
-homeButtonSelectedTexture = "assets/textures/Home_button_selected.png"
+HOMEBUTTONTEXTURE = "assets/textures/Home_button.png"
+HOMEBUTTONSELECTEDTEXTURE = "assets/textures/Home_button_selected.png"
     
 #Cell's texture
-boardCellTexture = "assets/textures/Empty_cell.png"
+BOARDCELLTEXTURE = "assets/textures/Empty_cell.png"
 
-redCellTexture = "assets/textures/Red_cell.png"
-lightBlueCellTexture = "assets/textures/Light_blue_cell.png"
-orangeCellTexture = "assets/textures/Orange_cell.png"
-yellowCellTexture = "assets/textures/Yellow_cell.png"
-blueCellTexture = "assets/textures/Blue_cell.png"
-blackCellTexture = "assets/textures/Black_cell.png"
-brownCellTexture = "assets/textures/Brown_cell.png"
-greenCellTexture = "assets/textures/Green_cell.png"
-pinkCellTexture = "assets/textures/Pink_cell.png"
-purpleCellTexture = "assets/textures/Purple_cell.png"
+REDCELLTEXTURE = "assets/textures/Red_cell.png"
+LIGHTBLUECELLTEXTURE = "assets/textures/Light_blue_cell.png"
+ORANGECELLTEXTURE = "assets/textures/Orange_cell.png"
+YELLOWCELLTEXTURE = "assets/textures/Yellow_cell.png"
+BLUECELLTEXTURE = "assets/textures/Blue_cell.png"
+BLACKCELLTEXTURE = "assets/textures/Black_cell.png"
+BROWNCELLTEXTURE = "assets/textures/Brown_cell.png"
+GREENCELLTEXTURE = "assets/textures/Green_cell.png"
+PINKCELLTEXTURE = "assets/textures/Pink_cell.png"
+PURPLECELLTEXTURE = "assets/textures/Purple_cell.png"
 
 #Selected cell's texture
-redCellSelectedTexture = "assets/textures/Red_cell_selected.png"
-lightBlueCellSelectedTexture = "assets/textures/Light_blue_cell_selected.png"
-orangeCellSelectedTexture = "assets/textures/Orange_cell_selected.png"
-yellowCellSelectedTexture = "assets/textures/Yellow_cell_selected.png"
-blueCellSelectedTexture = "assets/textures/Blue_cell_selected.png"
-blackCellSelectedTexture = "assets/textures/Black_cell_selected.png"
-brownCellSelectedTexture = "assets/textures/Brown_cell_selected.png"
-greenCellSelectedTexture = "assets/textures/Green_cell_selected.png"
-pinkCellSelectedTexture = "assets/textures/Pink_cell_selected.png"
-purpleCellSelectedTexture = "assets/textures/Purple_cell_selected.png"
+REDCELLSELECTEDTEXTURE = "assets/textures/Red_cell_selected.png"
+LIGHTBLUECELLSELECTEDTEXTURE = "assets/textures/Light_blue_cell_selected.png"
+ORANGECELLSELECTEDTEXTURE = "assets/textures/Orange_cell_selected.png"
+YELLOWCELLSELECTEDTEXTURE = "assets/textures/Yellow_cell_selected.png"
+BLUECELLSELECTEDTEXTURE = "assets/textures/Blue_cell_selected.png"
+BLACKCELLSELECTEDTEXTURE = "assets/textures/Black_cell_selected.png"
+BROWNCELLSELECTEDTEXTURE = "assets/textures/Brown_cell_selected.png"
+GREENCELLSELECTEDTEXTURE = "assets/textures/Green_cell_selected.png"
+PINKCELLSELECTEDTEXTURE = "assets/textures/Pink_cell_selected.png"
+PURPLECELLSELECTEDTEXTURE = "assets/textures/Purple_cell_selected.png"
 
 #Can't be placed cell's texture
-redCantPlaceTexture = "assets/textures/Red_cell_not.png"
-lightBlueCantPlaceTexture = "assets/textures/Light_blue_cell_not.png"
-orangeCantPlaceTexture = "assets/textures/Orange_cell_not.png"
-yellowCantPlaceTexture = "assets/textures/Yellow_cell_not.png"
-blueCantPlaceTexture = "assets/textures/Blue_cell_not.png"
-blackCantPlaceTexture = "assets/textures/Black_cell_not.png"
-brownCantPlaceTexture = "assets/textures/Brown_cell_not.png"
-greenCantPlaceTexture = "assets/textures/Green_cell_not.png"
-pinkCantPlaceTexture = "assets/textures/Pink_cell_not.png"
-purpleCantPlaceTexture = "assets/textures/Purple_cell_not.png"
+REDCANTPLACETEXTURE = "assets/textures/Red_cell_not.png"
+LIGHTBLUECANTPLACETEXTURE = "assets/textures/Light_blue_cell_not.png"
+ORANGECANTPLACETEXTURE = "assets/textures/Orange_cell_not.png"
+YELLOWCANTPLACETEXTURE = "assets/textures/Yellow_cell_not.png"
+BLUECANTPLACETEXTURE = "assets/textures/Blue_cell_not.png"
+BLACKCANTPLACETEXTURE = "assets/textures/Black_cell_not.png"
+BROWNCANTPLACETEXTURE = "assets/textures/Brown_cell_not.png"
+GREENCANTPLACETEXTURE = "assets/textures/Green_cell_not.png"
+PINKCANTPLACETEXTURE = "assets/textures/Pink_cell_not.png"
+PURPLECANTPLACETEXTURE = "assets/textures/Purple_cell_not.png"
 
 #List of list of cell's argument (pick a random list to generate a piece)
-pieceList = [
+PIECELIST = [
     
-    [{"x":0, "y":0,"textureUnselected": redCellTexture, "textureSelected": redCellSelectedTexture, "textureNot": redCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": REDCELLTEXTURE, "textureSelected": REDCELLSELECTEDTEXTURE, "textureNot": REDCANTPLACETEXTURE}],
 
-    [{"x":0, "y":0,"textureUnselected": blueCellTexture, "textureSelected": blueCellSelectedTexture, "textureNot": blueCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": blueCellTexture, "textureSelected": blueCellSelectedTexture, "textureNot": blueCantPlaceTexture}],
-    [{"x":0, "y":0,"textureUnselected": blueCellTexture, "textureSelected": blueCellSelectedTexture, "textureNot": blueCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": blueCellTexture, "textureSelected": blueCellSelectedTexture, "textureNot": blueCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": BLUECELLTEXTURE, "textureSelected": BLUECELLSELECTEDTEXTURE, "textureNot": BLUECANTPLACETEXTURE}, {"x":0, "y":1,"textureUnselected": BLUECELLTEXTURE, "textureSelected": BLUECELLSELECTEDTEXTURE, "textureNot": BLUECANTPLACETEXTURE}],
+    [{"x":0, "y":0,"textureUnselected": BLUECELLTEXTURE, "textureSelected": BLUECELLSELECTEDTEXTURE, "textureNot": BLUECANTPLACETEXTURE}, {"x":1, "y":0,"textureUnselected": BLUECELLTEXTURE, "textureSelected": BLUECELLSELECTEDTEXTURE, "textureNot": BLUECANTPLACETEXTURE}],
 
-    [{"x":0, "y":0,"textureUnselected": lightBlueCellTexture, "textureSelected": lightBlueCellSelectedTexture, "textureNot": lightBlueCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": lightBlueCellTexture, "textureSelected": lightBlueCellSelectedTexture, "textureNot": lightBlueCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": lightBlueCellTexture, "textureSelected": lightBlueCellSelectedTexture, "textureNot": lightBlueCantPlaceTexture}],
-    [{"x":0, "y":0,"textureUnselected": lightBlueCellTexture, "textureSelected": lightBlueCellSelectedTexture, "textureNot": lightBlueCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": lightBlueCellTexture, "textureSelected": lightBlueCellSelectedTexture, "textureNot": lightBlueCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": lightBlueCellTexture, "textureSelected": lightBlueCellSelectedTexture, "textureNot": lightBlueCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": LIGHTBLUECELLTEXTURE, "textureSelected": LIGHTBLUECELLSELECTEDTEXTURE, "textureNot": LIGHTBLUECANTPLACETEXTURE}, {"x":0, "y":1,"textureUnselected": LIGHTBLUECELLTEXTURE, "textureSelected": LIGHTBLUECELLSELECTEDTEXTURE, "textureNot": LIGHTBLUECANTPLACETEXTURE}, {"x":0, "y":2,"textureUnselected": LIGHTBLUECELLTEXTURE, "textureSelected": LIGHTBLUECELLSELECTEDTEXTURE, "textureNot": LIGHTBLUECANTPLACETEXTURE}],
+    [{"x":0, "y":0,"textureUnselected": LIGHTBLUECELLTEXTURE, "textureSelected": LIGHTBLUECELLSELECTEDTEXTURE, "textureNot": LIGHTBLUECANTPLACETEXTURE}, {"x":1, "y":0,"textureUnselected": LIGHTBLUECELLTEXTURE, "textureSelected": LIGHTBLUECELLSELECTEDTEXTURE, "textureNot": LIGHTBLUECANTPLACETEXTURE}, {"x":2, "y":0,"textureUnselected": LIGHTBLUECELLTEXTURE, "textureSelected": LIGHTBLUECELLSELECTEDTEXTURE, "textureNot": LIGHTBLUECANTPLACETEXTURE}],
 
-    [{"x":0, "y":0,"textureUnselected": purpleCellTexture, "textureSelected": purpleCellSelectedTexture, "textureNot": purpleCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": purpleCellTexture, "textureSelected": purpleCellSelectedTexture, "textureNot": purpleCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": purpleCellTexture, "textureSelected": purpleCellSelectedTexture, "textureNot": purpleCantPlaceTexture}, {"x":0, "y":3,"textureUnselected": purpleCellTexture, "textureSelected": purpleCellSelectedTexture, "textureNot": purpleCantPlaceTexture}],
-    [{"x":0, "y":0,"textureUnselected": purpleCellTexture, "textureSelected": purpleCellSelectedTexture, "textureNot": purpleCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": purpleCellTexture, "textureSelected": purpleCellSelectedTexture, "textureNot": purpleCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": purpleCellTexture, "textureSelected": purpleCellSelectedTexture, "textureNot": purpleCantPlaceTexture}, {"x":3, "y":0,"textureUnselected": purpleCellTexture, "textureSelected": purpleCellSelectedTexture, "textureNot": purpleCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": PURPLECELLTEXTURE, "textureSelected": PURPLECELLSELECTEDTEXTURE, "textureNot": PURPLECANTPLACETEXTURE}, {"x":0, "y":1,"textureUnselected": PURPLECELLTEXTURE, "textureSelected": PURPLECELLSELECTEDTEXTURE, "textureNot": PURPLECANTPLACETEXTURE}, {"x":0, "y":2,"textureUnselected": PURPLECELLTEXTURE, "textureSelected": PURPLECELLSELECTEDTEXTURE, "textureNot": PURPLECANTPLACETEXTURE}, {"x":0, "y":3,"textureUnselected": PURPLECELLTEXTURE, "textureSelected": PURPLECELLSELECTEDTEXTURE, "textureNot": PURPLECANTPLACETEXTURE}],
+    [{"x":0, "y":0,"textureUnselected": PURPLECELLTEXTURE, "textureSelected": PURPLECELLSELECTEDTEXTURE, "textureNot": PURPLECANTPLACETEXTURE}, {"x":1, "y":0,"textureUnselected": PURPLECELLTEXTURE, "textureSelected": PURPLECELLSELECTEDTEXTURE, "textureNot": PURPLECANTPLACETEXTURE}, {"x":2, "y":0,"textureUnselected": PURPLECELLTEXTURE, "textureSelected": PURPLECELLSELECTEDTEXTURE, "textureNot": PURPLECANTPLACETEXTURE}, {"x":3, "y":0,"textureUnselected": PURPLECELLTEXTURE, "textureSelected": PURPLECELLSELECTEDTEXTURE, "textureNot": PURPLECANTPLACETEXTURE}],
     
-    [{"x":0, "y":0,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}, {"x":0, "y":3,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}, {"x":0, "y":4,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}],
-    [{"x":0, "y":0,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}, {"x":3, "y":0,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}, {"x":4, "y":0,"textureUnselected": brownCellTexture, "textureSelected": brownCellSelectedTexture, "textureNot": brownCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": BROWNCELLTEXTURE, "textureSelected": BROWNCELLSELECTEDTEXTURE, "textureNot": BROWNCANTPLACETEXTURE}, {"x":0, "y":1,"textureUnselected": BROWNCELLTEXTURE, "textureSelected": BROWNCELLSELECTEDTEXTURE, "textureNot": BROWNCANTPLACETEXTURE}, {"x":0, "y":2,"textureUnselected": BROWNCELLTEXTURE, "textureSelected": BROWNCELLSELECTEDTEXTURE, "textureNot": BROWNCANTPLACETEXTURE}, {"x":0, "y":3,"textureUnselected": BROWNCELLTEXTURE, "textureSelected": BROWNCELLSELECTEDTEXTURE, "textureNot": BROWNCANTPLACETEXTURE}, {"x":0, "y":4,"textureUnselected": BROWNCELLTEXTURE, "textureSelected": BROWNCELLSELECTEDTEXTURE, "textureNot": BROWNCANTPLACETEXTURE}],
+    [{"x":0, "y":0,"textureUnselected": BROWNCELLTEXTURE, "textureSelected": BROWNCELLSELECTEDTEXTURE, "textureNot": BROWNCANTPLACETEXTURE}, {"x":1, "y":0,"textureUnselected": BROWNCELLTEXTURE, "textureSelected": BROWNCELLSELECTEDTEXTURE, "textureNot": BROWNCANTPLACETEXTURE}, {"x":2, "y":0,"textureUnselected": BROWNCELLTEXTURE, "textureSelected": BROWNCELLSELECTEDTEXTURE, "textureNot": BROWNCANTPLACETEXTURE}, {"x":3, "y":0,"textureUnselected": BROWNCELLTEXTURE, "textureSelected": BROWNCELLSELECTEDTEXTURE, "textureNot": BROWNCANTPLACETEXTURE}, {"x":4, "y":0,"textureUnselected": BROWNCELLTEXTURE, "textureSelected": BROWNCELLSELECTEDTEXTURE, "textureNot": BROWNCANTPLACETEXTURE}],
 
-    [{"x":0, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":2, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}],
-    [{"x":0, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}],
-    [{"x":0, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":2, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}],
-    [{"x":0, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":2, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":0, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}],
-    [{"x":0, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":2,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}],
-    [{"x":0, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}],
-    [{"x":0, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":2,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}],
-    [{"x":1, "y":0,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":1, "y":2,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": greenCellTexture, "textureSelected": greenCellSelectedTexture, "textureNot": greenCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":1, "y":0,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":2, "y":0,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":2, "y":1,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}],
+    [{"x":0, "y":0,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":1, "y":0,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":2, "y":0,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":0, "y":1,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}],
+    [{"x":0, "y":1,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":1, "y":1,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":2, "y":1,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":2, "y":0,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}],
+    [{"x":0, "y":1,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":1, "y":1,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":2, "y":1,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":0, "y":0,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}],
+    [{"x":0, "y":0,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":0, "y":1,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":0, "y":2,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":1, "y":2,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}],
+    [{"x":0, "y":0,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":1, "y":0,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":0, "y":1,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":0, "y":2,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}],
+    [{"x":0, "y":0,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":1, "y":0,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":1, "y":1,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":1, "y":2,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}],
+    [{"x":1, "y":0,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":1, "y":1,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":1, "y":2,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}, {"x":0, "y":2,"textureUnselected": GREENCELLTEXTURE, "textureSelected": GREENCELLSELECTEDTEXTURE, "textureNot": GREENCANTPLACETEXTURE}],
 
 
-    [{"x":0, "y":0,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}],
-    [{"x":1, "y":0,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}],
-    [{"x":0, "y":0,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}],
-    [{"x":0, "y":0,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": yellowCellTexture, "textureSelected": yellowCellSelectedTexture, "textureNot": yellowCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": YELLOWCELLTEXTURE, "textureSelected": YELLOWCELLSELECTEDTEXTURE, "textureNot": YELLOWCANTPLACETEXTURE}, {"x":0, "y":1,"textureUnselected": YELLOWCELLTEXTURE, "textureSelected": YELLOWCELLSELECTEDTEXTURE, "textureNot": YELLOWCANTPLACETEXTURE}, {"x":1, "y":1,"textureUnselected": YELLOWCELLTEXTURE, "textureSelected": YELLOWCELLSELECTEDTEXTURE, "textureNot": YELLOWCANTPLACETEXTURE}],
+    [{"x":1, "y":0,"textureUnselected": YELLOWCELLTEXTURE, "textureSelected": YELLOWCELLSELECTEDTEXTURE, "textureNot": YELLOWCANTPLACETEXTURE}, {"x":1, "y":1,"textureUnselected": YELLOWCELLTEXTURE, "textureSelected": YELLOWCELLSELECTEDTEXTURE, "textureNot": YELLOWCANTPLACETEXTURE}, {"x":0, "y":1,"textureUnselected": YELLOWCELLTEXTURE, "textureSelected": YELLOWCELLSELECTEDTEXTURE, "textureNot": YELLOWCANTPLACETEXTURE}],
+    [{"x":0, "y":0,"textureUnselected": YELLOWCELLTEXTURE, "textureSelected": YELLOWCELLSELECTEDTEXTURE, "textureNot": YELLOWCANTPLACETEXTURE}, {"x":1, "y":0,"textureUnselected": YELLOWCELLTEXTURE, "textureSelected": YELLOWCELLSELECTEDTEXTURE, "textureNot": YELLOWCANTPLACETEXTURE}, {"x":0, "y":1,"textureUnselected": YELLOWCELLTEXTURE, "textureSelected": YELLOWCELLSELECTEDTEXTURE, "textureNot": YELLOWCANTPLACETEXTURE}],
+    [{"x":0, "y":0,"textureUnselected": YELLOWCELLTEXTURE, "textureSelected": YELLOWCELLSELECTEDTEXTURE, "textureNot": YELLOWCANTPLACETEXTURE}, {"x":1, "y":0,"textureUnselected": YELLOWCELLTEXTURE, "textureSelected": YELLOWCELLSELECTEDTEXTURE, "textureNot": YELLOWCANTPLACETEXTURE}, {"x":1, "y":1,"textureUnselected": YELLOWCELLTEXTURE, "textureSelected": YELLOWCELLSELECTEDTEXTURE, "textureNot": YELLOWCANTPLACETEXTURE}],
 
-    [{"x":0, "y":0,"textureUnselected": blackCellTexture, "textureSelected": blackCellSelectedTexture, "textureNot": blackCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": blackCellTexture, "textureSelected": blackCellSelectedTexture, "textureNot": blackCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": blackCellTexture, "textureSelected": blackCellSelectedTexture, "textureNot": blackCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": blackCellTexture, "textureSelected": blackCellSelectedTexture, "textureNot": blackCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": BLACKCELLTEXTURE, "textureSelected": BLACKCELLSELECTEDTEXTURE, "textureNot": BLACKCANTPLACETEXTURE}, {"x":0, "y":1,"textureUnselected": BLACKCELLTEXTURE, "textureSelected": BLACKCELLSELECTEDTEXTURE, "textureNot": BLACKCANTPLACETEXTURE}, {"x":1, "y":0,"textureUnselected": BLACKCELLTEXTURE, "textureSelected": BLACKCELLSELECTEDTEXTURE, "textureNot": BLACKCANTPLACETEXTURE}, {"x":1, "y":1,"textureUnselected": BLACKCELLTEXTURE, "textureSelected": BLACKCELLSELECTEDTEXTURE, "textureNot": BLACKCANTPLACETEXTURE}],
 
-    [{"x":0, "y":0,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":1, "y":2,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":2, "y":2,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}],
-    [{"x":2, "y":0,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":2, "y":1,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":2, "y":2,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":1, "y":2,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}],
-    [{"x":0, "y":0,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}],
-    [{"x":0, "y":0,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":2, "y":1,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}, {"x":2, "y":2,"textureUnselected": pinkCellTexture, "textureSelected": pinkCellSelectedTexture, "textureNot": pinkCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}, {"x":0, "y":1,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}, {"x":0, "y":2,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}, {"x":1, "y":2,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}, {"x":2, "y":2,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}],
+    [{"x":2, "y":0,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}, {"x":2, "y":1,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}, {"x":2, "y":2,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}, {"x":1, "y":2,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}, {"x":0, "y":2,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}],
+    [{"x":0, "y":0,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}, {"x":1, "y":0,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}, {"x":2, "y":0,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}, {"x":0, "y":1,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}, {"x":0, "y":2,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}],
+    [{"x":0, "y":0,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}, {"x":1, "y":0,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}, {"x":2, "y":0,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}, {"x":2, "y":1,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}, {"x":2, "y":2,"textureUnselected": PINKCELLTEXTURE, "textureSelected": PINKCELLSELECTEDTEXTURE, "textureNot": PINKCANTPLACETEXTURE}],
 
-    [{"x":0, "y":0,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":0, "y":1,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":0, "y":2,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":1, "y":0,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":1, "y":1,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":1, "y":2,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":2, "y":0,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":2, "y":1,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}, {"x":2, "y":2,"textureUnselected": orangeCellTexture, "textureSelected": orangeCellSelectedTexture, "textureNot": orangeCantPlaceTexture}],
+    [{"x":0, "y":0,"textureUnselected": ORANGECELLTEXTURE, "textureSelected": ORANGECELLSELECTEDTEXTURE, "textureNot": ORANGECANTPLACETEXTURE}, {"x":0, "y":1,"textureUnselected": ORANGECELLTEXTURE, "textureSelected": ORANGECELLSELECTEDTEXTURE, "textureNot": ORANGECANTPLACETEXTURE}, {"x":0, "y":2,"textureUnselected": ORANGECELLTEXTURE, "textureSelected": ORANGECELLSELECTEDTEXTURE, "textureNot": ORANGECANTPLACETEXTURE}, {"x":1, "y":0,"textureUnselected": ORANGECELLTEXTURE, "textureSelected": ORANGECELLSELECTEDTEXTURE, "textureNot": ORANGECANTPLACETEXTURE}, {"x":1, "y":1,"textureUnselected": ORANGECELLTEXTURE, "textureSelected": ORANGECELLSELECTEDTEXTURE, "textureNot": ORANGECANTPLACETEXTURE}, {"x":1, "y":2,"textureUnselected": ORANGECELLTEXTURE, "textureSelected": ORANGECELLSELECTEDTEXTURE, "textureNot": ORANGECANTPLACETEXTURE}, {"x":2, "y":0,"textureUnselected": ORANGECELLTEXTURE, "textureSelected": ORANGECELLSELECTEDTEXTURE, "textureNot": ORANGECANTPLACETEXTURE}, {"x":2, "y":1,"textureUnselected": ORANGECELLTEXTURE, "textureSelected": ORANGECELLSELECTEDTEXTURE, "textureNot": ORANGECANTPLACETEXTURE}, {"x":2, "y":2,"textureUnselected": ORANGECELLTEXTURE, "textureSelected": ORANGECELLSELECTEDTEXTURE, "textureNot": ORANGECANTPLACETEXTURE}],
 ]
