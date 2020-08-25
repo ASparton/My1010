@@ -33,6 +33,16 @@ class Piece:
         return self._selected
     def _set_selected(self, selected):
         self._selected = selected
+
+        if self._selected:  #Select each cell of the piece
+            for cell in self._cellsList:
+                cell.select = True
+                cell.texture = cell.selectedTexture
+        else:   #Unselect each cell of the piece
+            for cell in self._cellsList:
+                cell.texture = cell.unselectedTexture
+                cell.select = False
+
     selected = property(_get_selected, _set_selected)
     #placed property
     def _get_placed(self):
@@ -85,24 +95,6 @@ class Piece:
                 
         self.cellNumberX = xmax
         self.cellNumberY = ymax
-
-    def select(self):
-        """Select each cell of the piece and the piece itself"""
-        
-        for cell in self.cellsList:
-            cell.select = True
-            cell.texture = cell.selectedTexture
-            
-        self.selected = True
-        
-    def unselect(self):
-        """Unselect each cell of the piece and the piece itself"""
-        
-        for cell in self.cellsList:
-            cell.texture = cell.unselectedTexture
-            cell.select = False
-            
-        self.selected = False
         
     def moove(self, direction):
         """Method to moove the piece to one of the 4 directions"""
@@ -153,7 +145,7 @@ class Piece:
         - Change the placed attribute to true
         - Place the actual piece outside of the screen (it will be removed when the 3 next pieces will be generated)."""
         
-        self.unselect()
+        self.selected = False
         board.put_down_piece(self)
         
         self.placed = True

@@ -95,7 +95,7 @@ while runGame:
                             #Pointer (list) of the piece the player is going to choose
                             chosenPiece = piece1    #For now it points on piece1
                             #We select the first piece. Then the player will choose from that start
-                            piece1[0].select()
+                            piece1[0].selected = True
                             #Set the score at the beginning
                             score = 0
                             bestScore = functions.get_best_score()
@@ -134,101 +134,101 @@ while runGame:
                     if event.key == K_DOWN:
                         
                         if piece1[0].selected == True:
-                            piece1[0].unselect()
+                            piece1[0].selected = False
                             
                             if piece2[0].placed == False:
-                                piece2[0].select()
+                                piece2[0].selected = True
                                 chosenPiece = piece2
                                 
                             elif piece2[0].placed == True:
                                 if piece3[0].placed == False:
-                                    piece3[0].select()
+                                    piece3[0].selected = True
                                     chosenPiece = piece3
                                     
                                 elif piece3[0].placed == True:
-                                    piece1[0].select()
+                                    piece1[0].selected = True
                                     chosenPiece = piece1
                             
                         elif piece2[0].selected == True:
-                            piece2[0].unselect()
+                            piece2[0].selected = False
                             
                             if piece3[0].placed == False:
-                                piece3[0].select()
+                                piece3[0].selected = True
                                 chosenPiece = piece3
                                 
                             elif piece3[0].placed == True:
                                 if piece1[0].placed == False:
-                                    piece1[0].select()
+                                    piece1[0].selected = True
                                     chosenPiece = piece1
                                     
                                 elif piece1[0].placed == True:
-                                    piece2[0].select()
+                                    piece2[0].selected = True
                                     chosenPiece = piece2
                             
                         elif piece3[0].selected == True:
-                            piece3[0].unselect()
+                            piece3[0].selected = False
                             
                             if piece1[0].placed == False:
-                                piece1[0].select()
+                                piece1[0].selected = True
                                 chosenPiece = piece1
                                 
                             elif piece1[0].placed == True:
                                 if piece2[0].placed == False:
-                                    piece2[0].select()
+                                    piece2[0].selected = True
                                     chosenPiece = piece2
                                     
                                 elif piece2[0].placed == True:
-                                    piece3[0].select()
+                                    piece3[0].selected = True
                                     chosenPiece = piece3
                                 
                     if event.key == K_UP:
                     
                         if piece1[0].selected == True:
-                            piece1[0].unselect()
+                            piece1[0].selected = False
                         
                             if piece3[0].placed == False:
-                                piece3[0].select()
+                                piece3[0].selected = True
                                 chosenPiece = piece3
                             
                             elif piece3[0].placed == True:
                                 if piece2[0].placed == False:
-                                    piece2[0].select()
+                                    piece2[0].selected = True
                                     chosenPiece = piece2
                                 
                                 elif piece2[0].placed == True:
-                                    piece1[0].select()
+                                    piece1[0].selected = True
                                     chosenPiece = piece1
                         
                         elif piece2[0].selected == True:
-                            piece2[0].unselect()
+                            piece2[0].selected = False
                         
                             if piece1[0].placed == False:
-                                piece1[0].select()
+                                piece1[0].selected = True
                                 chosenPiece = piece1
                             
                             elif piece1[0].placed == True:
                                 if piece3[0].placed == False:
-                                    piece3[0].select()
+                                    piece3[0].selected = True
                                     chosenPiece = piece3
                                 
                                 elif piece3[0].placed == True:
-                                    piece2[0].select()
+                                    piece2[0].selected = True
                                     chosenPiece = piece2
                         
                         elif piece3[0].selected == True:
-                            piece3[0].unselect()
+                            piece3[0].selected = False
                         
                             if piece2[0].placed == False:
-                                piece2[0].select()
+                                piece2[0].selected = True
                                 chosenPiece = piece2
                             
                             elif piece2[0].placed == True:
                                 if piece1[0].placed == False:
-                                    piece1[0].select()
+                                    piece1[0].selected = True
                                     chosenPiece = piece1
                                 
                                 elif piece1[0].placed == True:
-                                    piece3[0].select()
+                                    piece3[0].selected = True
                                     chosenPiece = piece3
  
                     if event.key == K_c:
@@ -297,7 +297,7 @@ while runGame:
                                 if piece3[0].placed == False:
                                     boardPlaceTestList.append(board.place_verification(piece3[0]))
                             
-                                piece1[0].select()
+                                piece1[0].selected = True
                                 chosenPiece = piece1
                                 
                             elif piece1[0].placed == True:
@@ -307,7 +307,7 @@ while runGame:
                                     if piece3[0].placed == False:
                                         boardPlaceTestList.append(board.place_verification(piece3[0]))
                                 
-                                    piece2[0].select()
+                                    piece2[0].selected = True
                                     chosenPiece = piece2
                                     
                                 elif piece2[0].placed == True:
@@ -315,14 +315,14 @@ while runGame:
                                 
                                         boardPlaceTestList.append(board.place_verification(piece3[0]))
                                     
-                                        piece3[0].select()
+                                        piece3[0].selected = True
                                         chosenPiece = piece3
                                         
                                     elif piece3[0].placed == True:
                                 
                                         #Generate 3 other pieces if all has been placed
                                         piece1, piece2, piece3 = functions.generate_pieces()
-                                        piece1[0].select()
+                                        piece1[0].selected = True
                                         chosenPiece = piece1
 
                                         boardPlaceTestList.append(board.place_verification(piece1[0]))
