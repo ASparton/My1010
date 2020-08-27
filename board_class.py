@@ -39,28 +39,28 @@ class Board:
         currentTest = False
         cellToTest = [0,0]
         
-        xMaxTest = 10 - piece.cellNumberX
-        yMaxTest = 10 - piece.cellNumberY
-        
         for boardCell in self.cellsList:
             
-            if boardCell.x < xMaxTest and boardCell.y < yMaxTest:         
-            
                 for pieceCell in piece.cellsList:
-                
+
                     cellToTest[0] = boardCell.x + pieceCell.x
                     cellToTest[1] = boardCell.y + pieceCell.y
+
+                    if cellToTest[0] <= 9 and cellToTest[1] <= 9:
                     
-                    for boardCellToTest in self.cellsList:
-                        if boardCellToTest.x == cellToTest[0] and boardCellToTest.y == cellToTest[1]:
-                            if boardCellToTest.empty == False:
-                                currentTest = False
-                                break
-                            elif boardCellToTest.empty == True:
-                                currentTest = True
-                                break
+                        for boardCellToTest in self.cellsList:
+                            if boardCellToTest.x == cellToTest[0] and boardCellToTest.y == cellToTest[1]:
+                                if boardCellToTest.empty == False:
+                                    currentTest = False
+                                    break
+                                elif boardCellToTest.empty == True:
+                                    currentTest = True
+                                    break
                                 
-                    if currentTest == False:
+                        if currentTest == False:
+                            break
+                    else:
+                        currentTest = False
                         break
                         
                 if currentTest == True:

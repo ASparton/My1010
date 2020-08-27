@@ -93,8 +93,8 @@ class Piece:
             if ymax < cell.y:
                 ymax = cell.y
                 
-        self.cellNumberX = xmax
-        self.cellNumberY = ymax
+        self.cellNumberX = xmax+1
+        self.cellNumberY = ymax+1
         
     def moove(self, direction):
         """Method to moove the piece to one of the 4 directions"""

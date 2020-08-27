@@ -115,6 +115,67 @@ while runGame:
         if not runGame: #If the player exit the game. Break the while loop to end up the program
             break
 
+        if not createDrawFunction:  #To create the function only once
+            createDrawFunction = True
+            def draw_game_screen(gamePhase):    #Draw the game screen
+                screen.blit(background, (0,0))
+
+                for cell in board.cellsList:
+                    screen.blit(cell.texture, (cell.x * constants.CELLSIZE, cell.y * constants.CELLSIZE))
+                    
+                if gamePhase == "choose":
+                    for cell in piece1[0].cellsList:
+                        screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY1 + cell.y) * constants.CELLSIZE)))
+                    for cell in piece2[0].cellsList:
+                        screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY2 + cell.y) * constants.CELLSIZE)))
+                    for cell in piece3[0].cellsList:
+                        screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY3 + cell.y) * constants.CELLSIZE)))
+                    
+                elif gamePhase == "board":
+                        
+                    if chosenPiece[0].canBePlaced == False:
+                        for cell in chosenPiece[0].cellsList:
+                            screen.blit(cell.texture, (((0 + cell.x) * constants.CELLSIZE), ((0 + cell.y) * constants.CELLSIZE)))
+                                    
+                        if piece1[0].selected == False:
+                            for cell in piece1[0].cellsList:
+                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY1 + cell.y) * constants.CELLSIZE)))
+                        if piece2[0].selected == False:
+                            for cell in piece2[0].cellsList:
+                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY2 + cell.y) * constants.CELLSIZE)))
+                        if piece3[0].selected == False:
+                            for cell in piece3[0].cellsList:
+                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY3 + cell.y) * constants.CELLSIZE)))
+                                    
+                        screen.blit(scoreText, (0.3*constants.CELLSIZE, 13.8*constants.CELLSIZE))
+                        screen.blit(bestScoreText, (0.3*constants.CELLSIZE, 15.8*constants.CELLSIZE))
+
+                        pygame.display.flip()
+                        time.sleep(0.6)
+                                
+                        for cell in chosenPiece[0].cellsList:
+                            cell.texture = cell.selectedTexture
+                            chosenPiece[0].canBePlaced = True
+                                
+                    else:
+                        for cell in chosenPiece[0].cellsList:
+                            screen.blit(cell.texture, (((0 + cell.x) * constants.CELLSIZE), ((0 + cell.y) * constants.CELLSIZE)))
+                                
+                        if piece1[0].selected == False:
+                            for cell in piece1[0].cellsList:
+                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY1 + cell.y) * constants.CELLSIZE)))
+                        if piece2[0].selected == False:
+                            for cell in piece2[0].cellsList:
+                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY2 + cell.y) * constants.CELLSIZE)))
+                        if piece3[0].selected == False:
+                            for cell in piece3[0].cellsList:
+                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY3 + cell.y) * constants.CELLSIZE)))
+                                    
+                screen.blit(scoreText, (0.3*constants.CELLSIZE, 13.8*constants.CELLSIZE))
+                screen.blit(bestScoreText, (0.3*constants.CELLSIZE, 15.8*constants.CELLSIZE))
+
+                pygame.display.flip()
+
         #We wait for game event and update the score
         strScore = "SCORE: " + str(score)
         scoreText = font.render(strScore, False, (255,255,255))
@@ -124,67 +185,6 @@ while runGame:
         for event in pygame.event.get(): #Exit event
             if event.type == QUIT:
                 runGame = False
-
-            if not createDrawFunction:  #To create the function only once
-                createDrawFunction = True
-                def draw_game_screen(gamePhase):    #Draw the game screen
-                    screen.blit(background, (0,0))
-
-                    for cell in board.cellsList:
-                        screen.blit(cell.texture, (cell.x * constants.CELLSIZE, cell.y * constants.CELLSIZE))
-                    
-                    if gamePhase == "choose":
-                        for cell in piece1[0].cellsList:
-                            screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY1 + cell.y) * constants.CELLSIZE)))
-                        for cell in piece2[0].cellsList:
-                            screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY2 + cell.y) * constants.CELLSIZE)))
-                        for cell in piece3[0].cellsList:
-                            screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY3 + cell.y) * constants.CELLSIZE)))
-                    
-                    elif gamePhase == "board":
-                        
-                        if chosenPiece[0].canBePlaced == False:
-                            for cell in chosenPiece[0].cellsList:
-                                screen.blit(cell.texture, (((0 + cell.x) * constants.CELLSIZE), ((0 + cell.y) * constants.CELLSIZE)))
-                                    
-                            if piece1[0].selected == False:
-                                for cell in piece1[0].cellsList:
-                                    screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY1 + cell.y) * constants.CELLSIZE)))
-                            if piece2[0].selected == False:
-                                for cell in piece2[0].cellsList:
-                                    screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY2 + cell.y) * constants.CELLSIZE)))
-                            if piece3[0].selected == False:
-                                for cell in piece3[0].cellsList:
-                                    screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY3 + cell.y) * constants.CELLSIZE)))
-                                    
-                            screen.blit(scoreText, (0.3*constants.CELLSIZE, 13.8*constants.CELLSIZE))
-                            screen.blit(bestScoreText, (0.3*constants.CELLSIZE, 15.8*constants.CELLSIZE))
-
-                            pygame.display.flip()
-                            time.sleep(0.6)
-                                
-                            for cell in chosenPiece[0].cellsList:
-                                cell.texture = cell.selectedTexture
-                                chosenPiece[0].canBePlaced = True
-                                
-                        else:
-                            for cell in chosenPiece[0].cellsList:
-                                screen.blit(cell.texture, (((0 + cell.x) * constants.CELLSIZE), ((0 + cell.y) * constants.CELLSIZE)))
-                                
-                            if piece1[0].selected == False:
-                                for cell in piece1[0].cellsList:
-                                    screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY1 + cell.y) * constants.CELLSIZE)))
-                            if piece2[0].selected == False:
-                                for cell in piece2[0].cellsList:
-                                    screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY2 + cell.y) * constants.CELLSIZE)))
-                            if piece3[0].selected == False:
-                                for cell in piece3[0].cellsList:
-                                    screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY3 + cell.y) * constants.CELLSIZE)))
-                                    
-                    screen.blit(scoreText, (0.3*constants.CELLSIZE, 13.8*constants.CELLSIZE))
-                    screen.blit(bestScoreText, (0.3*constants.CELLSIZE, 15.8*constants.CELLSIZE))
-
-                    pygame.display.flip()
     
             if gamePhase == "choose":
                 """When we are in choose game phase, the player need to choose a piece with the directional keys,
