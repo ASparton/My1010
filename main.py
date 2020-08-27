@@ -117,9 +117,9 @@ while runGame:
 
         #We wait for game event and update the score
         strScore = "SCORE: " + str(score)
-        scoreText = font.render(strScore, False, (10,10,10))
+        scoreText = font.render(strScore, False, (255,255,255))
         strBestScore = "BEST SCORE: " + bestScore
-        bestScoreText = font.render(strBestScore, False, (10,10,10))
+        bestScoreText = font.render(strBestScore, False, (255,255,255))
 
         for event in pygame.event.get(): #Exit event
             if event.type == QUIT:
@@ -413,9 +413,11 @@ while runGame:
             createDrawFunction = True
             def draw_game_over_screen():
                 screen.blit(backgroundGameOver,(0,0))
-                screen.blit(GAMEOVERTEXT, (300, 50))
+                screen.blit(GAMEOVERTEXT, (250, 50))
                 screen.blit(homeButton.texture, (homeButton.x, homeButton.y))
                 screen.blit(gameOverExitButton.texture, (gameOverExitButton.x, gameOverExitButton.y))
+                screen.blit(scoreText, (2*constants.CELLSIZE, 4*constants.CELLSIZE))
+                screen.blit(bestScoreText, (12*constants.CELLSIZE, 4*constants.CELLSIZE))
                 pygame.display.flip()
 
         for event in pygame.event.get(): #Exit event
