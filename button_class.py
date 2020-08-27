@@ -67,17 +67,17 @@ class Button:
     selected = property(_get_selected, _set_selected)
 
     def do_function(self):
-        gamePhase = 0
+        phase = 0
         runGame = True
 
         if self._function == "play":
-            gamePhase = 1
-            return gamePhase
+            phase = "game"
+            return phase
             
         elif self._function == "exit":
             runGame = False
             return runGame
 
         elif self._function == "home":
-            gamePhase = 0
-            return  gamePhase
+            phase = "main_menu"
+            return  phase
