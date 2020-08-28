@@ -9,7 +9,7 @@ import constants
 class Button:
         
     def __init__(self, function, x_pos, y_pos, unselected_texture, selected_texture, selected=False):
-        """function = "play" OR "exit" OR "home" """
+        """function = "play" OR "exit" OR "home" OR "settings" """
         self._function = function
 
         self._x = x_pos
@@ -69,6 +69,7 @@ class Button:
     def do_function(self):
         phase = 0
         runGame = True
+        boardSettingsClosed = True
 
         if self._function == "play":
             phase = "game"
@@ -81,3 +82,8 @@ class Button:
         elif self._function == "home":
             phase = "main_menu"
             return  phase
+
+        elif self._function == "settings":
+            boardSettingsClosed = False
+            return boardSettingsClosed
+            

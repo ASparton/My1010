@@ -1,0 +1,123 @@
+import pygame
+from pygame.locals import *
+import constants
+
+import button_class
+
+class BoardSettings:
+        
+    def __init__(self, xPos, yPos, texture=constants.BOARDSETTINGSTEXTURE):
+        
+        self._x = xPos
+        self._y = yPos
+
+        self._musicOn = True
+        self._soundOn = True
+        self._musicOnButton = button_class.Button("music", 12, 25, constants.MUSICONBUTTONTEXTURE, constants.MUSICONBUTTONSELECTEDTEXTURE, True)
+        self._musicOffButton = button_class.Button("music", 12, 25, constants.MUSICOFFBUTTONTEXTURE, constants.MUSICOFFBUTTONSELECTEDTEXTURE)
+        self._soundOnButton = button_class.Button("sound", 138, 25, constants.SOUNDONBUTTONTEXTURE, constants.SOUNDONBUTTONSELECTEDTEXTURE)
+        self._soundOffButton = button_class.Button("sound", 138, 25, constants.SOUNDOFFBUTTONTEXTURE, constants.SOUNDOFFBUTTONSELECTEDTEXTURE)
+
+        self._close = True
+        self._exitButton = button_class.Button("exitSettings", 0, 0, constants.EXITBUTTONTEXTURE, constants.EXITBUTTONSELECTEDTEXTURE)
+
+        self._texture = pygame.image.load(texture).convert_alpha()
+
+    """Properties"""
+    #Position properties
+    def _get_x(self):
+        return self._x
+    def _set_x(self, xPos):
+        self._x = xPos
+    x = property(_get_x, _set_x)
+    def _get_y(self):
+        return self._y
+    def _set_y(self, yPos):
+        self._y = yPos
+    y = property(_get_y, _set_y)
+    #Exit property
+    def _get_close(self):
+        return self._close
+    def _set_close(self, close):
+        self._close = close
+    close = property(_get_close, _set_close)
+    #Exit button property
+    def _get_exitButton(self):
+        return self._exitButton
+    exitButton = property(_get_exitButton)
+    #Texture property
+    def _get_texture(self):
+        return self._texture
+    texture = property(_get_texture)
+    #Music/Sound on properties
+    def _get_soundOn(self):
+        return self._soundOn
+    def _set_soundOn(self, onOrOff):
+        self._soundOn = onOrOff
+    soundOn = property(_get_soundOn, _set_soundOn)
+    def _get_musicOn(self):
+        return self._musicOn
+    def _set_musicOn(self, onOrOff):
+        self._musicOn = onOrOff
+    musicOn = property(_get_musicOn, _set_musicOn)
+    #Buttons properties
+    def _get_musicOnButton(self):
+        return self._musicOnButton
+    musicOnButton = property(_get_musicOnButton)
+    def _get_musicOffButton(self):
+        return self._musicOffButton
+    musicOffButton = property(_get_musicOffButton)
+    def _get_soundOnButton(self):
+        return self._soundOnButton
+    soundOnButton = property(_get_soundOnButton)
+    def _get_soundOffButton(self):
+        return self._soundOffButton
+    soundOffButton = property(_get_soundOffButton)
+
+    def selectNextButton(self, direction):
+        if direction == "left":
+            if self._soundOnButton.selected:
+                self._soundOnButton.selected = False
+                if self._musicOn:
+                    self._musicOnButton.selected = True
+                elif not self._musicOn:
+                    self._musicOffButton.selected = True
+            elif self._soundOffButton.selected:
+                self._soundOffButton.selected = False
+                if self._musicOn:
+                    self._musicOnButton.selected = True
+                elif not self._musicOn:
+                    self._musicOffButton.selected = True
+
+        elif direction == "right":
+            if self._musicOnButton.selected:
+                self._musicOnButton.selected = False
+                if self._soundOn:
+                    self._soundOnButton.selected = True
+                elif not self._soundOn:
+                    self._soundOffButton.selected = True
+            
+            elif self._musicOffButton.selected:
+                self._musicOffButton.selected = False
+                if self._soundOn:
+                    self._soundOnButton.selected = True
+                elif not self._soundOn:
+                    self._soundOffButton.selected = True
+
+    def set_music(self, onOrOff):
+        self._musicOn = onOrOff
+        if onOrOff:
+            self.musicOnButton.selected = True
+            self.musicOffButton.selected = False
+        else:
+            self.musicOffButton.selected = True
+            self.musicOnButton.selected = False
+            
+    def set_sound(self, onOrOff):
+        self._soundOn = onOrOff
+        if onOrOff:
+            self.soundOnButton.selected = True
+            self.soundOffButton.selected = False
+        else:
+            self.soundOffButton.selected = True
+            self.soundOnButton.selected = False

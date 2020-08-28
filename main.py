@@ -9,6 +9,7 @@ import cell_class
 import board_class
 import piece_class
 import button_class
+import boardSettings_class
 
 pygame.init()
 
@@ -20,7 +21,7 @@ pygame.display.set_caption("Retro 1010!")
 
 #Game music and sound setup
 pygame.mixer.music.load("assets/sounds/The Grand Affair.wav")
-pygame.mixer.music.set_volume(0.3)
+pygame.mixer.music.set_volume(0.5)
 pygame.mixer.music.play()
 winingLineSound = pygame.mixer.Sound("assets/sounds/Ouh_nice_!.wav")
 cantPlaceSound = pygame.mixer.Sound("assets/sounds/Nope.wav")
@@ -35,8 +36,12 @@ backgroundGameOver = pygame.image.load(constants.GAMEOVERBACKGROUNDTEXTURE).conv
 
 #Main menu setup
 title = pygame.image.load(constants.TITLETEXTURE).convert_alpha()
-playButton = button_class.Button("play", constants.SCREENSIZE[0]/2-96, 200, constants.PLAYBUTTONTEXTURE, constants.PLAYBUTTONSELECTEDTEXTURE, True)
-mainMenuExitButton = button_class.Button("exit", constants.SCREENSIZE[0]/2-96, 400, constants.EXITBUTTONTEXTURE, constants.exitButtonSelectedTexture)
+playButton = button_class.Button("play", constants.SCREENSIZE[0]/2-96, 50, constants.PLAYBUTTONTEXTURE, constants.PLAYBUTTONSELECTEDTEXTURE, True)
+mainMenuExitButton = button_class.Button("exit", constants.SCREENSIZE[0]/2-96, 450, constants.EXITBUTTONTEXTURE, constants.EXITBUTTONSELECTEDTEXTURE)
+settingsButton = button_class.Button("settings", constants.SCREENSIZE[0]/2-96, 250,constants.SETTINGSBUTTONTEXTURE, constants.SETTINGSBUTTONSELECTEDTEXTURE)
+
+#Settings board setup
+boardSettings = boardSettings_class.BoardSettings(constants.SCREENSIZE[0]/2 - 125, constants.SCREENSIZE[1]/2 - 75)
 
 #game variables setup
 phase = "main_menu"
@@ -65,6 +70,18 @@ while runGame:
                 screen.blit(title, ((constants.SCREENSIZE[0]/2-160), 0))
                 screen.blit(playButton.texture, (playButton.x, playButton.y))
                 screen.blit(mainMenuExitButton.texture, (mainMenuExitButton.x, mainMenuExitButton.y))
+                screen.blit(settingsButton.texture, (settingsButton.x, settingsButton.y))
+                if not boardSettings.close:
+                    screen.blit(boardSettings.texture, (boardSettings.x, boardSettings.y))
+                    if boardSettings.soundOn:
+                        boardSettings.texture.blit(boardSettings.soundOnButton.texture, (boardSettings.soundOnButton.x, boardSettings.soundOnButton.y))
+                    elif not boardSettings.soundOn:
+                        boardSettings.texture.blit(boardSettings.soundOffButton.texture, (boardSettings.soundOffButton.x, boardSettings.soundOffButton.y))
+                    if boardSettings.musicOn:
+                        boardSettings.texture.blit(boardSettings.musicOnButton.texture, (boardSettings.musicOnButton.x, boardSettings.musicOnButton.y))
+                    elif not boardSettings.musicOn:
+                        boardSettings.texture.blit(boardSettings.musicOffButton.texture, (boardSettings.musicOffButton.x, boardSettings.musicOffButton.y))
+
                 pygame.display.flip()
 
         for event in pygame.event.get(): #Exit event
@@ -72,38 +89,74 @@ while runGame:
                 runGame = False
 
             if event.type == KEYDOWN:
-                if event.key == K_DOWN: #Select the next button
-                    if playButton.selected:
-                        playButton.selected = False
-                        mainMenuExitButton.selected = True
-                    elif mainMenuExitButton.selected:
-                        mainMenuExitButton.selected = False
-                        playButton.selected = True
+                if boardSettings.close:
+                    if event.key == K_DOWN: #Select the next button
+                        if playButton.selected:
+                            playButton.selected = False
+                            settingsButton.selected = True
+                        elif settingsButton.selected:
+                            settingsButton.selected = False
+                            mainMenuExitButton.selected = True
+                        else:
+                            mainMenuExitButton.selected = False
+                            playButton.selected = True
 
-                if event.key == K_UP:   #Select the next button
-                    if playButton.selected:
-                        playButton.selected = False
-                        mainMenuExitButton.selected = True
-                    elif mainMenuExitButton.selected:
-                        mainMenuExitButton.selected = False
-                        playButton.selected = True
+                    if event.key == K_UP:   #Select the next button
+                        if playButton.selected:
+                            playButton.selected = False
+                            mainMenuExitButton.selected = True
+                        elif settingsButton.selected:
+                            settingsButton.selected = False
+                            playButton.selected = True
+                        else:
+                            mainMenuExitButton.selected = False
+                            settingsButton.selected = True
 
-                if event.key == K_RETURN:   #Call the function of the selected button
-                    if playButton.selected:
-                        phase = playButton.do_function()
-                        createDrawFunction = False
-                        gamePhase = "choose"
-                        board = board_class.Board() #Board creation
-                        board.build()
-                        piece1, piece2, piece3 = functions.generate_pieces()    #Pieces generation
-                        #Pointer (list) of the piece the player is going to choose
-                        chosenPiece = piece1    #For now it points on piece1
-                        piece1[0].selected = True   #We select the first piece. Then the player will choose from that start
-                        score = 0   #Set the score at the beginning
-                        bestScore = functions.get_best_score()
+                    if event.key == K_RETURN:   #Call the function of the selected button
+                        if playButton.selected:
+                            phase = playButton.do_function()
+                            createDrawFunction = False
+                            gamePhase = "choose"
+                            board = board_class.Board() #Board creation
+                            board.build()
+                            piece1, piece2, piece3 = functions.generate_pieces()    #Pieces generation
+                            #Pointer (list) of the piece the player is going to choose
+                            chosenPiece = piece1    #For now it points on piece1
+                            piece1[0].selected = True   #We select the first piece. Then the player will choose from that start
+                            score = 0   #Set the score at the beginning
+                            bestScore = functions.get_best_score()
 
-                    elif mainMenuExitButton.selected:
-                        runGame = mainMenuExitButton.do_function()
+                        elif mainMenuExitButton.selected:
+                            runGame = mainMenuExitButton.do_function()
+
+                        else:
+                            boardSettings.close = settingsButton.do_function()
+                
+                elif not boardSettings.close:
+                    if event.key == K_LEFT:
+                        boardSettings.selectNextButton("left")
+                    elif event.key == K_RIGHT:
+                        boardSettings.selectNextButton("right")
+
+                    elif event.key == K_RETURN:
+                        if boardSettings.soundOnButton.selected:
+                            boardSettings.set_sound(False)
+                            pygame.mixer.pause()
+
+                        elif boardSettings.soundOffButton.selected:
+                            boardSettings.set_sound(True)
+                            pygame.mixer.unpause()
+
+                        elif boardSettings.musicOnButton.selected:
+                            boardSettings.set_music(False)
+                            pygame.mixer.music.set_volume(0)
+
+                        elif boardSettings.musicOffButton.selected:
+                            boardSettings.set_music(True)
+                            pygame.mixer.music.set_volume(0.5)
+
+                    elif event.key == K_ESCAPE:
+                        boardSettings.close = True
 
         draw_main_menu_screen()
 
@@ -393,7 +446,7 @@ while runGame:
                                 functions.set_new_best_score_or_not(score, int(bestScore))
                                 #Game over menu's buttons creation
                                 homeButton = button_class.Button("home", constants.SCREENSIZE[0]/2-96, 200, constants.HOMEBUTTONTEXTURE, constants.HOMEBUTTONSELECTEDTEXTURE, True)
-                                gameOverExitButton = button_class.Button("exit", constants.SCREENSIZE[0]/2-96, 400, constants.EXITBUTTONTEXTURE, constants.exitButtonSelectedTexture)
+                                gameOverExitButton = button_class.Button("exit", constants.SCREENSIZE[0]/2-96, 400, constants.EXITBUTTONTEXTURE, constants.EXITBUTTONSELECTEDTEXTURE)
                                 phase = "game_over"
                                 createDrawFunction = False
                             else:
@@ -444,7 +497,7 @@ while runGame:
                         createDrawFunction = False
                         #Main menu's buttons creation
                         playButton = button_class.Button("play", constants.SCREENSIZE[0]/2-96, 200, constants.PLAYBUTTONTEXTURE, constants.PLAYBUTTONSELECTEDTEXTURE, True)
-                        mainMenuExitButton = button_class.Button("exit", constants.SCREENSIZE[0]/2-96, 400, constants.EXITBUTTONTEXTURE, constants.exitButtonSelectedTexture)
+                        mainMenuExitButton = button_class.Button("exit", constants.SCREENSIZE[0]/2-96, 400, constants.EXITBUTTONTEXTURE, constants.EXITBUTTONSELECTEDTEXTURE)
                     elif gameOverExitButton.selected:
                         runGame = gameOverExitButton.do_function()
         

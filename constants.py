@@ -14,18 +14,27 @@ FPS = 60
 """Textures"""
 BACKGROUNDTEXTURE = "assets/textures/Background.png"
 GAMEOVERBACKGROUNDTEXTURE = "assets/textures/Background_game_over.png"
-
-#Main menu
 TITLETEXTURE = "assets/textures/Title.png"
+BOARDSETTINGSTEXTURE = "assets/textures/Board_settings.png"
 
 #Buttons
 PLAYBUTTONTEXTURE = "assets/textures/Play_button.png"
 PLAYBUTTONSELECTEDTEXTURE = "assets/textures/Play_button_selected.png"
 EXITBUTTONTEXTURE = "assets/textures/Exit_button.png"
-exitButtonSelectedTexture = "assets/textures/Exit_button_selected.png"
+EXITBUTTONSELECTEDTEXTURE = "assets/textures/Exit_button_selected.png"
 HOMEBUTTONTEXTURE = "assets/textures/Home_button.png"
 HOMEBUTTONSELECTEDTEXTURE = "assets/textures/Home_button_selected.png"
-    
+SETTINGSBUTTONTEXTURE = "assets/textures/Settings_button.png"
+SETTINGSBUTTONSELECTEDTEXTURE = "assets/textures/Settings_button_selected.png"
+MUSICONBUTTONTEXTURE = "assets/textures/Music_on.png"
+MUSICONBUTTONSELECTEDTEXTURE = "assets/textures/Music_on_selected.png"
+MUSICOFFBUTTONTEXTURE = "assets/textures/Music_off.png"
+MUSICOFFBUTTONSELECTEDTEXTURE = "assets/textures/Music_off_selected.png"
+SOUNDONBUTTONTEXTURE = "assets/textures/Sound_on.png"
+SOUNDONBUTTONSELECTEDTEXTURE = "assets/textures/Sound_on_selected.png"
+SOUNDOFFBUTTONTEXTURE = "assets/textures/Sound_off.png"
+SOUNDOFFBUTTONSELECTEDTEXTURE = "assets/textures/Sound_off_selected.png"
+
 #Cell's texture
 BOARDCELLTEXTURE = "assets/textures/Empty_cell.png"
 
