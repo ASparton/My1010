@@ -92,17 +92,14 @@ while runGame:
                     if playButton.selected:
                         phase = playButton.do_function()
                         createDrawFunction = False
-                        #Board creation
-                        board = board_class.Board()
+                        gamePhase = "choose"
+                        board = board_class.Board() #Board creation
                         board.build()
-                        #Pieces generation
-                        piece1, piece2, piece3 = functions.generate_pieces()
+                        piece1, piece2, piece3 = functions.generate_pieces()    #Pieces generation
                         #Pointer (list) of the piece the player is going to choose
                         chosenPiece = piece1    #For now it points on piece1
-                        #We select the first piece. Then the player will choose from that start
-                        piece1[0].selected = True
-                        #Set the score at the beginning
-                        score = 0
+                        piece1[0].selected = True   #We select the first piece. Then the player will choose from that start
+                        score = 0   #Set the score at the beginning
                         bestScore = functions.get_best_score()
 
                     elif mainMenuExitButton.selected:
