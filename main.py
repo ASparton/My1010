@@ -9,7 +9,7 @@ import cell_class
 import board_class
 import piece_class
 import button_class
-import boardSettings_class
+import soundSettings_class
 
 pygame.init()
 
@@ -23,9 +23,9 @@ pygame.display.set_caption("Retro 1010!")
 pygame.mixer.music.load("assets/sounds/The Grand Affair.wav")
 pygame.mixer.music.set_volume(0.5)
 pygame.mixer.music.play()
-winingLineSound = pygame.mixer.Sound("assets/sounds/Ouh_nice_!.wav")
-cantPlaceSound = pygame.mixer.Sound("assets/sounds/Nope.wav")
-gameOverSound = pygame.mixer.Sound("assets/sounds/Game_over.wav")
+soundDict = {"winingLineSound":pygame.mixer.Sound("assets/sounds/Ouh_nice_!.wav"), "cantPlaceSound":pygame.mixer.Sound("assets/sounds/Nope.wav"), "gameOverSound":pygame.mixer.Sound("assets/sounds/Game_over.wav")}
+for sound in soundDict.keys():
+    soundDict[sound].set_volume(0.5)
 
 #Font setup
 font = pygame.font.Font("assets/pixel_font.ttf", 40)
@@ -33,15 +33,64 @@ font = pygame.font.Font("assets/pixel_font.ttf", 40)
 #Texture loading
 background = pygame.image.load(constants.BACKGROUNDTEXTURE).convert_alpha()
 backgroundGameOver = pygame.image.load(constants.GAMEOVERBACKGROUNDTEXTURE).convert_alpha()
+settingsBackground = pygame.image.load(constants.SETTINGSBACKGROUNDTEXTURE).convert_alpha()
+
+#Game sound settings button
+gameSoundSettingsButton = button_class.Button("settings", constants.SCREENSIZE[0]-100, 0, constants.GAMESOUNDSETTINGSBUTTONTEXTURE, constants.GAMESOUNDSETTINGSBUTTONSELECTEDTEXTURE)
 
 #Main menu setup
 title = pygame.image.load(constants.TITLETEXTURE).convert_alpha()
-playButton = button_class.Button("play", constants.SCREENSIZE[0]/2-96, 50, constants.PLAYBUTTONTEXTURE, constants.PLAYBUTTONSELECTEDTEXTURE, True)
+playButton = button_class.Button("play", constants.SCREENSIZE[0]/2-96, 150, constants.PLAYBUTTONTEXTURE, constants.PLAYBUTTONSELECTEDTEXTURE, True)
 mainMenuExitButton = button_class.Button("exit", constants.SCREENSIZE[0]/2-96, 450, constants.EXITBUTTONTEXTURE, constants.EXITBUTTONSELECTEDTEXTURE)
-settingsButton = button_class.Button("settings", constants.SCREENSIZE[0]/2-96, 250,constants.SETTINGSBUTTONTEXTURE, constants.SETTINGSBUTTONSELECTEDTEXTURE)
+soundSettingsButton = button_class.Button("settings", constants.SCREENSIZE[0]/2-96, 300, constants.SOUNDSETTINGSBUTTONTEXTURE, constants.SOUNDSETTINGSBUTTONSELECTEDTEXTURE)
 
 #Settings board setup
-boardSettings = boardSettings_class.BoardSettings(constants.SCREENSIZE[0]/2 - 125, constants.SCREENSIZE[1]/2 - 75)
+soundSettings = soundSettings_class.SoundSettings(constants.SCREENSIZE[0]/2 - 125, constants.SCREENSIZE[1]/2 - 75)
+def draw_sound_settings():
+    if not soundSettings.close:
+        screen.blit(settingsBackground, (0,0))
+        screen.blit(soundSettings.texture, (soundSettings.x, soundSettings.y))
+        soundSettings.texture.blit(soundSettings.exitButton.texture, (soundSettings.exitButton.x, soundSettings.exitButton.y))
+        if soundSettings.soundOn:
+            soundSettings.texture.blit(soundSettings.soundOnButton.texture, (soundSettings.soundOnButton.x, soundSettings.soundOnButton.y))
+        elif not soundSettings.soundOn:
+            soundSettings.texture.blit(soundSettings.soundOffButton.texture, (soundSettings.soundOffButton.x, soundSettings.soundOffButton.y))
+        if soundSettings.musicOn:
+            soundSettings.texture.blit(soundSettings.musicOnButton.texture, (soundSettings.musicOnButton.x, soundSettings.musicOnButton.y))
+        elif not soundSettings.musicOn:
+            soundSettings.texture.blit(soundSettings.musicOffButton.texture, (soundSettings.musicOffButton.x, soundSettings.musicOffButton.y))
+    pygame.display.flip()
+def sound_settings_function():
+    if event.key == K_LEFT:
+        soundSettings.selectNextButton("left")
+    elif event.key == K_RIGHT:
+        soundSettings.selectNextButton("right")
+    elif event.key == K_UP:
+        soundSettings.selectNextButton("up")
+    elif event.key == K_DOWN:
+        soundSettings.selectNextButton("down")
+
+    elif event.key == K_RETURN:
+        if soundSettings.soundOnButton.selected:
+            soundSettings.set_sound(False)
+            for sound in soundDict.keys():
+                soundDict[sound].set_volume(0)
+
+        elif soundSettings.soundOffButton.selected:
+            soundSettings.set_sound(True)
+            for sound in soundDict.keys():
+                soundDict[sound].set_volume(0.5)
+
+        elif soundSettings.musicOnButton.selected:
+            soundSettings.set_music(False)
+            pygame.mixer.music.pause()
+
+        elif soundSettings.musicOffButton.selected:
+            soundSettings.set_music(True)
+            pygame.mixer.music.unpause()
+
+        elif soundSettings.exitButton.selected:
+            soundSettings.close = True
 
 #game variables setup
 phase = "main_menu"
@@ -70,49 +119,38 @@ while runGame:
                 screen.blit(title, ((constants.SCREENSIZE[0]/2-160), 0))
                 screen.blit(playButton.texture, (playButton.x, playButton.y))
                 screen.blit(mainMenuExitButton.texture, (mainMenuExitButton.x, mainMenuExitButton.y))
-                screen.blit(settingsButton.texture, (settingsButton.x, settingsButton.y))
-                if not boardSettings.close:
-                    screen.blit(boardSettings.texture, (boardSettings.x, boardSettings.y))
-                    if boardSettings.soundOn:
-                        boardSettings.texture.blit(boardSettings.soundOnButton.texture, (boardSettings.soundOnButton.x, boardSettings.soundOnButton.y))
-                    elif not boardSettings.soundOn:
-                        boardSettings.texture.blit(boardSettings.soundOffButton.texture, (boardSettings.soundOffButton.x, boardSettings.soundOffButton.y))
-                    if boardSettings.musicOn:
-                        boardSettings.texture.blit(boardSettings.musicOnButton.texture, (boardSettings.musicOnButton.x, boardSettings.musicOnButton.y))
-                    elif not boardSettings.musicOn:
-                        boardSettings.texture.blit(boardSettings.musicOffButton.texture, (boardSettings.musicOffButton.x, boardSettings.musicOffButton.y))
-
-                pygame.display.flip()
+                screen.blit(soundSettingsButton.texture, (soundSettingsButton.x, soundSettingsButton.y))
 
         for event in pygame.event.get(): #Exit event
             if event.type == QUIT:
                 runGame = False
 
             if event.type == KEYDOWN:
-                if boardSettings.close:
+                if soundSettings.close:
+
                     if event.key == K_DOWN: #Select the next button
                         if playButton.selected:
                             playButton.selected = False
-                            settingsButton.selected = True
-                        elif settingsButton.selected:
-                            settingsButton.selected = False
+                            soundSettingsButton.selected = True
+                        elif soundSettingsButton.selected:
+                            soundSettingsButton.selected = False
                             mainMenuExitButton.selected = True
                         else:
                             mainMenuExitButton.selected = False
                             playButton.selected = True
 
-                    if event.key == K_UP:   #Select the next button
+                    elif event.key == K_UP:   #Select the next button
                         if playButton.selected:
                             playButton.selected = False
                             mainMenuExitButton.selected = True
-                        elif settingsButton.selected:
-                            settingsButton.selected = False
+                        elif soundSettingsButton.selected:
+                            soundSettingsButton.selected = False
                             playButton.selected = True
                         else:
                             mainMenuExitButton.selected = False
-                            settingsButton.selected = True
+                            soundSettingsButton.selected = True
 
-                    if event.key == K_RETURN:   #Call the function of the selected button
+                    elif event.key == K_RETURN:   #Call the function of the selected button
                         if playButton.selected:
                             phase = playButton.do_function()
                             createDrawFunction = False
@@ -125,40 +163,17 @@ while runGame:
                             piece1[0].selected = True   #We select the first piece. Then the player will choose from that start
                             score = 0   #Set the score at the beginning
                             bestScore = functions.get_best_score()
-
+                            
                         elif mainMenuExitButton.selected:
                             runGame = mainMenuExitButton.do_function()
-
                         else:
-                            boardSettings.close = settingsButton.do_function()
-                
-                elif not boardSettings.close:
-                    if event.key == K_LEFT:
-                        boardSettings.selectNextButton("left")
-                    elif event.key == K_RIGHT:
-                        boardSettings.selectNextButton("right")
+                            soundSettings.close = soundSettingsButton.do_function()
 
-                    elif event.key == K_RETURN:
-                        if boardSettings.soundOnButton.selected:
-                            boardSettings.set_sound(False)
-                            pygame.mixer.pause()
-
-                        elif boardSettings.soundOffButton.selected:
-                            boardSettings.set_sound(True)
-                            pygame.mixer.unpause()
-
-                        elif boardSettings.musicOnButton.selected:
-                            boardSettings.set_music(False)
-                            pygame.mixer.music.set_volume(0)
-
-                        elif boardSettings.musicOffButton.selected:
-                            boardSettings.set_music(True)
-                            pygame.mixer.music.set_volume(0.5)
-
-                    elif event.key == K_ESCAPE:
-                        boardSettings.close = True
+                elif not soundSettings.close:
+                    sound_settings_function()
 
         draw_main_menu_screen()
+        draw_sound_settings()
 
     while (phase == "game"):
         clock.tick(constants.FPS)
@@ -196,7 +211,8 @@ while runGame:
                         if piece3[0].selected == False:
                             for cell in piece3[0].cellsList:
                                 screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY3 + cell.y) * constants.CELLSIZE)))
-                                    
+
+                        screen.blit(gameSoundSettingsButton.texture, (gameSoundSettingsButton.x, gameSoundSettingsButton.y))    
                         screen.blit(scoreText, (0.3*constants.CELLSIZE, 13.8*constants.CELLSIZE))
                         screen.blit(bestScoreText, (0.3*constants.CELLSIZE, 15.8*constants.CELLSIZE))
 
@@ -220,11 +236,10 @@ while runGame:
                         if piece3[0].selected == False:
                             for cell in piece3[0].cellsList:
                                 screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY3 + cell.y) * constants.CELLSIZE)))
-                                    
-                screen.blit(scoreText, (0.3*constants.CELLSIZE, 13.8*constants.CELLSIZE))
-                screen.blit(bestScoreText, (0.3*constants.CELLSIZE, 15.8*constants.CELLSIZE))
 
-                pygame.display.flip()
+                screen.blit(gameSoundSettingsButton.texture, (gameSoundSettingsButton.x, gameSoundSettingsButton.y))
+                screen.blit(scoreText, (constants.CELLSIZE, 14*constants.CELLSIZE))
+                screen.blit(bestScoreText, (constants.CELLSIZE, 16*constants.CELLSIZE))
 
         #We wait for game event and update the score
         strScore = "SCORE: " + str(score)
@@ -235,119 +250,139 @@ while runGame:
         for event in pygame.event.get(): #Exit event
             if event.type == QUIT:
                 runGame = False
-    
+
             if gamePhase == "choose":
                 """When we are in choose game phase, the player need to choose a piece with the directional keys,
                 and need to press "c" to choose the one he wants. That's the events we are wainting for"""
                 if event.type == KEYDOWN:
-                
-                    if event.key == K_DOWN:
-                        
-                        if piece1[0].selected == True:
-                            piece1[0].selected = False
-                            
-                            if piece2[0].placed == False:
-                                piece2[0].selected = True
-                                chosenPiece = piece2
-                                
-                            elif piece2[0].placed == True:
-                                if piece3[0].placed == False:
-                                    piece3[0].selected = True
-                                    chosenPiece = piece3
-                                    
-                                elif piece3[0].placed == True:
-                                    piece1[0].selected = True
-                                    chosenPiece = piece1
-                            
-                        elif piece2[0].selected == True:
-                            piece2[0].selected = False
-                            
-                            if piece3[0].placed == False:
-                                piece3[0].selected = True
-                                chosenPiece = piece3
-                                
-                            elif piece3[0].placed == True:
-                                if piece1[0].placed == False:
-                                    piece1[0].selected = True
-                                    chosenPiece = piece1
-                                    
-                                elif piece1[0].placed == True:
-                                    piece2[0].selected = True
-                                    chosenPiece = piece2
-                            
-                        elif piece3[0].selected == True:
-                            piece3[0].selected = False
-                            
-                            if piece1[0].placed == False:
-                                piece1[0].selected = True
-                                chosenPiece = piece1
-                                
-                            elif piece1[0].placed == True:
-                                if piece2[0].placed == False:
-                                    piece2[0].selected = True
-                                    chosenPiece = piece2
-                                    
-                                elif piece2[0].placed == True:
-                                    piece3[0].selected = True
-                                    chosenPiece = piece3
-                                
-                    if event.key == K_UP:
-                    
-                        if piece1[0].selected == True:
-                            piece1[0].selected = False
-                        
-                            if piece3[0].placed == False:
-                                piece3[0].selected = True
-                                chosenPiece = piece3
-                            
-                            elif piece3[0].placed == True:
-                                if piece2[0].placed == False:
-                                    piece2[0].selected = True
-                                    chosenPiece = piece2
-                                
-                                elif piece2[0].placed == True:
-                                    piece1[0].selected = True
-                                    chosenPiece = piece1
-                        
-                        elif piece2[0].selected == True:
-                            piece2[0].selected = False
-                        
-                            if piece1[0].placed == False:
-                                piece1[0].selected = True
-                                chosenPiece = piece1
-                            
-                            elif piece1[0].placed == True:
-                                if piece3[0].placed == False:
-                                    piece3[0].selected = True
-                                    chosenPiece = piece3
-                                
-                                elif piece3[0].placed == True:
-                                    piece2[0].selected = True
-                                    chosenPiece = piece2
-                        
-                        elif piece3[0].selected == True:
-                            piece3[0].selected = False
-                        
-                            if piece2[0].placed == False:
-                                piece2[0].selected = True
-                                chosenPiece = piece2
-                            
-                            elif piece2[0].placed == True:
-                                if piece1[0].placed == False:
-                                    piece1[0].selected = True
-                                    chosenPiece = piece1
-                                
-                                elif piece1[0].placed == True:
-                                    piece3[0].selected = True
-                                    chosenPiece = piece3
- 
-                    if event.key == K_RETURN:
+                    if soundSettings.close:
 
-                        for cell in chosenPiece[0].cellsList:
-                            cell.x = 0 + cell.x
-                            cell.y = 0 + cell.y
+                        if event.key == K_DOWN:
                             
-                        gamePhase = "board"
+                            if piece1[0].selected == True:
+                                piece1[0].selected = False
+                                
+                                if piece2[0].placed == False:
+                                    piece2[0].selected = True
+                                    chosenPiece = piece2
+                                    
+                                elif piece2[0].placed == True:
+                                    if piece3[0].placed == False:
+                                        piece3[0].selected = True
+                                        chosenPiece = piece3
+                                        
+                                    elif piece3[0].placed == True:
+                                        piece1[0].selected = True
+                                        chosenPiece = piece1
+                                
+                            elif piece2[0].selected == True:
+                                piece2[0].selected = False
+                                
+                                if piece3[0].placed == False:
+                                    piece3[0].selected = True
+                                    chosenPiece = piece3
+                                    
+                                elif piece3[0].placed == True:
+                                    if piece1[0].placed == False:
+                                        piece1[0].selected = True
+                                        chosenPiece = piece1
+                                        
+                                    elif piece1[0].placed == True:
+                                        piece2[0].selected = True
+                                        chosenPiece = piece2
+                                
+                            elif piece3[0].selected == True:
+                                piece3[0].selected = False
+                                
+                                if piece1[0].placed == False:
+                                    piece1[0].selected = True
+                                    chosenPiece = piece1
+                                    
+                                elif piece1[0].placed == True:
+                                    if piece2[0].placed == False:
+                                        piece2[0].selected = True
+                                        chosenPiece = piece2
+                                        
+                                    elif piece2[0].placed == True:
+                                        piece3[0].selected = True
+                                        chosenPiece = piece3
+                                    
+                        elif event.key == K_UP:
+                        
+                            if piece1[0].selected == True:
+                                piece1[0].selected = False
+                            
+                                if piece3[0].placed == False:
+                                    piece3[0].selected = True
+                                    chosenPiece = piece3
+                                
+                                elif piece3[0].placed == True:
+                                    if piece2[0].placed == False:
+                                        piece2[0].selected = True
+                                        chosenPiece = piece2
+                                    
+                                    elif piece2[0].placed == True:
+                                        piece1[0].selected = True
+                                        chosenPiece = piece1
+                            
+                            elif piece2[0].selected == True:
+                                piece2[0].selected = False
+                            
+                                if piece1[0].placed == False:
+                                    piece1[0].selected = True
+                                    chosenPiece = piece1
+                                
+                                elif piece1[0].placed == True:
+                                    if piece3[0].placed == False:
+                                        piece3[0].selected = True
+                                        chosenPiece = piece3
+                                    
+                                    elif piece3[0].placed == True:
+                                        piece2[0].selected = True
+                                        chosenPiece = piece2
+                            
+                            elif piece3[0].selected == True:
+                                piece3[0].selected = False
+                            
+                                if piece2[0].placed == False:
+                                    piece2[0].selected = True
+                                    chosenPiece = piece2
+                                
+                                elif piece2[0].placed == True:
+                                    if piece1[0].placed == False:
+                                        piece1[0].selected = True
+                                        chosenPiece = piece1
+                                    
+                                    elif piece1[0].placed == True:
+                                        piece3[0].selected = True
+                                        chosenPiece = piece3
+                        
+                        elif event.key == K_RIGHT:
+                            gameSoundSettingsButton.selected = True
+                            if piece1[0].selected == True:
+                                piece1[0].selected = False
+                            elif piece2[0].selected == True:
+                                piece2[0].selected = False
+                            elif piece3[0].selected == True:
+                                piece3[0].selected = False
+                        
+                        elif event.key == K_LEFT:
+                            gameSoundSettingsButton.selected = False
+                            chosenPiece[0].selected = True
+
+                        elif event.key == K_RETURN:
+                            
+                            if gameSoundSettingsButton.selected:
+                                soundSettings.close = gameSoundSettingsButton.do_function()
+                            else:
+                                for cell in chosenPiece[0].cellsList:
+                                    cell.x = 0 + cell.x
+                                    cell.y = 0 + cell.y
+                                    
+                                gamePhase = "board"
+
+                    elif not soundSettings.close:
+                        sound_settings_function()
                 
             elif gamePhase == "board":
                 """During the board phase :
@@ -385,7 +420,7 @@ while runGame:
                                 cell.texture = cell.cantPlaceTexture
                             
                             chosenPiece[0].canBePlaced = False
-                            cantPlaceSound.play()
+                            soundDict["cantPlaceSound"].play()
                                         
                         if canBePlaced == True:
                             #Check for lines who has been made and add to the score
@@ -394,7 +429,7 @@ while runGame:
                         
                             if lineCellNumber > 0:
                                 score += lineCellNumber
-                                winingLineSound.play()
+                                soundDict["winingLineSound"].play()
                         
                             #Check for a possible game over
                             boardPlaceTestList = []
@@ -442,7 +477,7 @@ while runGame:
                             #Test if we are game over or not
                             gameOverTest = functions.check_game_over(boardPlaceTestList)
                             if gameOverTest == True:
-                                gameOverSound.play()
+                                soundDict["gameOverSound"].play()
                                 functions.set_new_best_score_or_not(score, int(bestScore))
                                 #Game over menu's buttons creation
                                 homeButton = button_class.Button("home", constants.SCREENSIZE[0]/2-96, 200, constants.HOMEBUTTONTEXTURE, constants.HOMEBUTTONSELECTEDTEXTURE, True)
@@ -453,6 +488,7 @@ while runGame:
                                 gamePhase = "choose"
 
         draw_game_screen(gamePhase)
+        draw_sound_settings()
 
     while (phase == "game_over"):
         clock.tick(constants.FPS)
