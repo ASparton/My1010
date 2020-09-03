@@ -28,21 +28,22 @@ for sound in soundDict.keys():
     soundDict[sound].set_volume(0.5)
 
 #Font setup
-font = pygame.font.Font("assets/pixel_font.ttf", 40)
+titleFont = pygame.font.Font("assets/fonts/karma future.ttf", 72)
+mainFont = pygame.font.Font("assets/fonts/karma suture.ttf", 24)
 
 #Texture loading
 background = pygame.image.load(constants.BACKGROUNDTEXTURE).convert_alpha()
-backgroundGameOver = pygame.image.load(constants.GAMEOVERBACKGROUNDTEXTURE).convert_alpha()
 settingsBackground = pygame.image.load(constants.SETTINGSBACKGROUNDTEXTURE).convert_alpha()
+buttonsTexture = pygame.image.load(constants.BUTTONSTEXTURE).convert_alpha()    #Just to get the size
 
 #Game sound settings button
-gameSoundSettingsButton = button_class.Button("settings", constants.SCREENSIZE[0]-100, 0, constants.GAMESOUNDSETTINGSBUTTONTEXTURE, constants.GAMESOUNDSETTINGSBUTTONSELECTEDTEXTURE)
+gameSoundSettingsButton = button_class.Button("settings", constants.SCREENSIZE[0]-100, 0, "", False, constants.GAMESOUNDSETTINGSBUTTONTEXTURE, constants.GAMESOUNDSETTINGSBUTTONSELECTEDTEXTURE)
 
 #Main menu setup
-title = pygame.image.load(constants.TITLETEXTURE).convert_alpha()
-playButton = button_class.Button("play", constants.SCREENSIZE[0]/2-96, 150, constants.PLAYBUTTONTEXTURE, constants.PLAYBUTTONSELECTEDTEXTURE, True)
-mainMenuExitButton = button_class.Button("exit", constants.SCREENSIZE[0]/2-96, 450, constants.EXITBUTTONTEXTURE, constants.EXITBUTTONSELECTEDTEXTURE)
-soundSettingsButton = button_class.Button("settings", constants.SCREENSIZE[0]/2-96, 300, constants.SOUNDSETTINGSBUTTONTEXTURE, constants.SOUNDSETTINGSBUTTONSELECTEDTEXTURE)
+title = titleFont.render("RETRO 1010!", False, (132,187,132))
+playButton = button_class.Button("play", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, 100, "PLAY", True)
+soundSettingsButton = button_class.Button("settings", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, 300, "SETTINGS")
+mainMenuExitButton = button_class.Button("exit", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, 400, "EXIT")
 
 #Settings board setup
 soundSettings = soundSettings_class.SoundSettings(constants.SCREENSIZE[0]/2 - 125, constants.SCREENSIZE[1]/2 - 75)
@@ -97,7 +98,7 @@ phase = "main_menu"
 gamePhase = "choose"
 gameOver = False
 createDrawFunction = False
-GAMEOVERTEXT = font.render("Game Over", False, (255, 255, 255))
+GAMEOVERTEXT = titleFont.render("Game Over", False, (139,172,15))
 
 #game loop setup
 clock = pygame.time.Clock()
@@ -116,10 +117,13 @@ while runGame:
             createDrawFunction = True
             def draw_main_menu_screen():    #draw function: draw/display the main menu screen
                 screen.blit(background, (0,0))
-                screen.blit(title, ((constants.SCREENSIZE[0]/2-160), 0))
+                screen.blit(title, ((constants.SCREENSIZE[0]//2-title.get_size()[0]//2), 0))
                 screen.blit(playButton.texture, (playButton.x, playButton.y))
+                playButton.texture.blit(playButton.title, (playButton.titlePosition[0], playButton.titlePosition[1]))
                 screen.blit(mainMenuExitButton.texture, (mainMenuExitButton.x, mainMenuExitButton.y))
+                mainMenuExitButton.texture.blit(mainMenuExitButton.title, (mainMenuExitButton.titlePosition[0], mainMenuExitButton.titlePosition[1]))
                 screen.blit(soundSettingsButton.texture, (soundSettingsButton.x, soundSettingsButton.y))
+                soundSettingsButton.texture.blit(soundSettingsButton.title, (soundSettingsButton.titlePosition[0], soundSettingsButton.titlePosition[1]))
 
         for event in pygame.event.get(): #Exit event
             if event.type == QUIT:
@@ -243,9 +247,9 @@ while runGame:
 
         #We wait for game event and update the score
         strScore = "SCORE: " + str(score)
-        scoreText = font.render(strScore, False, (255,255,255))
+        scoreText = mainFont.render(strScore, False, (255,255,255))
         strBestScore = "BEST SCORE: " + bestScore
-        bestScoreText = font.render(strBestScore, False, (255,255,255))
+        bestScoreText = mainFont.render(strBestScore, False, (255,255,255))
 
         for event in pygame.event.get(): #Exit event
             if event.type == QUIT:
@@ -498,8 +502,8 @@ while runGame:
         if not createDrawFunction:
             createDrawFunction = True
             def draw_game_over_screen():
-                screen.blit(backgroundGameOver,(0,0))
-                screen.blit(GAMEOVERTEXT, (250, 50))
+                screen.blit(background,(0,0))
+                screen.blit(GAMEOVERTEXT, (constants.SCREENSIZE[0]//2 - GAMEOVERTEXT.get_size()[0]//2, 0))
                 screen.blit(homeButton.texture, (homeButton.x, homeButton.y))
                 screen.blit(gameOverExitButton.texture, (gameOverExitButton.x, gameOverExitButton.y))
                 screen.blit(scoreText, (2*constants.CELLSIZE, 4*constants.CELLSIZE))
@@ -533,7 +537,9 @@ while runGame:
                         createDrawFunction = False
                         #Main menu's buttons creation
                         playButton = button_class.Button("play", constants.SCREENSIZE[0]/2-96, 200, constants.PLAYBUTTONTEXTURE, constants.PLAYBUTTONSELECTEDTEXTURE, True)
+                        soundSettingsButton = button_class.Button("settings", constants.SCREENSIZE[0]/2-96, 300, constants.SOUNDSETTINGSBUTTONTEXTURE, constants.SOUNDSETTINGSBUTTONSELECTEDTEXTURE)
                         mainMenuExitButton = button_class.Button("exit", constants.SCREENSIZE[0]/2-96, 400, constants.EXITBUTTONTEXTURE, constants.EXITBUTTONSELECTEDTEXTURE)
+
                     elif gameOverExitButton.selected:
                         runGame = gameOverExitButton.do_function()
         

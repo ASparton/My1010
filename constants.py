@@ -1,5 +1,6 @@
 """Screen"""
 SCREENSIZE = [640, 544]
+SCREENXMIDDLE = SCREENSIZE[0] // 2
 
 CELLSIZE = 32
 
@@ -19,14 +20,8 @@ TITLETEXTURE = "assets/textures/Title.png"
 SOUNDSETTINGSTEXTURE = "assets/textures/Sound_settings.png"
 
 #Buttons
-PLAYBUTTONTEXTURE = "assets/textures/Play_button.png"
-PLAYBUTTONSELECTEDTEXTURE = "assets/textures/Play_button_selected.png"
-EXITBUTTONTEXTURE = "assets/textures/Exit_button.png"
-EXITBUTTONSELECTEDTEXTURE = "assets/textures/Exit_button_selected.png"
-HOMEBUTTONTEXTURE = "assets/textures/Home_button.png"
-HOMEBUTTONSELECTEDTEXTURE = "assets/textures/Home_button_selected.png"
-SOUNDSETTINGSBUTTONTEXTURE = "assets/textures/Sound_settings_button.png"
-SOUNDSETTINGSBUTTONSELECTEDTEXTURE = "assets/textures/Sound_settings_button_selected.png"
+BUTTONSTEXTURE = "assets/textures/button.png"
+BUTTONSSELECTEDTEXTURE = "assets/textures/button_selected.png"
 MUSICONBUTTONTEXTURE = "assets/textures/Music_on.png"
 MUSICONBUTTONSELECTEDTEXTURE = "assets/textures/Music_on_selected.png"
 MUSICOFFBUTTONTEXTURE = "assets/textures/Music_off.png"

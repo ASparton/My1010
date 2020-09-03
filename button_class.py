@@ -2,23 +2,28 @@ import pygame
 from pygame.locals import *
 import constants
 
+pygame.init() #Need to init pygame to use fonts
+
 """Class that create a button:
    - Position
    - Unselected and selected textures
    - Function of the button: "play", "exit", "mainMenu", "settings". """
 class Button:
         
-    def __init__(self, function, x_pos, y_pos, unselected_texture, selected_texture, selected=False):
+    def __init__(self, function, x_pos, y_pos, title="", selected=False, unselectedTexture=constants.BUTTONSTEXTURE, selectedTexture=constants.BUTTONSSELECTEDTEXTURE):
         """function = "play" OR "exit" OR "home" OR "settings" """
-        self._function = function
+        self._unselectedTexture = pygame.image.load(unselectedTexture).convert_alpha()
+        self._selectedTexture = pygame.image.load(selectedTexture).convert_alpha()
+
+        self._title = 0
+        self._titlePosition = []
+        self._def_button_title(title)
 
         self._x = x_pos
         self._y = y_pos
         
         self._selected = selected
-        
-        self._unselectedTexture = pygame.image.load(unselected_texture).convert_alpha()
-        self._selectedTexture = pygame.image.load(selected_texture).convert_alpha()
+        self._function = function
         
         if self._selected:
             self._texture = self._selectedTexture
@@ -40,13 +45,13 @@ class Button:
     #Textures properties
     def _get_unselectedTexture(self):
         return self._unselectedTexture
-    def _set_unselectedTexture(self, unselectedTexture):
-        self._unselectedTexture = unselectedTexture
+    def _set_unselectedTexture(self, newTexture):
+        self._unselectedTexture = newTexture
     unselectedTexture = property(_get_unselectedTexture, _set_unselectedTexture)
     def _get_selectedTexture(self):
         return self._selectedTexture
-    def _set_selectedTexture(self, selectedTexture):
-        self._selectedTexture = selectedTexture
+    def _set_selectedTexture(self, newTexture):
+        self._selectedTexture = newTexture
     selectedTexture = property(_get_selectedTexture, _set_selectedTexture)
     def _get_texture(self):
         return self._texture
@@ -63,8 +68,24 @@ class Button:
             self.texture = self.selectedTexture
         else:
             self.texture = self.unselectedTexture
-
     selected = property(_get_selected, _set_selected)
+    #title properties
+    def _get_title(self):
+        return self._title
+    def _set_title(self, titleText):
+        self._def_button_title(titleText)
+    title = property(_get_title, _set_title)
+    def _get_titlePosition(self):
+        return self._titlePosition
+    titlePosition = property(_get_titlePosition)
+
+    def _def_button_title(self, titleText):
+        
+        titleFont = pygame.font.Font("assets/fonts/karma future.ttf", 48)
+        self._title = titleFont.render(titleText, False, (15, 56, 15))
+        
+        self._titlePosition.append(self._unselectedTexture.get_size()[0]//2 - self._title.get_size()[0]//2)
+        self._titlePosition.append(self._unselectedTexture.get_size()[1]//2 - self._title.get_size()[1]//2)
 
     def do_function(self):
         phase = 0

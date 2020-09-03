@@ -13,13 +13,13 @@ class SoundSettings:
 
         self._musicOn = True
         self._soundOn = True
-        self._musicOnButton = button_class.Button("music", 12, 25, constants.MUSICONBUTTONTEXTURE, constants.MUSICONBUTTONSELECTEDTEXTURE, True)
-        self._musicOffButton = button_class.Button("music", 12, 25, constants.MUSICOFFBUTTONTEXTURE, constants.MUSICOFFBUTTONSELECTEDTEXTURE)
-        self._soundOnButton = button_class.Button("sound", 138, 25, constants.SOUNDONBUTTONTEXTURE, constants.SOUNDONBUTTONSELECTEDTEXTURE)
-        self._soundOffButton = button_class.Button("sound", 138, 25, constants.SOUNDOFFBUTTONTEXTURE, constants.SOUNDOFFBUTTONSELECTEDTEXTURE)
+        self._musicOnButton = button_class.Button("music", 12, 25, "", True, constants.MUSICONBUTTONTEXTURE, constants.MUSICONBUTTONSELECTEDTEXTURE)
+        self._musicOffButton = button_class.Button("music", 12, 25, "", False, constants.MUSICOFFBUTTONTEXTURE, constants.MUSICOFFBUTTONSELECTEDTEXTURE)
+        self._soundOnButton = button_class.Button("sound", 138, 25, "", False, constants.SOUNDONBUTTONTEXTURE, constants.SOUNDONBUTTONSELECTEDTEXTURE)
+        self._soundOffButton = button_class.Button("sound", 138, 25, "", False, constants.SOUNDOFFBUTTONTEXTURE, constants.SOUNDOFFBUTTONSELECTEDTEXTURE)
 
         self._close = True
-        self._exitButton = button_class.Button("exitSettings", 0, 0, constants.EXITBUTTONTEXTURE, constants.EXITBUTTONSELECTEDTEXTURE)
+        self._exitButton = button_class.Button("exitSettings", 0, 0, "EXIT")
         self._exitButton.selectedTexture = pygame.transform.scale(self._exitButton.selectedTexture, (self._exitButton.selectedTexture.get_size()[0]//4, self._exitButton.selectedTexture.get_size()[1]//4))
         self._exitButton.unselectedTexture = pygame.transform.scale(self._exitButton.unselectedTexture, (self._exitButton.unselectedTexture.get_size()[0]//4, self._exitButton.unselectedTexture.get_size()[1]//4))
         self._exitButton.texture = self._exitButton.unselectedTexture
