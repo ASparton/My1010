@@ -52,6 +52,7 @@ def draw_sound_settings():
         screen.blit(settingsBackground, (0,0))
         screen.blit(soundSettings.texture, (soundSettings.x, soundSettings.y))
         soundSettings.texture.blit(soundSettings.exitButton.texture, (soundSettings.exitButton.x, soundSettings.exitButton.y))
+        soundSettings.exitButton.texture.blit(soundSettings.exitButton.title, (soundSettings.exitButton.titlePosition[0], soundSettings.exitButton.titlePosition[1]))
         if soundSettings.soundOn:
             soundSettings.texture.blit(soundSettings.soundOnButton.texture, (soundSettings.soundOnButton.x, soundSettings.soundOnButton.y))
         elif not soundSettings.soundOn:
@@ -217,8 +218,8 @@ while runGame:
                                 screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY3 + cell.y) * constants.CELLSIZE)))
 
                         screen.blit(gameSoundSettingsButton.texture, (gameSoundSettingsButton.x, gameSoundSettingsButton.y))    
-                        screen.blit(scoreText, (0.3*constants.CELLSIZE, 13.8*constants.CELLSIZE))
-                        screen.blit(bestScoreText, (0.3*constants.CELLSIZE, 15.8*constants.CELLSIZE))
+                        screen.blit(scoreText, (0, 14*constants.CELLSIZE))
+                        screen.blit(bestScoreText, (0, 16*constants.CELLSIZE))
 
                         pygame.display.flip()
                         time.sleep(0.6)
@@ -242,14 +243,14 @@ while runGame:
                                 screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY3 + cell.y) * constants.CELLSIZE)))
 
                 screen.blit(gameSoundSettingsButton.texture, (gameSoundSettingsButton.x, gameSoundSettingsButton.y))
-                screen.blit(scoreText, (constants.CELLSIZE, 14*constants.CELLSIZE))
-                screen.blit(bestScoreText, (constants.CELLSIZE, 16*constants.CELLSIZE))
+                screen.blit(scoreText, (0, 14*constants.CELLSIZE))
+                screen.blit(bestScoreText, (0, 16*constants.CELLSIZE))
 
         #We wait for game event and update the score
-        strScore = "SCORE: " + str(score)
-        scoreText = mainFont.render(strScore, False, (255,255,255))
-        strBestScore = "BEST SCORE: " + bestScore
-        bestScoreText = mainFont.render(strBestScore, False, (255,255,255))
+        strScore = " SCORE: " + str(score)
+        scoreText = mainFont.render(strScore, False, (159,196,159))
+        strBestScore = " BEST SCORE: " + bestScore
+        bestScoreText = mainFont.render(strBestScore, False, (159,196,159))
 
         for event in pygame.event.get(): #Exit event
             if event.type == QUIT:

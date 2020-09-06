@@ -17,7 +17,7 @@ class Button:
 
         self._title = 0
         self._titlePosition = []
-        self._def_button_title(title)
+        self.set_button_title(title, 60)
 
         self._x = x_pos
         self._y = y_pos
@@ -72,18 +72,17 @@ class Button:
     #title properties
     def _get_title(self):
         return self._title
-    def _set_title(self, titleText):
-        self._def_button_title(titleText)
-    title = property(_get_title, _set_title)
+    title = property(_get_title)
     def _get_titlePosition(self):
         return self._titlePosition
     titlePosition = property(_get_titlePosition)
 
-    def _def_button_title(self, titleText):
+    def set_button_title(self, titleText, fontSize):
         
-        titleFont = pygame.font.Font("assets/fonts/karma future.ttf", 60)
+        titleFont = pygame.font.Font("assets/fonts/karma future.ttf", fontSize)
         self._title = titleFont.render(titleText, False, (15, 56, 15))
         
+        self._titlePosition.clear()
         self._titlePosition.append(self._unselectedTexture.get_size()[0]//2 - self._title.get_size()[0]//2)
         self._titlePosition.append(self._unselectedTexture.get_size()[1]//2 - self._title.get_size()[1]//2)
 

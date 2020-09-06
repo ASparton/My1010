@@ -23,6 +23,7 @@ class SoundSettings:
         self._exitButton.selectedTexture = pygame.transform.scale(self._exitButton.selectedTexture, (self._exitButton.selectedTexture.get_size()[0]//4, self._exitButton.selectedTexture.get_size()[1]//4))
         self._exitButton.unselectedTexture = pygame.transform.scale(self._exitButton.unselectedTexture, (self._exitButton.unselectedTexture.get_size()[0]//4, self._exitButton.unselectedTexture.get_size()[1]//4))
         self._exitButton.texture = self._exitButton.unselectedTexture
+        self._exitButton.set_button_title("EXIT", 18)
 
         self._texture = pygame.image.load(texture).convert_alpha()
 
