@@ -41,9 +41,9 @@ gameSoundSettingsButton = button_class.Button("settings", constants.SCREENSIZE[0
 
 #Main menu setup
 title = titleFont.render("RETRO 1010!", False, (132,187,132))
-playButton = button_class.Button("play", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, 100, "PLAY", True)
-soundSettingsButton = button_class.Button("settings", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, 300, "SETTINGS")
-mainMenuExitButton = button_class.Button("exit", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, 400, "EXIT")
+playButton = button_class.Button("play", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY1, "PLAY", True)
+soundSettingsButton = button_class.Button("settings", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY2, "SETTINGS")
+mainMenuExitButton = button_class.Button("exit", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY3, "EXIT")
 
 #Settings board setup
 soundSettings = soundSettings_class.SoundSettings(constants.SCREENSIZE[0]/2 - 125, constants.SCREENSIZE[1]/2 - 75)
@@ -484,8 +484,8 @@ while runGame:
                                 soundDict["gameOverSound"].play()
                                 functions.set_new_best_score_or_not(score, int(bestScore))
                                 #Game over menu's buttons creation
-                                homeButton = button_class.Button("home", constants.SCREENSIZE[0]/2-96, 200, constants.HOMEBUTTONTEXTURE, constants.HOMEBUTTONSELECTEDTEXTURE, True)
-                                gameOverExitButton = button_class.Button("exit", constants.SCREENSIZE[0]/2-96, 400, constants.EXITBUTTONTEXTURE, constants.EXITBUTTONSELECTEDTEXTURE)
+                                homeButton = button_class.Button("home", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, 250, "MAIN MENU", True)
+                                gameOverExitButton = button_class.Button("exit", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, 370, "EXIT")
                                 phase = "game_over"
                                 createDrawFunction = False
                             else:
@@ -505,7 +505,9 @@ while runGame:
                 screen.blit(background,(0,0))
                 screen.blit(GAMEOVERTEXT, (constants.SCREENSIZE[0]//2 - GAMEOVERTEXT.get_size()[0]//2, 0))
                 screen.blit(homeButton.texture, (homeButton.x, homeButton.y))
+                homeButton.texture.blit(homeButton.title, (homeButton.titlePosition[0], homeButton.titlePosition[1]))
                 screen.blit(gameOverExitButton.texture, (gameOverExitButton.x, gameOverExitButton.y))
+                gameOverExitButton.texture.blit(gameOverExitButton.title, (gameOverExitButton.titlePosition[0], gameOverExitButton.titlePosition[1]))
                 screen.blit(scoreText, (2*constants.CELLSIZE, 4*constants.CELLSIZE))
                 screen.blit(bestScoreText, (12*constants.CELLSIZE, 4*constants.CELLSIZE))
                 pygame.display.flip()
@@ -536,9 +538,9 @@ while runGame:
                         phase = homeButton.do_function()
                         createDrawFunction = False
                         #Main menu's buttons creation
-                        playButton = button_class.Button("play", constants.SCREENSIZE[0]/2-96, 200, constants.PLAYBUTTONTEXTURE, constants.PLAYBUTTONSELECTEDTEXTURE, True)
-                        soundSettingsButton = button_class.Button("settings", constants.SCREENSIZE[0]/2-96, 300, constants.SOUNDSETTINGSBUTTONTEXTURE, constants.SOUNDSETTINGSBUTTONSELECTEDTEXTURE)
-                        mainMenuExitButton = button_class.Button("exit", constants.SCREENSIZE[0]/2-96, 400, constants.EXITBUTTONTEXTURE, constants.EXITBUTTONSELECTEDTEXTURE)
+                        playButton = button_class.Button("play", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY1, "PLAY", True)
+                        soundSettingsButton = button_class.Button("settings", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY2, "SETTINGS")
+                        mainMenuExitButton = button_class.Button("exit", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY3, "EXIT")
 
                     elif gameOverExitButton.selected:
                         runGame = gameOverExitButton.do_function()

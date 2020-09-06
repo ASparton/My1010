@@ -13,7 +13,7 @@ def create_piece(cellsArgumentList):
     pieceList = []
     
     for cell in cellsArgumentList:
-        pieceList.append(cell_class.Cell(cell["x"], cell["y"], cell["textureUnselected"], cell["textureSelected"], cell["textureNot"]))
+        pieceList.append(cell_class.Cell(cell["x"], cell["y"]))
         
     piece = piece_class.Piece(pieceList)
         

@@ -24,7 +24,7 @@ class Board:
         
         while(y_counter < self.y_size):
             while(x_counter < self.x_size):
-                self.cellsList.append(cell_class.Cell(x_counter, y_counter))
+                self.cellsList.append(cell_class.Cell(x_counter, y_counter, constants.BOARDCELLTEXTURE))
                 x_counter += 1
             
             y_counter += 1

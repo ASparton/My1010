@@ -81,7 +81,7 @@ class Button:
 
     def _def_button_title(self, titleText):
         
-        titleFont = pygame.font.Font("assets/fonts/karma future.ttf", 48)
+        titleFont = pygame.font.Font("assets/fonts/karma future.ttf", 60)
         self._title = titleFont.render(titleText, False, (15, 56, 15))
         
         self._titlePosition.append(self._unselectedTexture.get_size()[0]//2 - self._title.get_size()[0]//2)

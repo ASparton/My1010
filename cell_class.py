@@ -11,7 +11,7 @@ import constants
                   - the texture when it can't be placed on the board"""
 class Cell:
         
-    def __init__(self, x_pos, y_pos, unselected_texture=constants.BOARDCELLTEXTURE, selected_texture=constants.BOARDCELLTEXTURE, cant_place_texture=constants.BOARDCELLTEXTURE, empty=True, selected=False):
+    def __init__(self, x_pos, y_pos, unselected_texture=constants.UNSELECTEDCELLTEXTURE, selected_texture=constants.SELECTEDCELLTEXTURE, cant_place_texture=constants.CANTPLACECELLTEXTURE, empty=True, selected=False):
         
         self.x = x_pos
         self.y = y_pos
