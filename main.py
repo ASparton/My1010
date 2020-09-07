@@ -20,16 +20,19 @@ screen = pygame.display.set_mode((constants.SCREENSIZE[0], constants.SCREENSIZE[
 pygame.display.set_caption("Retro 1010!")
 
 #Game music and sound setup
-pygame.mixer.music.load("assets/sounds/The Grand Affair.wav")
-pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.load("assets/sounds/Retro Samurai.wav")
+pygame.mixer.music.set_volume(0.1)
 pygame.mixer.music.play()
-soundDict = {"winingLineSound":pygame.mixer.Sound("assets/sounds/Ouh_nice_!.wav"), "cantPlaceSound":pygame.mixer.Sound("assets/sounds/Nope.wav"), "gameOverSound":pygame.mixer.Sound("assets/sounds/Game_over.wav")}
+soundDict = {"winingLine":pygame.mixer.Sound("assets/sounds/Line.wav"), "cantPlace":pygame.mixer.Sound("assets/sounds/Cant_place.wav"),
+"gameOver":pygame.mixer.Sound("assets/sounds/Game_over.wav"), "select":pygame.mixer.Sound("assets/sounds/Select.wav"),
+"piecePlaced":pygame.mixer.Sound("assets/sounds/Placed.wav"), "moove":pygame.mixer.Sound("assets/sounds/Moove.wav"),
+"pieceGeneration":pygame.mixer.Sound("assets/sounds/Piece_generation.wav"), "beginGame":pygame.mixer.Sound("assets/sounds/Begin.wav")}
 for sound in soundDict.keys():
     soundDict[sound].set_volume(0.5)
 
 #Font setup
 titleFont = pygame.font.Font("assets/fonts/karma future.ttf", 72)
-mainFont = pygame.font.Font("assets/fonts/karma suture.ttf", 24)
+mainFont = pygame.font.Font("assets/fonts/karma future.ttf", 24)
 
 #Texture loading
 background = pygame.image.load(constants.BACKGROUNDTEXTURE).convert_alpha()
@@ -64,12 +67,16 @@ def draw_sound_settings():
     pygame.display.flip()
 def sound_settings_function():
     if event.key == K_LEFT:
+        soundDict["select"].play()
         soundSettings.selectNextButton("left")
     elif event.key == K_RIGHT:
+        soundDict["select"].play()
         soundSettings.selectNextButton("right")
     elif event.key == K_UP:
+        soundDict["select"].play()
         soundSettings.selectNextButton("up")
     elif event.key == K_DOWN:
+        soundDict["select"].play()
         soundSettings.selectNextButton("down")
 
     elif event.key == K_RETURN:
@@ -134,6 +141,7 @@ while runGame:
                 if soundSettings.close:
 
                     if event.key == K_DOWN: #Select the next button
+                        soundDict["select"].play()
                         if playButton.selected:
                             playButton.selected = False
                             soundSettingsButton.selected = True
@@ -145,6 +153,7 @@ while runGame:
                             playButton.selected = True
 
                     elif event.key == K_UP:   #Select the next button
+                        soundDict["select"].play()
                         if playButton.selected:
                             playButton.selected = False
                             mainMenuExitButton.selected = True
@@ -157,6 +166,7 @@ while runGame:
 
                     elif event.key == K_RETURN:   #Call the function of the selected button
                         if playButton.selected:
+                            soundDict["beginGame"].play()
                             phase = playButton.do_function()
                             createDrawFunction = False
                             gamePhase = "choose"
@@ -263,7 +273,7 @@ while runGame:
                     if soundSettings.close:
 
                         if event.key == K_DOWN:
-                            
+                            soundDict["select"].play()
                             if piece1[0].selected == True:
                                 piece1[0].selected = False
                                 
@@ -313,7 +323,7 @@ while runGame:
                                         chosenPiece = piece3
                                     
                         elif event.key == K_UP:
-                        
+                            soundDict["select"].play()
                             if piece1[0].selected == True:
                                 piece1[0].selected = False
                             
@@ -363,6 +373,7 @@ while runGame:
                                         chosenPiece = piece3
                         
                         elif event.key == K_RIGHT:
+                            soundDict["select"].play()
                             gameSoundSettingsButton.selected = True
                             if piece1[0].selected == True:
                                 piece1[0].selected = False
@@ -372,6 +383,7 @@ while runGame:
                                 piece3[0].selected = False
                         
                         elif event.key == K_LEFT:
+                            soundDict["select"].play()
                             gameSoundSettingsButton.selected = False
                             chosenPiece[0].selected = True
 
@@ -397,15 +409,19 @@ while runGame:
                 if event.type == KEYDOWN:
                 
                     if event.key == K_DOWN:
+                        soundDict["moove"].play()
                         chosenPiece[0].moove("down")
-                
+
                     if event.key == K_UP:
+                        soundDict["moove"].play()
                         chosenPiece[0].moove("up")
-                    
+
                     if event.key == K_RIGHT:
+                        soundDict["moove"].play()
                         chosenPiece[0].moove("right")
-           
+
                     if event.key == K_LEFT:
+                        soundDict["moove"].play()
                         chosenPiece[0].moove("left")
             
                     if event.key == K_r:
@@ -417,24 +433,24 @@ while runGame:
                     if event.key == K_RETURN:
                     
                         canBePlaced = board.player_place_verification(chosenPiece[0])
-                        if canBePlaced:
-                            chosenPiece[0].place_piece(board)
-                            score += chosenPiece[0].cellNumber
-                        elif canBePlaced == False:
+                        if not canBePlaced:
+                            soundDict["cantPlace"].play()
                             for cell in chosenPiece[0].cellsList:
                                 cell.texture = cell.cantPlaceTexture
-                            
                             chosenPiece[0].canBePlaced = False
-                            soundDict["cantPlaceSound"].play()
-                                        
-                        if canBePlaced == True:
-                            #Check for lines who has been made and add to the score
+
+                        elif canBePlaced:
+                            #Place the piece on the board and update the score
+                            chosenPiece[0].place_piece(board)
+                            score += chosenPiece[0].cellNumber
                     
+                            #Check if line has been done
                             lineCellNumber = board.line_verification_suppression()
-                        
                             if lineCellNumber > 0:
+                                soundDict["winingLine"].play()
                                 score += lineCellNumber
-                                soundDict["winingLineSound"].play()
+                            else:
+                                soundDict["piecePlaced"].play()
                         
                             #Check for a possible game over
                             boardPlaceTestList = []
@@ -471,10 +487,10 @@ while runGame:
                                     elif piece3[0].placed == True:
                                 
                                         #Generate 3 other pieces if all has been placed
+                                        soundDict["pieceGeneration"].play()
                                         piece1, piece2, piece3 = functions.generate_pieces()
                                         piece1[0].selected = True
                                         chosenPiece = piece1
-
                                         boardPlaceTestList.append(board.place_verification(piece1[0]))
                                         boardPlaceTestList.append(board.place_verification(piece2[0]))
                                         boardPlaceTestList.append(board.place_verification(piece3[0]))
@@ -482,7 +498,7 @@ while runGame:
                             #Test if we are game over or not
                             gameOverTest = functions.check_game_over(boardPlaceTestList)
                             if gameOverTest == True:
-                                soundDict["gameOverSound"].play()
+                                soundDict["gameOver"].play()
                                 functions.set_new_best_score_or_not(score, int(bestScore))
                                 #Game over menu's buttons creation
                                 homeButton = button_class.Button("home", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, 250, "MAIN MENU", True)
