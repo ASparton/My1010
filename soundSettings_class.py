@@ -49,8 +49,10 @@ class SoundSettings:
         self._exitButton.selected = False
         if self._musicOn:
             self._musicOnButton.selected = True
+            self._selectedButton = self._musicOnButton
         else:
             self._musicOffButton.selected = True
+            self._selectedButton = self._musicOffButton
     close = property(_get_close, _set_close)
     #Exit button property
     def _get_exitButton(self):
@@ -144,7 +146,7 @@ class SoundSettings:
             self._exitButton.selected = True
             self._selectedButton = self._exitButton
 
-        elif direction == "down":
+        elif direction == "down" and self._selectedButton == self._exitButton:
             self._exitButton.selected = False
             if self._musicOn:
                 self._musicOnButton.selected = True

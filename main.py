@@ -87,7 +87,6 @@ def sound_settings_function():
         soundSettings.selectNextButton("down")
 
     elif event.key == K_RETURN:
-        soundDict["enter"].play()
 
         if soundSettings.soundOnButton.selected:
             soundSettings.set_sound(False)
@@ -95,15 +94,18 @@ def sound_settings_function():
                 soundDict[sound].set_volume(0)
 
         elif soundSettings.soundOffButton.selected:
+            soundDict["enter"].play()
             soundSettings.set_sound(True)
             for sound in soundDict.keys():
                 soundDict[sound].set_volume(0.5)
 
         elif soundSettings.musicOnButton.selected:
+            soundDict["enter"].play()
             soundSettings.set_music(False)
             pygame.mixer.music.pause()
 
         elif soundSettings.musicOffButton.selected:
+            soundDict["enter"].play()
             soundSettings.set_music(True)
             pygame.mixer.music.unpause()
 
@@ -400,7 +402,7 @@ while runGame:
                             chosenPiece[0].selected = True
 
                         elif event.key == K_RETURN:
-                            soundDict["enter"].play()
+                            soundDict["moove"].play()
                             
                             if gameSoundSettingsButton.selected:
                                 soundSettings.close = gameSoundSettingsButton.do_function()
@@ -445,6 +447,7 @@ while runGame:
                             cell.x = cell.initialX
                             cell.y = cell.initialY
                         gamePhase = "choose"
+                        soundDict["moove"].play()
 
                     if event.key == K_RETURN:
                     
@@ -513,6 +516,7 @@ while runGame:
                             #Test if we are game over or not
                             gameOverTest = functions.check_game_over(boardPlaceTestList)
                             if gameOverTest == True:
+                                pygame.mixer.music.pause()
                                 soundDict["gameOver"].play()
                                 functions.set_new_best_score_or_not(score, int(bestScore))
                                 #Game over menu's buttons creation
@@ -549,6 +553,8 @@ while runGame:
                 runGame = False
 
             if event.type == KEYDOWN:
+                soundDict["select"].play()
+
                 if event.key == K_DOWN: #Select the next button
                     if homeButton.selected:
                         homeButton.selected = False
@@ -575,6 +581,7 @@ while runGame:
                         playButton = button_class.Button("play", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY1, "PLAY", True)
                         soundSettingsButton = button_class.Button("settings", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY2, "SETTINGS")
                         mainMenuExitButton = button_class.Button("exit", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY3, "EXIT")
+                        pygame.mixer.music.unpause()
 
                     elif gameOverExitButton.selected:
                         runGame = gameOverExitButton.do_function()
