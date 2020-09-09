@@ -63,3 +63,15 @@ def check_game_over(boardPlaceTestList):
             gameOverTest = True
 
     return gameOverTest
+
+def check_moove(piece, cellsPiecePositionBeforeAction):
+    counter = 0
+    didNotMoove = True
+    for cells in piece[0].cellsList:
+        if cellsPiecePositionBeforeAction[counter][0] == cells.x and cellsPiecePositionBeforeAction[counter][1] == cells.y:
+            didNotMoove = True
+        else:
+            didNotMoove = False
+            break
+        counter += 1
+    return didNotMoove

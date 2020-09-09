@@ -25,6 +25,8 @@ class SoundSettings:
         self._exitButton.texture = self._exitButton.unselectedTexture
         self._exitButton.set_button_title("EXIT", 18)
 
+        self._selectedButton = 0
+
         self._texture = pygame.image.load(texture).convert_alpha()
 
     """Properties"""
@@ -82,36 +84,53 @@ class SoundSettings:
     def _get_soundOffButton(self):
         return self._soundOffButton
     soundOffButton = property(_get_soundOffButton)
+    #SelectedButton property
+    def _get_selectedButton(self):
+        return self._selectedButton
+    selectedButton = property(_get_selectedButton)
 
     def selectNextButton(self, direction):
         if direction == "left":
             if self._soundOnButton.selected:
                 self._soundOnButton.selected = False
+
                 if self._musicOn:
                     self._musicOnButton.selected = True
+                    self._selectedButton = self._musicOnButton
                 elif not self._musicOn:
                     self._musicOffButton.selected = True
+                    self._selectButton = self._musicOffButton
+
             elif self._soundOffButton.selected:
                 self._soundOffButton.selected = False
+
                 if self._musicOn:
                     self._musicOnButton.selected = True
+                    self._selectButton = self._musicOnButton
                 elif not self._musicOn:
                     self._musicOffButton.selected = True
+                    self._selectedButton = self._musicOffButton
 
         elif direction == "right":
             if self._musicOnButton.selected:
                 self._musicOnButton.selected = False
+
                 if self._soundOn:
                     self._soundOnButton.selected = True
+                    self._selectedButton = self._soundOnButton
                 elif not self._soundOn:
                     self._soundOffButton.selected = True
+                    self._selectedButton = self._soundOffButton
             
             elif self._musicOffButton.selected:
                 self._musicOffButton.selected = False
+
                 if self._soundOn:
                     self._soundOnButton.selected = True
+                    self._selectedButton = self._soundOnButton
                 elif not self._soundOn:
                     self._soundOffButton.selected = True
+                    self._selectedButton = self._soundOffButton
 
         elif direction == "up":
             if self._musicOnButton.selected:
@@ -123,28 +142,35 @@ class SoundSettings:
             elif self._soundOffButton.selected:
                 self._soundOffButton.selected = False
             self._exitButton.selected = True
+            self._selectedButton = self._exitButton
 
         elif direction == "down":
             self._exitButton.selected = False
             if self._musicOn:
                 self._musicOnButton.selected = True
+                self._selectedButton = self._musicOnButton
             else:
                 self._musicOffButton.selected = True
+                self._selectedButton = self._musicOffButton
 
     def set_music(self, onOrOff):
         self._musicOn = onOrOff
         if onOrOff:
             self.musicOnButton.selected = True
+            self._selectedButton = self._musicOnButton
             self.musicOffButton.selected = False
         else:
             self.musicOffButton.selected = True
+            self._selectedButton = self._musicOffButton
             self.musicOnButton.selected = False
             
     def set_sound(self, onOrOff):
         self._soundOn = onOrOff
         if onOrOff:
             self.soundOnButton.selected = True
+            self._selectedButton = self._soundOnButton
             self.soundOffButton.selected = False
         else:
             self.soundOffButton.selected = True
+            self._selectedButton = self._soundOffButton
             self.soundOnButton.selected = False

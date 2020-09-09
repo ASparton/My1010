@@ -11,7 +11,10 @@ import piece_class
 import button_class
 import soundSettings_class
 
+pygame.mixer.pre_init(44100, -16, 2, 1024)
 pygame.init()
+pygame.mixer.quit()
+pygame.mixer.init(44100, -16, 2, 1024)
 
 """Program setup"""
 
@@ -26,7 +29,7 @@ pygame.mixer.music.play()
 soundDict = {"winingLine":pygame.mixer.Sound("assets/sounds/Line.wav"), "cantPlace":pygame.mixer.Sound("assets/sounds/Cant_place.wav"),
 "gameOver":pygame.mixer.Sound("assets/sounds/Game_over.wav"), "select":pygame.mixer.Sound("assets/sounds/Select.wav"),
 "piecePlaced":pygame.mixer.Sound("assets/sounds/Placed.wav"), "moove":pygame.mixer.Sound("assets/sounds/Moove.wav"),
-"pieceGeneration":pygame.mixer.Sound("assets/sounds/Piece_generation.wav"), "beginGame":pygame.mixer.Sound("assets/sounds/Begin.wav")}
+"beginGame":pygame.mixer.Sound("assets/sounds/Begin.wav"), "enter":pygame.mixer.Sound("assets/sounds/Enter.wav")}
 for sound in soundDict.keys():
     soundDict[sound].set_volume(0.5)
 
@@ -67,19 +70,25 @@ def draw_sound_settings():
     pygame.display.flip()
 def sound_settings_function():
     if event.key == K_LEFT:
-        soundDict["select"].play()
+        if soundSettings.selectedButton == soundSettings.soundOffButton or soundSettings.selectedButton == soundSettings.soundOnButton:
+            soundDict["select"].play()
         soundSettings.selectNextButton("left")
     elif event.key == K_RIGHT:
-        soundDict["select"].play()
+        if soundSettings.selectedButton == soundSettings.musicOffButton or soundSettings.selectedButton == soundSettings.musicOnButton:
+            soundDict["select"].play()
         soundSettings.selectNextButton("right")
     elif event.key == K_UP:
-        soundDict["select"].play()
+        if soundSettings.selectedButton != soundSettings.exitButton:
+            soundDict["select"].play()
         soundSettings.selectNextButton("up")
     elif event.key == K_DOWN:
-        soundDict["select"].play()
+        if soundSettings.selectedButton == soundSettings.exitButton:
+            soundDict["select"].play()
         soundSettings.selectNextButton("down")
 
     elif event.key == K_RETURN:
+        soundDict["enter"].play()
+
         if soundSettings.soundOnButton.selected:
             soundSettings.set_sound(False)
             for sound in soundDict.keys():
@@ -165,6 +174,7 @@ while runGame:
                             soundSettingsButton.selected = True
 
                     elif event.key == K_RETURN:   #Call the function of the selected button
+
                         if playButton.selected:
                             soundDict["beginGame"].play()
                             phase = playButton.do_function()
@@ -181,8 +191,10 @@ while runGame:
                             
                         elif mainMenuExitButton.selected:
                             runGame = mainMenuExitButton.do_function()
+                            soundDict["enter"].play()
                         else:
                             soundSettings.close = soundSettingsButton.do_function()
+                            soundDict["enter"].play()
 
                 elif not soundSettings.close:
                     sound_settings_function()
@@ -388,6 +400,7 @@ while runGame:
                             chosenPiece[0].selected = True
 
                         elif event.key == K_RETURN:
+                            soundDict["enter"].play()
                             
                             if gameSoundSettingsButton.selected:
                                 soundSettings.close = gameSoundSettingsButton.do_function()
@@ -395,7 +408,6 @@ while runGame:
                                 for cell in chosenPiece[0].cellsList:
                                     cell.x = 0 + cell.x
                                     cell.y = 0 + cell.y
-                                    
                                 gamePhase = "board"
 
                     elif not soundSettings.close:
@@ -407,22 +419,26 @@ while runGame:
                 - Then we wait for him to put down the piece on the board with enter.
                 - Then we check for a possible game over, generate other pieces if there is no more and return to phase 1"""
                 if event.type == KEYDOWN:
-                
+                    
+                    cellsPiecePositionBeforeAction = []
+                    for cells in chosenPiece[0].cellsList:
+                        cellsPiecePositionBeforeAction.append([cells.x, cells.y])
+
                     if event.key == K_DOWN:
-                        soundDict["moove"].play()
                         chosenPiece[0].moove("down")
 
                     if event.key == K_UP:
-                        soundDict["moove"].play()
                         chosenPiece[0].moove("up")
 
                     if event.key == K_RIGHT:
-                        soundDict["moove"].play()
                         chosenPiece[0].moove("right")
 
                     if event.key == K_LEFT:
-                        soundDict["moove"].play()
                         chosenPiece[0].moove("left")
+                    
+                    didNotMoove = functions.check_moove(chosenPiece, cellsPiecePositionBeforeAction)
+                    if not didNotMoove:
+                        soundDict["moove"].play()
             
                     if event.key == K_r:
                         for cell in chosenPiece[0].cellsList:
@@ -487,7 +503,6 @@ while runGame:
                                     elif piece3[0].placed == True:
                                 
                                         #Generate 3 other pieces if all has been placed
-                                        soundDict["pieceGeneration"].play()
                                         piece1, piece2, piece3 = functions.generate_pieces()
                                         piece1[0].selected = True
                                         chosenPiece = piece1
@@ -551,6 +566,8 @@ while runGame:
                         homeButton.selected = True
 
                 if event.key == K_RETURN:   #Call the function of the selected button
+                    soundDict["enter"].play()
+
                     if homeButton.selected:
                         phase = homeButton.do_function()
                         createDrawFunction = False
