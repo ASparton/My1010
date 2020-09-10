@@ -11,6 +11,7 @@ import piece_class
 import button_class
 import soundSettings_class
 
+"""Pygame + mixer initialization to delete the sound delay in the pygame.mixer"""
 pygame.mixer.pre_init(44100, -16, 2, 1024)
 pygame.init()
 pygame.mixer.quit()
@@ -402,10 +403,10 @@ while runGame:
                             chosenPiece[0].selected = True
 
                         elif event.key == K_RETURN:
-                            soundDict["moove"].play()
                             
                             if gameSoundSettingsButton.selected:
                                 soundSettings.close = gameSoundSettingsButton.do_function()
+                                soundDict["enter"].play()
                             else:
                                 for cell in chosenPiece[0].cellsList:
                                     cell.x = 0 + cell.x
@@ -447,7 +448,6 @@ while runGame:
                             cell.x = cell.initialX
                             cell.y = cell.initialY
                         gamePhase = "choose"
-                        soundDict["moove"].play()
 
                     if event.key == K_RETURN:
                     
