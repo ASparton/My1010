@@ -47,7 +47,6 @@ buttonsTexture = pygame.image.load(constants.BUTTONSTEXTURE).convert_alpha()    
 gameSoundSettingsButton = button_class.Button("settings", constants.SCREENSIZE[0]-100, 0, "", False, constants.GAMESOUNDSETTINGSBUTTONTEXTURE, constants.GAMESOUNDSETTINGSBUTTONSELECTEDTEXTURE)
 
 #Main menu setup
-title = titleFont.render("RETRO 1010!", False, (132,187,132))
 playButton = button_class.Button("play", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY1, "PLAY", True)
 soundSettingsButton = button_class.Button("settings", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY2, "SETTINGS")
 mainMenuExitButton = button_class.Button("exit", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY3, "EXIT")
@@ -119,6 +118,7 @@ gamePhase = "choose"
 gameOver = False
 createDrawFunction = False
 GAMEOVERTEXT = titleFont.render("Game Over", False, (139,172,15))
+title = titleFont.render("RETRO 1010!", False, (132,187,132))
 
 #game loop setup
 clock = pygame.time.Clock()
@@ -214,9 +214,10 @@ while runGame:
             createDrawFunction = True
             def draw_game_screen(gamePhase):    #Draw the game screen
                 screen.blit(background, (0,0))
+                screen.blit(title, ((constants.SCREENSIZE[0]//2-title.get_size()[0]//2), 0))
 
                 for cell in board.cellsList:
-                    screen.blit(cell.texture, (cell.x * constants.CELLSIZE, cell.y * constants.CELLSIZE))
+                    screen.blit(cell.texture, (constants.BOARDBEGINNINGX + cell.x * constants.CELLSIZE, constants.BOARDBEGINNINGY + cell.y * constants.CELLSIZE))
                     
                 if gamePhase == "choose":
                     for cell in piece1[0].cellsList:
@@ -443,7 +444,7 @@ while runGame:
                     if not didNotMoove:
                         soundDict["moove"].play()
             
-                    if event.key == K_r:
+                    if event.key == K_BACKSPACE:
                         for cell in chosenPiece[0].cellsList:
                             cell.x = cell.initialX
                             cell.y = cell.initialY
