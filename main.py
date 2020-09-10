@@ -43,13 +43,11 @@ background = pygame.image.load(constants.BACKGROUNDTEXTURE).convert_alpha()
 settingsBackground = pygame.image.load(constants.SETTINGSBACKGROUNDTEXTURE).convert_alpha()
 buttonsTexture = pygame.image.load(constants.BUTTONSTEXTURE).convert_alpha()    #Just to get the size
 
-#Game sound settings button
+#Game buttons
 gameSoundSettingsButton = button_class.Button("settings", constants.SCREENSIZE[0]-100, constants.BOARDBEGINNINGY*constants.CELLSIZE, "", False, constants.GAMESOUNDSETTINGSBUTTONTEXTURE, constants.GAMESOUNDSETTINGSBUTTONSELECTEDTEXTURE)
-
-#Main menu setup
 playButton = button_class.Button("play", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY1, "PLAY", True)
 soundSettingsButton = button_class.Button("settings", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY2, "SETTINGS")
-mainMenuExitButton = button_class.Button("exit", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY3, "EXIT")
+exitButton = button_class.Button("exit", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY3, "EXIT")
 
 #Settings board setup
 soundSettings = soundSettings_class.SoundSettings(constants.SCREENSIZE[0]/2 - 125, constants.SCREENSIZE[1]/2 - 75)
@@ -140,8 +138,8 @@ while runGame:
                 screen.blit(title, ((constants.SCREENSIZE[0]//2-title.get_size()[0]//2), 0))
                 screen.blit(playButton.texture, (playButton.x, playButton.y))
                 playButton.texture.blit(playButton.title, (playButton.titlePosition[0], playButton.titlePosition[1]))
-                screen.blit(mainMenuExitButton.texture, (mainMenuExitButton.x, mainMenuExitButton.y))
-                mainMenuExitButton.texture.blit(mainMenuExitButton.title, (mainMenuExitButton.titlePosition[0], mainMenuExitButton.titlePosition[1]))
+                screen.blit(exitButton.texture, (exitButton.x, exitButton.y))
+                exitButton.texture.blit(exitButton.title, (exitButton.titlePosition[0], exitButton.titlePosition[1]))
                 screen.blit(soundSettingsButton.texture, (soundSettingsButton.x, soundSettingsButton.y))
                 soundSettingsButton.texture.blit(soundSettingsButton.title, (soundSettingsButton.titlePosition[0], soundSettingsButton.titlePosition[1]))
 
@@ -159,21 +157,21 @@ while runGame:
                             soundSettingsButton.selected = True
                         elif soundSettingsButton.selected:
                             soundSettingsButton.selected = False
-                            mainMenuExitButton.selected = True
+                            exitButton.selected = True
                         else:
-                            mainMenuExitButton.selected = False
+                            exitButton.selected = False
                             playButton.selected = True
 
                     elif event.key == K_UP:   #Select the next button
                         soundDict["select"].play()
                         if playButton.selected:
                             playButton.selected = False
-                            mainMenuExitButton.selected = True
+                            exitButton.selected = True
                         elif soundSettingsButton.selected:
                             soundSettingsButton.selected = False
                             playButton.selected = True
                         else:
-                            mainMenuExitButton.selected = False
+                            exitButton.selected = False
                             soundSettingsButton.selected = True
 
                     elif event.key == K_RETURN:   #Call the function of the selected button
@@ -192,8 +190,8 @@ while runGame:
                             score = 0   #Set the score at the beginning
                             bestScore = functions.get_best_score()
                             
-                        elif mainMenuExitButton.selected:
-                            runGame = mainMenuExitButton.do_function()
+                        elif exitButton.selected:
+                            runGame = exitButton.do_function()
                             soundDict["enter"].play()
                         else:
                             soundSettings.close = soundSettingsButton.do_function()
@@ -231,7 +229,7 @@ while runGame:
                         
                     if chosenPiece[0].canBePlaced == False:
                         for cell in chosenPiece[0].cellsList:
-                            screen.blit(cell.texture, (((0 + cell.x) * constants.CELLSIZE), ((0 + cell.y) * constants.CELLSIZE)))
+                            screen.blit(cell.texture, ((cell.x * constants.CELLSIZE), (cell.y * constants.CELLSIZE)))
                                     
                         if piece1[0].selected == False:
                             for cell in piece1[0].cellsList:
@@ -295,7 +293,7 @@ while runGame:
                 if event.type == KEYDOWN:
                     if soundSettings.close:
 
-                        if event.key == K_DOWN:
+                        if event.key == K_RIGHT:
                             soundDict["select"].play()
                             if piece1[0].selected == True:
                                 piece1[0].selected = False
@@ -345,7 +343,7 @@ while runGame:
                                         piece3[0].selected = True
                                         chosenPiece = piece3
                                     
-                        elif event.key == K_UP:
+                        elif event.key == K_LEFT:
                             soundDict["select"].play()
                             if piece1[0].selected == True:
                                 piece1[0].selected = False
@@ -395,7 +393,7 @@ while runGame:
                                         piece3[0].selected = True
                                         chosenPiece = piece3
                         
-                        elif event.key == K_RIGHT:
+                        elif event.key == K_UP:
                             soundDict["select"].play()
                             gameSoundSettingsButton.selected = True
                             if piece1[0].selected == True:
@@ -405,7 +403,7 @@ while runGame:
                             elif piece3[0].selected == True:
                                 piece3[0].selected = False
                         
-                        elif event.key == K_LEFT:
+                        elif event.key == K_DOWN:
                             soundDict["select"].play()
                             gameSoundSettingsButton.selected = False
                             chosenPiece[0].selected = True
@@ -529,7 +527,8 @@ while runGame:
                                 functions.set_new_best_score_or_not(score, int(bestScore))
                                 #Game over menu's buttons creation
                                 homeButton = button_class.Button("home", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, 250, "MAIN MENU", True)
-                                gameOverExitButton = button_class.Button("exit", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, 370, "EXIT")
+                                exitButton.x = constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2
+                                exitButton.y = 370
                                 phase = "game_over"
                                 createDrawFunction = False
                             else:
@@ -550,11 +549,17 @@ while runGame:
                 screen.blit(GAMEOVERTEXT, (constants.SCREENSIZE[0]//2 - GAMEOVERTEXT.get_size()[0]//2, 0))
                 screen.blit(homeButton.texture, (homeButton.x, homeButton.y))
                 homeButton.texture.blit(homeButton.title, (homeButton.titlePosition[0], homeButton.titlePosition[1]))
-                screen.blit(gameOverExitButton.texture, (gameOverExitButton.x, gameOverExitButton.y))
-                gameOverExitButton.texture.blit(gameOverExitButton.title, (gameOverExitButton.titlePosition[0], gameOverExitButton.titlePosition[1]))
+                screen.blit(exitButton.texture, (exitButton.x, exitButton.y))
+                exitButton.texture.blit(exitButton.title, (exitButton.titlePosition[0], exitButton.titlePosition[1]))
                 screen.blit(scoreText, (2*constants.CELLSIZE, 4*constants.CELLSIZE))
                 screen.blit(bestScoreText, (12*constants.CELLSIZE, 4*constants.CELLSIZE))
                 pygame.display.flip()
+
+        #Redef of the score's texts
+        strScoreText = "SCORE: " + str(score)
+        scoreText = font.render(strScoreText, False, (159, 196,159))
+        strBestScoreText = "BEST SCORE: " + bestScore
+        bestScoreText = font.render(strBestScoreText, False, (159, 196,159))
 
         for event in pygame.event.get(): #Exit event
             if event.type == QUIT:
@@ -566,17 +571,17 @@ while runGame:
                 if event.key == K_DOWN: #Select the next button
                     if homeButton.selected:
                         homeButton.selected = False
-                        gameOverExitButton.selected = True
-                    elif gameOverExitButton.selected:
-                        gameOverExitButton.selected = False
+                        exitButton.selected = True
+                    elif exitButton.selected:
+                        exitButton.selected = False
                         homeButton.selected = True
 
                 if event.key == K_UP:   #Select the next button
                     if homeButton.selected:
                         homeButton.selected = False
-                        gameOverExitButton.selected = True
-                    elif gameOverExitButton.selected:
-                        gameOverExitButton.selected = False
+                        exitButton.selected = True
+                    elif exitButton.selected:
+                        exitButton.selected = False
                         homeButton.selected = True
 
                 if event.key == K_RETURN:   #Call the function of the selected button
@@ -588,11 +593,11 @@ while runGame:
                         #Main menu's buttons creation
                         playButton = button_class.Button("play", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY1, "PLAY", True)
                         soundSettingsButton = button_class.Button("settings", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY2, "SETTINGS")
-                        mainMenuExitButton = button_class.Button("exit", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY3, "EXIT")
+                        exitButton = button_class.Button("exit", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY3, "EXIT")
                         pygame.mixer.music.unpause()
 
-                    elif gameOverExitButton.selected:
-                        runGame = gameOverExitButton.do_function()
+                    elif exitButton.selected:
+                        runGame = exitButton.do_function()
         
         draw_game_over_screen()
 

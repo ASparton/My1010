@@ -34,7 +34,11 @@ class Board:
         """Test if a piece can be placed on the board: 
            - Take the piece that we wanna test in parameter
            - Return the true if the piece can be placed and false if it can't."""
-        
+
+        for cell in piece.cellsList:    #Need to reset the origin position of the cells to 0
+            cell.x-=constants.BOARDBEGINNINGX
+            cell.y-=constants.BOARDBEGINNINGY
+
         test = False
         currentTest = False
         cellToTest = [0,0]
@@ -70,13 +74,21 @@ class Board:
                 elif currentTest == False:
                     test = False
         
+        for cell in piece.cellsList:    #Need to reset the origin position of the cells to 0
+            cell.x+=constants.BOARDBEGINNINGX
+            cell.y+=constants.BOARDBEGINNINGY
+
         return test
         
     def player_place_verification(self, piece):
         """Test if the piece can be placed where the player decide to place:
            - Take the piece that we wanna test in parameter
            - Return the true if the piece can be placed and false if it can't."""
-        
+
+        for cell in piece.cellsList:    #Need to reset the origin position of the cells to 0
+            cell.x-=constants.BOARDBEGINNINGX
+            cell.y-=constants.BOARDBEGINNINGY
+
         test = True
         
         for pieceCell in piece.cellsList:
@@ -88,8 +100,15 @@ class Board:
                     break
             
             if test == False:
+                for cell in piece.cellsList:    #Need to reset the origin position of the cells to 0
+                    cell.x+=constants.BOARDBEGINNINGX
+                    cell.y+=constants.BOARDBEGINNINGY
                 return test
                 
+        for cell in piece.cellsList:    #Need to reset the origin position of the cells to 0
+            cell.x+=constants.BOARDBEGINNINGX
+            cell.y+=constants.BOARDBEGINNINGY
+
         return test
         
     def line_verification_suppression(self):
@@ -198,6 +217,10 @@ class Board:
         """Place the piece on the board.
            Modify the properties of the board's cells at the position where we put down the piece"""
         
+        for cell in piece.cellsList:    #Need to reset the origin position of the cells to 0
+            cell.x-=constants.BOARDBEGINNINGX
+            cell.y-=constants.BOARDBEGINNINGY
+
         counter = piece.cellNumber
         
         for boardCell in self.cellsList:
@@ -207,13 +230,10 @@ class Board:
                 break
             
             for pieceCell in piece.cellsList:
-                
                 if boardCell.x == pieceCell.x and boardCell.y == pieceCell.y:
-                
                     """Modification of the cell's board properties.
                     (empty == False) and take the texture of the piece."""
                     boardCell.empty = False
                     boardCell.texture = pieceCell.texture
                     counter -= 1
-                    
                     break

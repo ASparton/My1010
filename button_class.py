@@ -40,7 +40,7 @@ class Button:
     def _get_y(self):
         return self._y
     def _set_y(self, y_pos):
-        self._y = x_pos
+        self._y = y_pos
     y = property(_get_y, _set_y)
     #Textures properties
     def _get_unselectedTexture(self):
