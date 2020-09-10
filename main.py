@@ -20,7 +20,7 @@ pygame.mixer.init(44100, -16, 2, 1024)
 """Program setup"""
 
 #Screen setup
-screen = pygame.display.set_mode((constants.SCREENSIZE[0], constants.SCREENSIZE[1]), RESIZABLE)
+screen = pygame.display.set_mode((constants.SCREENSIZE[0], constants.SCREENSIZE[1]))
 pygame.display.set_caption("Retro 1010!")
 
 #Game music and sound setup
@@ -36,7 +36,8 @@ for sound in soundDict.keys():
 
 #Font setup
 titleFont = pygame.font.Font("assets/fonts/karma future.ttf", 72)
-font = pygame.font.Font("assets/fonts/karma future.ttf", 24)
+gameOverFont = titleFont = pygame.font.Font("assets/fonts/karma future.ttf", 60)
+font = pygame.font.Font("assets/fonts/karma future.ttf", 26)
 
 #Texture loading
 background = pygame.image.load(constants.BACKGROUNDTEXTURE).convert_alpha()
@@ -115,8 +116,8 @@ phase = "main_menu"
 gamePhase = "choose"
 gameOver = False
 createDrawFunction = False
-GAMEOVERTEXT = titleFont.render("Game Over", False, (139,172,15))
-title = titleFont.render("RETRO 1010!", False, (132,187,132))
+GAMEOVERTEXT = gameOverFont.render("Game Over", False, (139,172,15))
+TITLE = titleFont.render("RETRO 1010!", False, (132,187,132))
 
 #game loop setup
 clock = pygame.time.Clock()
@@ -135,7 +136,7 @@ while runGame:
             createDrawFunction = True
             def draw_main_menu_screen():    #draw function: draw/display the main menu screen
                 screen.blit(background, (0,0))
-                screen.blit(title, ((constants.SCREENSIZE[0]//2-title.get_size()[0]//2), 0))
+                screen.blit(TITLE, ((constants.SCREENXMIDDLE-TITLE.get_size()[0]//2), 0))
                 screen.blit(playButton.texture, (playButton.x, playButton.y))
                 playButton.texture.blit(playButton.title, (playButton.titlePosition[0], playButton.titlePosition[1]))
                 screen.blit(exitButton.texture, (exitButton.x, exitButton.y))
@@ -212,7 +213,7 @@ while runGame:
             createDrawFunction = True
             def draw_game_screen(gamePhase):    #Draw the game screen
                 screen.blit(background, (0,0))
-                screen.blit(title, ((constants.SCREENSIZE[0]//2-title.get_size()[0]//2), 0))
+                screen.blit(TITLE, ((constants.SCREENSIZE[0]//2-TITLE.get_size()[0]//2), 0))
 
                 for cell in board.cellsList:
                     screen.blit(cell.texture, ((constants.BOARDBEGINNINGX + cell.x) * constants.CELLSIZE, (constants.BOARDBEGINNINGY + cell.y) * constants.CELLSIZE))
@@ -242,10 +243,10 @@ while runGame:
                                 screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX3 + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY + cell.y) * constants.CELLSIZE)))
 
                         screen.blit(gameSoundSettingsButton.texture, (gameSoundSettingsButton.x, gameSoundSettingsButton.y))    
-                        screen.blit(scoreText, (0, 6*constants.CELLSIZE))
-                        screen.blit(scorePoint, (0, 7*constants.CELLSIZE))
-                        screen.blit(bestScoreText, (0, 9*constants.CELLSIZE))
-                        screen.blit(bestScorePoint, (0, 10*constants.CELLSIZE))
+                        screen.blit(scoreText, (1*constants.CELLSIZE, 6*constants.CELLSIZE))
+                        screen.blit(scorePoint, (2*constants.CELLSIZE, 7*constants.CELLSIZE))
+                        screen.blit(bestScoreText, (0, 10*constants.CELLSIZE))
+                        screen.blit(bestScorePoint, (2*constants.CELLSIZE, 11*constants.CELLSIZE))
 
                         pygame.display.flip()
                         time.sleep(0.6)
@@ -269,10 +270,10 @@ while runGame:
                                 screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX3 + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY + cell.y) * constants.CELLSIZE)))
 
                 screen.blit(gameSoundSettingsButton.texture, (gameSoundSettingsButton.x, gameSoundSettingsButton.y))
-                screen.blit(scoreText, (0, 6*constants.CELLSIZE))
-                screen.blit(scorePoint, (0, 7*constants.CELLSIZE))
+                screen.blit(scoreText, (1*constants.CELLSIZE, 6*constants.CELLSIZE))
+                screen.blit(scorePoint, (2*constants.CELLSIZE, 7*constants.CELLSIZE))
                 screen.blit(bestScoreText, (0, 10*constants.CELLSIZE))
-                screen.blit(bestScorePoint, (0, 11*constants.CELLSIZE))
+                screen.blit(bestScorePoint, (2*constants.CELLSIZE, 11*constants.CELLSIZE))
 
         #We wait for game event and update the score
         strScore = " SCORE: " 
@@ -526,9 +527,9 @@ while runGame:
                                 soundDict["gameOver"].play()
                                 functions.set_new_best_score_or_not(score, int(bestScore))
                                 #Game over menu's buttons creation
-                                homeButton = button_class.Button("home", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, 250, "MAIN MENU", True)
+                                homeButton = button_class.Button("home", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, 320, "MAIN MENU", True)
                                 exitButton.x = constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2
-                                exitButton.y = 370
+                                exitButton.y = 480
                                 phase = "game_over"
                                 createDrawFunction = False
                             else:
@@ -546,13 +547,14 @@ while runGame:
             createDrawFunction = True
             def draw_game_over_screen():
                 screen.blit(background,(0,0))
-                screen.blit(GAMEOVERTEXT, (constants.SCREENSIZE[0]//2 - GAMEOVERTEXT.get_size()[0]//2, 0))
+                screen.blit(TITLE, (constants.SCREENSIZE[0]//2 - TITLE.get_size()[0]//2, 0))
+                screen.blit(GAMEOVERTEXT, (constants.SCREENSIZE[0]//2 - GAMEOVERTEXT.get_size()[0]//2, 3*constants.CELLSIZE))
                 screen.blit(homeButton.texture, (homeButton.x, homeButton.y))
                 homeButton.texture.blit(homeButton.title, (homeButton.titlePosition[0], homeButton.titlePosition[1]))
                 screen.blit(exitButton.texture, (exitButton.x, exitButton.y))
                 exitButton.texture.blit(exitButton.title, (exitButton.titlePosition[0], exitButton.titlePosition[1]))
-                screen.blit(scoreText, (2*constants.CELLSIZE, 4*constants.CELLSIZE))
-                screen.blit(bestScoreText, (12*constants.CELLSIZE, 4*constants.CELLSIZE))
+                screen.blit(scoreText, (4*constants.CELLSIZE, 7*constants.CELLSIZE))
+                screen.blit(bestScoreText, (10*constants.CELLSIZE, 7*constants.CELLSIZE))
                 pygame.display.flip()
 
         #Redef of the score's texts
@@ -566,9 +568,9 @@ while runGame:
                 runGame = False
 
             if event.type == KEYDOWN:
-                soundDict["select"].play()
 
                 if event.key == K_DOWN: #Select the next button
+                    soundDict["select"].play()
                     if homeButton.selected:
                         homeButton.selected = False
                         exitButton.selected = True
@@ -577,6 +579,7 @@ while runGame:
                         homeButton.selected = True
 
                 if event.key == K_UP:   #Select the next button
+                    soundDict["select"].play()
                     if homeButton.selected:
                         homeButton.selected = False
                         exitButton.selected = True
