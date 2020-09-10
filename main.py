@@ -36,7 +36,7 @@ for sound in soundDict.keys():
 
 #Font setup
 titleFont = pygame.font.Font("assets/fonts/karma future.ttf", 72)
-mainFont = pygame.font.Font("assets/fonts/karma future.ttf", 24)
+font = pygame.font.Font("assets/fonts/karma future.ttf", 24)
 
 #Texture loading
 background = pygame.image.load(constants.BACKGROUNDTEXTURE).convert_alpha()
@@ -44,7 +44,7 @@ settingsBackground = pygame.image.load(constants.SETTINGSBACKGROUNDTEXTURE).conv
 buttonsTexture = pygame.image.load(constants.BUTTONSTEXTURE).convert_alpha()    #Just to get the size
 
 #Game sound settings button
-gameSoundSettingsButton = button_class.Button("settings", constants.SCREENSIZE[0]-100, 0, "", False, constants.GAMESOUNDSETTINGSBUTTONTEXTURE, constants.GAMESOUNDSETTINGSBUTTONSELECTEDTEXTURE)
+gameSoundSettingsButton = button_class.Button("settings", constants.SCREENSIZE[0]-100, constants.BOARDBEGINNINGY*constants.CELLSIZE, "", False, constants.GAMESOUNDSETTINGSBUTTONTEXTURE, constants.GAMESOUNDSETTINGSBUTTONSELECTEDTEXTURE)
 
 #Main menu setup
 playButton = button_class.Button("play", constants.SCREENXMIDDLE-buttonsTexture.get_size()[0]//2, constants.MAINMENUBUTTONPLACEY1, "PLAY", True)
@@ -217,15 +217,15 @@ while runGame:
                 screen.blit(title, ((constants.SCREENSIZE[0]//2-title.get_size()[0]//2), 0))
 
                 for cell in board.cellsList:
-                    screen.blit(cell.texture, (constants.BOARDBEGINNINGX + cell.x * constants.CELLSIZE, constants.BOARDBEGINNINGY + cell.y * constants.CELLSIZE))
+                    screen.blit(cell.texture, ((constants.BOARDBEGINNINGX + cell.x) * constants.CELLSIZE, (constants.BOARDBEGINNINGY + cell.y) * constants.CELLSIZE))
                     
                 if gamePhase == "choose":
                     for cell in piece1[0].cellsList:
-                        screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY1 + cell.y) * constants.CELLSIZE)))
+                        screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX1 + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY + cell.y) * constants.CELLSIZE)))
                     for cell in piece2[0].cellsList:
-                        screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY2 + cell.y) * constants.CELLSIZE)))
+                        screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX2 + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY + cell.y)* constants.CELLSIZE)))
                     for cell in piece3[0].cellsList:
-                        screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY3 + cell.y) * constants.CELLSIZE)))
+                        screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX3 + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY + cell.y)* constants.CELLSIZE)))
                     
                 elif gamePhase == "board":
                         
@@ -235,17 +235,19 @@ while runGame:
                                     
                         if piece1[0].selected == False:
                             for cell in piece1[0].cellsList:
-                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY1 + cell.y) * constants.CELLSIZE)))
+                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX1 + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY + cell.y) * constants.CELLSIZE)))
                         if piece2[0].selected == False:
                             for cell in piece2[0].cellsList:
-                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY2 + cell.y) * constants.CELLSIZE)))
+                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX2 + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY + cell.y) * constants.CELLSIZE)))
                         if piece3[0].selected == False:
                             for cell in piece3[0].cellsList:
-                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY3 + cell.y) * constants.CELLSIZE)))
+                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX3 + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY + cell.y) * constants.CELLSIZE)))
 
                         screen.blit(gameSoundSettingsButton.texture, (gameSoundSettingsButton.x, gameSoundSettingsButton.y))    
-                        screen.blit(scoreText, (0, 14*constants.CELLSIZE))
-                        screen.blit(bestScoreText, (0, 16*constants.CELLSIZE))
+                        screen.blit(scoreText, (0, 6*constants.CELLSIZE))
+                        screen.blit(scorePoint, (0, 7*constants.CELLSIZE))
+                        screen.blit(bestScoreText, (0, 9*constants.CELLSIZE))
+                        screen.blit(bestScorePoint, (0, 10*constants.CELLSIZE))
 
                         pygame.display.flip()
                         time.sleep(0.6)
@@ -260,23 +262,28 @@ while runGame:
                                 
                         if piece1[0].selected == False:
                             for cell in piece1[0].cellsList:
-                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY1 + cell.y) * constants.CELLSIZE)))
+                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX1 + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY + cell.y) * constants.CELLSIZE)))
                         if piece2[0].selected == False:
                             for cell in piece2[0].cellsList:
-                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY2 + cell.y) * constants.CELLSIZE)))
+                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX2 + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY + cell.y) * constants.CELLSIZE)))
                         if piece3[0].selected == False:
                             for cell in piece3[0].cellsList:
-                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY3 + cell.y) * constants.CELLSIZE)))
+                                screen.blit(cell.texture, (((constants.PIECECHOOSEPLACEX3 + cell.x) * constants.CELLSIZE), ((constants.PIECECHOOSEPLACEY + cell.y) * constants.CELLSIZE)))
 
                 screen.blit(gameSoundSettingsButton.texture, (gameSoundSettingsButton.x, gameSoundSettingsButton.y))
-                screen.blit(scoreText, (0, 14*constants.CELLSIZE))
-                screen.blit(bestScoreText, (0, 16*constants.CELLSIZE))
+                screen.blit(scoreText, (0, 6*constants.CELLSIZE))
+                screen.blit(scorePoint, (0, 7*constants.CELLSIZE))
+                screen.blit(bestScoreText, (0, 10*constants.CELLSIZE))
+                screen.blit(bestScorePoint, (0, 11*constants.CELLSIZE))
 
         #We wait for game event and update the score
-        strScore = " SCORE: " + str(score)
-        scoreText = mainFont.render(strScore, False, (159,196,159))
-        strBestScore = " BEST SCORE: " + bestScore
-        bestScoreText = mainFont.render(strBestScore, False, (159,196,159))
+        strScore = " SCORE: " 
+        scoreText = font.render(strScore, False, (159,196,159))
+        strScorePoint = str(score)
+        scorePoint = font.render(strScorePoint, False, (159, 196,159))
+        strBestScore = " BEST SCORE: "
+        bestScoreText = font.render(strBestScore, False, (159,196,159))
+        bestScorePoint = font.render(bestScore, False, (159,196,159))
 
         for event in pygame.event.get(): #Exit event
             if event.type == QUIT:
@@ -410,8 +417,8 @@ while runGame:
                                 soundDict["enter"].play()
                             else:
                                 for cell in chosenPiece[0].cellsList:
-                                    cell.x = 0 + cell.x
-                                    cell.y = 0 + cell.y
+                                    cell.x = constants.BOARDBEGINNINGX + cell.x
+                                    cell.y = constants.BOARDBEGINNINGY + cell.y
                                 gamePhase = "board"
 
                     elif not soundSettings.close:

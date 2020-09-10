@@ -104,7 +104,7 @@ class Piece:
 
         if direction == "right":
             for cell in self.cellsList: #If we moove right the piece, test if it will be outside of the board or not
-                if (cell.x + 1) > 9:
+                if (cell.x + 1) > constants.BOARDBEGINNINGX + 9:
                     outside = True
             
             if outside == False: #If it's not outside, then moove each in cell (= the entire piece)
@@ -113,7 +113,7 @@ class Piece:
                 
         if direction == "left":
             for cell in self.cellsList:
-                if (cell.x - 1) < 0:
+                if (cell.x - 1) < 0 + constants.BOARDBEGINNINGX:
                     outside = True
 
             if outside == False:
@@ -122,7 +122,7 @@ class Piece:
                 
         if direction == "up":
             for cell in self.cellsList:
-                if (cell.y - 1) < 0:
+                if (cell.y - 1) < 0 + constants.BOARDBEGINNINGY:
                     outside = True
 
             if outside == False:
@@ -131,7 +131,7 @@ class Piece:
                 
         if direction == "down":
             for cell in self.cellsList:
-                if (cell.y + 1) > 9:
+                if (cell.y + 1) > constants.BOARDBEGINNINGX + 8:
                     outside = True
 
             if outside == False:
