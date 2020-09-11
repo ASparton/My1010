@@ -26,7 +26,7 @@ pygame.display.set_caption("Retro 1010!")
 #Game music and sound setup
 pygame.mixer.music.load("assets/sounds/Retro Samurai.wav")
 pygame.mixer.music.set_volume(0.1)
-pygame.mixer.music.play()
+pygame.mixer.music.play(-1)
 soundDict = {"winingLine":pygame.mixer.Sound("assets/sounds/Line.wav"), "cantPlace":pygame.mixer.Sound("assets/sounds/Cant_place.wav"),
 "gameOver":pygame.mixer.Sound("assets/sounds/Game_over.wav"), "select":pygame.mixer.Sound("assets/sounds/Select.wav"),
 "piecePlaced":pygame.mixer.Sound("assets/sounds/Placed.wav"), "moove":pygame.mixer.Sound("assets/sounds/Moove.wav"),
@@ -295,18 +295,19 @@ while runGame:
                     if soundSettings.close:
 
                         if event.key == K_RIGHT:
-                            soundDict["select"].play()
                             if piece1[0].selected == True:
                                 piece1[0].selected = False
                                 
                                 if piece2[0].placed == False:
                                     piece2[0].selected = True
                                     chosenPiece = piece2
+                                    soundDict["select"].play()
                                     
                                 elif piece2[0].placed == True:
                                     if piece3[0].placed == False:
                                         piece3[0].selected = True
                                         chosenPiece = piece3
+                                        soundDict["select"].play()
                                         
                                     elif piece3[0].placed == True:
                                         piece1[0].selected = True
@@ -318,11 +319,13 @@ while runGame:
                                 if piece3[0].placed == False:
                                     piece3[0].selected = True
                                     chosenPiece = piece3
+                                    soundDict["select"].play()
                                     
                                 elif piece3[0].placed == True:
                                     if piece1[0].placed == False:
                                         piece1[0].selected = True
                                         chosenPiece = piece1
+                                        soundDict["select"].play()
                                         
                                     elif piece1[0].placed == True:
                                         piece2[0].selected = True
@@ -334,29 +337,32 @@ while runGame:
                                 if piece1[0].placed == False:
                                     piece1[0].selected = True
                                     chosenPiece = piece1
+                                    soundDict["select"].play()
                                     
                                 elif piece1[0].placed == True:
                                     if piece2[0].placed == False:
                                         piece2[0].selected = True
                                         chosenPiece = piece2
+                                        soundDict["select"].play()
                                         
                                     elif piece2[0].placed == True:
                                         piece3[0].selected = True
                                         chosenPiece = piece3
                                     
                         elif event.key == K_LEFT:
-                            soundDict["select"].play()
                             if piece1[0].selected == True:
                                 piece1[0].selected = False
                             
                                 if piece3[0].placed == False:
                                     piece3[0].selected = True
                                     chosenPiece = piece3
+                                    soundDict["select"].play()
                                 
                                 elif piece3[0].placed == True:
                                     if piece2[0].placed == False:
                                         piece2[0].selected = True
                                         chosenPiece = piece2
+                                        soundDict["select"].play()
                                     
                                     elif piece2[0].placed == True:
                                         piece1[0].selected = True
@@ -368,11 +374,13 @@ while runGame:
                                 if piece1[0].placed == False:
                                     piece1[0].selected = True
                                     chosenPiece = piece1
+                                    soundDict["select"].play()
                                 
                                 elif piece1[0].placed == True:
                                     if piece3[0].placed == False:
                                         piece3[0].selected = True
                                         chosenPiece = piece3
+                                        soundDict["select"].play()
                                     
                                     elif piece3[0].placed == True:
                                         piece2[0].selected = True
@@ -384,11 +392,13 @@ while runGame:
                                 if piece2[0].placed == False:
                                     piece2[0].selected = True
                                     chosenPiece = piece2
+                                    soundDict["select"].play()
                                 
                                 elif piece2[0].placed == True:
                                     if piece1[0].placed == False:
                                         piece1[0].selected = True
                                         chosenPiece = piece1
+                                        soundDict["select"].play()
                                     
                                     elif piece1[0].placed == True:
                                         piece3[0].selected = True
