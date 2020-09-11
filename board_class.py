@@ -35,10 +35,6 @@ class Board:
            - Take the piece that we wanna test in parameter
            - Return the true if the piece can be placed and false if it can't."""
 
-        for cell in piece.cellsList:    #Need to reset the origin position of the cells to 0
-            cell.x-=constants.BOARDBEGINNINGX
-            cell.y-=constants.BOARDBEGINNINGY
-
         test = False
         currentTest = False
         cellToTest = [0,0]
@@ -73,10 +69,6 @@ class Board:
                     
                 elif currentTest == False:
                     test = False
-        
-        for cell in piece.cellsList:    #Need to reset the origin position of the cells to 0
-            cell.x+=constants.BOARDBEGINNINGX
-            cell.y+=constants.BOARDBEGINNINGY
 
         return test
         
