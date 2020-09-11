@@ -77,7 +77,9 @@ class Board:
            - Take the piece that we wanna test in parameter
            - Return the true if the piece can be placed and false if it can't."""
 
-        for cell in piece.cellsList:    #Need to reset the origin position of the cells to 0
+        #Need to reset the origin position of the cells to 0
+        # because we use the actual position of the piece and the board is in the middle of the screen
+        for cell in piece.cellsList:
             cell.x-=constants.BOARDBEGINNINGX
             cell.y-=constants.BOARDBEGINNINGY
 
@@ -209,7 +211,9 @@ class Board:
         """Place the piece on the board.
            Modify the properties of the board's cells at the position where we put down the piece"""
         
-        for cell in piece.cellsList:    #Need to reset the origin position of the cells to 0
+        #Need to reset the origin position of the cells to 0
+        # because we use the actual position of the piece and the board is in the middle of the screen
+        for cell in piece.cellsList:
             cell.x-=constants.BOARDBEGINNINGX
             cell.y-=constants.BOARDBEGINNINGY
 

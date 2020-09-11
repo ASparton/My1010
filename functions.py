@@ -65,6 +65,12 @@ def check_game_over(boardPlaceTestList):
     return gameOverTest
 
 def check_moove(piece, cellsPiecePositionBeforeAction):
+    """Check if a piece has mooved
+    Take in argument: -an array that contain the position of each cell before a possible action of the player
+                      -the piece after the possible to compare to the array
+    Return: -True if the arrays are the same, it means the position of the piece did not change
+            -False if the arrays are diferent, it means that the position of the piece changed"""
+
     counter = 0
     didNotMoove = True
     for cells in piece[0].cellsList:

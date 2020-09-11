@@ -7,6 +7,7 @@ pygame.init() #Need to init pygame to use fonts
 """Class that create a button:
    - Position
    - Unselected and selected textures
+   - Title (text that will be displayed in the button)
    - Function of the button: "play", "exit", "mainMenu", "settings". """
 class Button:
         
@@ -78,6 +79,8 @@ class Button:
     titlePosition = property(_get_titlePosition)
 
     def set_button_title(self, titleText, fontSize):
+        """Transform the string argument into a real text that can be displayed
+        + set his position in the middle of the button"""
         
         titleFont = pygame.font.Font("assets/fonts/karma future.ttf", fontSize)
         self._title = titleFont.render(titleText, False, (15, 56, 15))

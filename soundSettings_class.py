@@ -5,12 +5,17 @@ import constants
 import button_class
 
 class SoundSettings:
+    """Class that create the sound settings menu that contains:
+    - Music buttons : ON and OFF
+    - Sound buttons : ON and OFF
+    - Exit button : to exit the actual menu"""
         
     def __init__(self, xPos, yPos, texture=constants.SOUNDSETTINGSTEXTURE):
         
         self._x = xPos
         self._y = yPos
 
+        #Creation of the buttons
         self._musicOn = True
         self._soundOn = True
         self._musicOnButton = button_class.Button("music", 12, 25, "", True, constants.MUSICONBUTTONTEXTURE, constants.MUSICONBUTTONSELECTEDTEXTURE)
@@ -18,7 +23,7 @@ class SoundSettings:
         self._soundOnButton = button_class.Button("sound", 138, 25, "", False, constants.SOUNDONBUTTONTEXTURE, constants.SOUNDONBUTTONSELECTEDTEXTURE)
         self._soundOffButton = button_class.Button("sound", 138, 25, "", False, constants.SOUNDOFFBUTTONTEXTURE, constants.SOUNDOFFBUTTONSELECTEDTEXTURE)
 
-        self._close = True
+        self._close = True  #At the creation the settings menu isn't displayed (open).
         self._exitButton = button_class.Button("exitSettings", 0, 0, "EXIT")
         self._exitButton.selectedTexture = pygame.transform.scale(self._exitButton.selectedTexture, (self._exitButton.selectedTexture.get_size()[0]//4, self._exitButton.selectedTexture.get_size()[1]//4))
         self._exitButton.unselectedTexture = pygame.transform.scale(self._exitButton.unselectedTexture, (self._exitButton.unselectedTexture.get_size()[0]//4, self._exitButton.unselectedTexture.get_size()[1]//4))
@@ -92,6 +97,11 @@ class SoundSettings:
     selectedButton = property(_get_selectedButton)
 
     def selectNextButton(self, direction):
+        """Select the next button in function of :
+        - the direction the player wants to navigate
+        - the music's status (on or off)
+        - the sound's status (on or off)"""
+
         if direction == "left":
             if self._soundOnButton.selected:
                 self._soundOnButton.selected = False
@@ -156,6 +166,8 @@ class SoundSettings:
                 self._selectedButton = self._musicOffButton
 
     def set_music(self, onOrOff):
+        """Set the music on or off and modifiy the button textures in consequences"""
+
         self._musicOn = onOrOff
         if onOrOff:
             self.musicOnButton.selected = True
@@ -167,6 +179,8 @@ class SoundSettings:
             self.musicOnButton.selected = False
             
     def set_sound(self, onOrOff):
+        """Set the sounds on or off and modifiy the button textures in consequences"""
+
         self._soundOn = onOrOff
         if onOrOff:
             self.soundOnButton.selected = True

@@ -26,13 +26,13 @@ pygame.display.set_caption("Retro 1010!")
 #Game music and sound setup
 pygame.mixer.music.load("assets/sounds/Retro Samurai.wav")
 pygame.mixer.music.set_volume(0.1)
-pygame.mixer.music.play(-1)
+pygame.mixer.music.play(-1) #Play the music indefinitely
 soundDict = {"winingLine":pygame.mixer.Sound("assets/sounds/Line.wav"), "cantPlace":pygame.mixer.Sound("assets/sounds/Cant_place.wav"),
 "gameOver":pygame.mixer.Sound("assets/sounds/Game_over.wav"), "select":pygame.mixer.Sound("assets/sounds/Select.wav"),
 "piecePlaced":pygame.mixer.Sound("assets/sounds/Placed.wav"), "moove":pygame.mixer.Sound("assets/sounds/Moove.wav"),
 "beginGame":pygame.mixer.Sound("assets/sounds/Begin.wav"), "enter":pygame.mixer.Sound("assets/sounds/Enter.wav")}
 for sound in soundDict.keys():
-    soundDict[sound].set_volume(0.5)
+    soundDict[sound].set_volume(0.5)    #Set the volume on each sound at 0.5
 
 #Font setup
 titleFont = pygame.font.Font("assets/fonts/karma future.ttf", 72)
@@ -53,6 +53,7 @@ exitButton = button_class.Button("exit", constants.SCREENXMIDDLE-buttonsTexture.
 #Settings board setup
 soundSettings = soundSettings_class.SoundSettings(constants.SCREENSIZE[0]/2 - 125, constants.SCREENSIZE[1]/2 - 75)
 def draw_sound_settings():
+    """Display all the elements when the player enter the sound settings."""
     if not soundSettings.close:
         screen.blit(settingsBackground, (0,0))
         screen.blit(soundSettings.texture, (soundSettings.x, soundSettings.y))
@@ -66,8 +67,14 @@ def draw_sound_settings():
             soundSettings.texture.blit(soundSettings.musicOnButton.texture, (soundSettings.musicOnButton.x, soundSettings.musicOnButton.y))
         elif not soundSettings.musicOn:
             soundSettings.texture.blit(soundSettings.musicOffButton.texture, (soundSettings.musicOffButton.x, soundSettings.musicOffButton.y))
+    #IMPORTANT: Refresh the screen even if the sound setting is closed
+    # because this draw function is called after the draw function of the future game parts        
     pygame.display.flip()
+
 def sound_settings_function():
+    """Function called when the player enter the sound settings.
+    It allows the player to navigate trough the music and the sounds to mute them or play them.
+    We have to repeat this instructions in diferent parts of the game."""
     if event.key == K_LEFT:
         if soundSettings.selectedButton == soundSettings.soundOffButton or soundSettings.selectedButton == soundSettings.soundOnButton:
             soundDict["select"].play()
@@ -112,15 +119,15 @@ def sound_settings_function():
             soundSettings.close = True
 
 #game variables setup
-phase = "main_menu"
-gamePhase = "choose"
+phase = "main_menu" #3 phases in the program (1: main_menu / 2: game / 3: game_over)
+gamePhase = "choose" #2 phases in the game phase (1: choose(the player pick a piece) / 2: board(the player cross the board to place the piece in it))
 gameOver = False
-createDrawFunction = False
+createDrawFunction = False  #We have to create the draw function of the program phase only once
 GAMEOVERTEXT = gameOverFont.render("Game Over", False, (139,172,15))
 TITLE = titleFont.render("RETRO 1010!", False, (132,187,132))
 
 #game loop setup
-clock = pygame.time.Clock()
+clock = pygame.time.Clock() #Create a clock to control FPS (How many times per second the main loop will run)
 runGame = True
 
 while runGame:
@@ -185,7 +192,7 @@ while runGame:
                             board = board_class.Board() #Board creation
                             board.build()
                             piece1, piece2, piece3 = functions.generate_pieces()    #Pieces generation
-                            #Pointer (list) of the piece the player is going to choose
+                            #Use of arrays to imitate a pointer which is here chosenPiece 
                             chosenPiece = piece1    #For now it points on piece1
                             piece1[0].selected = True   #We select the first piece. Then the player will choose from that start
                             score = 0   #Set the score at the beginning
@@ -275,7 +282,7 @@ while runGame:
                 screen.blit(bestScoreText, (0, 10*constants.CELLSIZE))
                 screen.blit(bestScorePoint, (2*constants.CELLSIZE, 11*constants.CELLSIZE))
 
-        #We wait for game event and update the score
+        #Creation of the scores texts
         strScore = " SCORE: " 
         scoreText = font.render(strScore, False, (159,196,159))
         strScorePoint = str(score)
@@ -290,11 +297,11 @@ while runGame:
 
             if gamePhase == "choose":
                 """When we are in choose game phase, the player need to choose a piece with the directional keys,
-                and need to press "c" to choose the one he wants. That's the events we are wainting for"""
+                and need to press "Return" to choose the one he wants. That's the events we are wainting for"""
                 if event.type == KEYDOWN:
                     if soundSettings.close:
 
-                        if event.key == K_RIGHT:
+                        if event.key == K_RIGHT:    #Select the next piece in function of how many pieces left in the selection
                             if piece1[0].selected == True:
                                 piece1[0].selected = False
                                 
@@ -349,7 +356,7 @@ while runGame:
                                         piece3[0].selected = True
                                         chosenPiece = piece3
                                     
-                        elif event.key == K_LEFT:
+                        elif event.key == K_LEFT:   #Select the next piece in function of how many pieces left in the selection
                             if piece1[0].selected == True:
                                 piece1[0].selected = False
                             
@@ -404,7 +411,7 @@ while runGame:
                                         piece3[0].selected = True
                                         chosenPiece = piece3
                         
-                        elif event.key == K_UP:
+                        elif event.key == K_UP: #Select the settings button
                             soundDict["select"].play()
                             gameSoundSettingsButton.selected = True
                             if piece1[0].selected == True:
@@ -414,7 +421,7 @@ while runGame:
                             elif piece3[0].selected == True:
                                 piece3[0].selected = False
                         
-                        elif event.key == K_DOWN:
+                        elif event.key == K_DOWN:   #Return from the settings button to the pieces to pick one
                             soundDict["select"].play()
                             gameSoundSettingsButton.selected = False
                             chosenPiece[0].selected = True
@@ -422,10 +429,10 @@ while runGame:
                         elif event.key == K_RETURN:
                             
                             if gameSoundSettingsButton.selected:
-                                soundSettings.close = gameSoundSettingsButton.do_function()
+                                soundSettings.close = gameSoundSettingsButton.do_function() #Open the sound settings
                                 soundDict["enter"].play()
                             else:
-                                for cell in chosenPiece[0].cellsList:
+                                for cell in chosenPiece[0].cellsList:   #Place the chosen piece on the board
                                     cell.x = constants.BOARDBEGINNINGX + cell.x
                                     cell.y = constants.BOARDBEGINNINGY + cell.y
                                 gamePhase = "board"
@@ -436,10 +443,11 @@ while runGame:
             elif gamePhase == "board":
                 """During the board phase :
                 - We wait for the player to moove the piece on the board with the directional keys.
-                - Then we wait for him to put down the piece on the board with enter.
-                - Then we check for a possible game over, generate other pieces if there is no more and return to phase 1"""
+                - Then we wait for him to put down the piece on the board with enter. if he is allowed to.
+                - Then we check for a possible game over and generate other pieces if there is no more and return to phase 1"""
                 if event.type == KEYDOWN:
                     
+                    #Save the position of the piece before the events to check if it has mooved after (to play the moove sound or not)
                     cellsPiecePositionBeforeAction = []
                     for cells in chosenPiece[0].cellsList:
                         cellsPiecePositionBeforeAction.append([cells.x, cells.y])
@@ -460,15 +468,17 @@ while runGame:
                     if not didNotMoove:
                         soundDict["moove"].play()
             
-                    if event.key == K_BACKSPACE:
-                        for cell in chosenPiece[0].cellsList:
+                    if event.key == K_BACKSPACE:    #If the player press backspace he can return to choose phase to pick an other piece
+                        for cell in chosenPiece[0].cellsList:   #So we have to replace the place at her start point
                             cell.x = cell.initialX
                             cell.y = cell.initialY
                         gamePhase = "choose"
 
-                    if event.key == K_RETURN:
+                    if event.key == K_RETURN:  
+                        #If the player press return, check if he can place the piece where he wants to then act in function of this test.
                     
                         canBePlaced = board.player_place_verification(chosenPiece[0])
+                        #If it can't be placed, then we change the texture and play a sound to show that he can't place the piece here.
                         if not canBePlaced:
                             soundDict["cantPlace"].play()
                             for cell in chosenPiece[0].cellsList:
