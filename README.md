@@ -1,4 +1,3 @@
 # Retro 1010!
-Old pygame project made for school. The game is inspired by the quite famous game "1010!". I want to train by taking back this project, clean it and finish it for my first real project on github and that will be on my portfolio.
-
-You can reuse this project as you want, and it will be a pleasure for me to receive your advices to improve my skills.
+Python and pygame project made during high school. The game is inspired by the quite famous game "1010!".
+It would be a great challenge to re-work on it now and see if I progressed by improving the code !
